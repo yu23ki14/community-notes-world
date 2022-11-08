@@ -1,12 +1,13 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
 import * as Tabs from "@radix-ui/react-tabs";
+import { styled } from "@stitches/react";
+import Head from "next/head";
+import Footer from "../components/footer";
+import Header from "../components/header";
+import LeaderboardRow from "../components/leaderboardRow";
+import styles from "../styles/Home.module.css";
 import getTopAuthors from "../utils/getTopAuthors";
 import { author } from "../utils/types";
-import LeaderboardRow from "../components/leaderboardRow";
-import Header from "../components/header";
-// import getUserAlias from "../utils/getUserAlias";
-import { styled } from "@stitches/react";
+
 const TabContent = styled(Tabs.Content, {
   display: "flex",
   width: "100%",
@@ -67,6 +68,7 @@ export default function Home(props: { topAuthors: topAuthors }) {
           </TabWrapper>
         </Table>
       </main>
+      <Footer />
     </div>
   );
 }
