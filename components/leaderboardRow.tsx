@@ -1,4 +1,5 @@
 import { styled } from "@stitches/react";
+import { author, note } from "../utils/types";
 const Row = styled("div", {
   display: "flex",
   justifyContent: "space-between",
@@ -6,7 +7,11 @@ const Row = styled("div", {
   padding: "1rem",
   borderTop: "1px solid dimGray",
 });
-const leaderBoardRow = ({ author, numberOfHelpfulNotes, notes, index }) => {
+type props = {
+  author: author;
+  index: number;
+};
+const leaderBoardRow = ({ author, index }: props) => {
   const medal =
     index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : "⚫️";
   return (
@@ -19,19 +24,6 @@ const leaderBoardRow = ({ author, numberOfHelpfulNotes, notes, index }) => {
         >
           {medal} Top writer nº{index + 1}
         </a>
-        {/* <ul>
-          {author.notes.map((note, index) => {
-            return (
-              <li key="note.noteId">
-                <a
-                  href={`https://www.twitter.com/i/birdwatch/n/${note.noteId}`}
-                >
-                  note {index}
-                </a>
-              </li>
-            );
-          })}
-        </ul> */}
       </div>
       <div>{author.numberOfHelpfulNotes} helpful notes</div>
     </Row>
