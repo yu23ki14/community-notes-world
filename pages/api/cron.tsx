@@ -13,7 +13,7 @@ export default async function handler(
       } else {
         res.status(401).json({ success: false });
       }
-    } catch (err) {
+    } catch (err: any) {
       res.status(500).json({ statusCode: 500, message: err.message });
     }
   } else {
