@@ -1,7 +1,6 @@
-import { styled } from "@stitches/react";
+import { styled, css } from "../utils/styles";
 import { author, note } from "../utils/types";
 import Trophy from "../public/icons/trophy.svg";
-import { copyFile } from "fs";
 const Row = styled("div", {
   display: "flex",
   width: "100%",
@@ -12,7 +11,24 @@ const Row = styled("div", {
 const AuthorWrapper = styled("div", {
   display: "flex",
 });
-
+const StyledTrophy = styled(Trophy, {
+  variants: {
+    color: {
+      gold: {
+        color: "orange",
+      },
+      silver: {
+        color: "gray",
+      },
+      bronze: {
+        color: "brown",
+      },
+      neutral: {
+        color: "$gray6",
+      },
+    },
+  },
+});
 type props = {
   author: author;
   index: number;
@@ -20,16 +36,17 @@ type props = {
 const leaderBoardRow = ({ author, index }: props) => {
   const color =
     index === 0
-      ? "orange"
+      ? "gold"
       : index === 1
-      ? "gray"
+      ? "silver"
       : index === 2
-      ? "brown"
-      : "#333";
+      ? "bronze"
+      : "neutral";
+
   return (
     <Row key={author.participantId}>
       <AuthorWrapper>
-        <Trophy
+        <StyledTrophy
           width={"24px"}
           height={"24px"}
           viewBox="0 0 48 48"
