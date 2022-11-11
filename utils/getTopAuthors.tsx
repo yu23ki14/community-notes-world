@@ -1,23 +1,23 @@
-import getAllHelpfulNotes from "./getAllHelpfulNotes";
+import getAllHelpfulNotes from "./getAllNotes";
 import { author, notes, note } from "../utils/types";
 let currentTime = Date.now();
 
 export default async function getTopAuthors(range?: string): Promise<author[]> {
-  let allHelpfulNotes = await getAllHelpfulNotes();
+  let { helpfulNotes } = await getAllHelpfulNotes();
   if (range === "last month") {
-    allHelpfulNotes = allHelpfulNotes.filter((note: note) => {
+    helpfulNotes = helpfulNotes.filter((note: note) => {
       let noteDate = note.createdAtMillis;
       return currentTime - noteDate < 2629800000;
     });
   } else if (range === "last week") {
-    allHelpfulNotes = allHelpfulNotes.filter((note: note) => {
+    helpfulNotes = helpfulNotes.filter((note: note) => {
       let noteDate = note.createdAtMillis;
       return currentTime - noteDate < 604800000;
     });
   }
   const authors: author[] = [];
 
-  allHelpfulNotes.forEach((note: note) => {
+  helpfulNotes.forEach((note: note) => {
     let authorIndex = authors.findIndex((author) => {
       return author.participantId === note.participantId;
     });

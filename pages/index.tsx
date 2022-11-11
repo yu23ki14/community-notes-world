@@ -5,8 +5,8 @@ import TopWritersLeaderBoard from "../components/topWritersLeaderBoard";
 import styles from "../styles/Home.module.css";
 import { author, notes } from "../utils/types";
 import getTopAuthors from "../utils/getTopAuthors";
-import getAllHelpfulNotes from "../utils/getAllHelpfulNotes";
-import LineChart from "../components/lineChart";
+import getAllNotes from "../utils/getAllNotes";
+import NoteActivity from "../components/noteActivity";
 
 type authorArray = author[];
 
@@ -14,12 +14,18 @@ export default function Home({
   topAuthors,
   topAuthorsLastMonth,
   topAuthorsLastWeek,
-  allHelpfulNotes,
+  helpfulNotes,
+  notHelpfulNotes,
+  needsMoreRatingsNotes,
+  allNotes,
 }: {
   topAuthors: authorArray;
   topAuthorsLastMonth: authorArray;
   topAuthorsLastWeek: authorArray;
-  allHelpfulNotes: notes;
+  allNotes: notes;
+  helpfulNotes: notes;
+  notHelpfulNotes: notes;
+  needsMoreRatingsNotes: notes;
 }) {
   return (
     <div className={styles.container}>
@@ -30,29 +36,37 @@ export default function Home({
       <Header />
       <main className={styles.main}>
         <TopWritersLeaderBoard
-          allHelpfulNotes={allHelpfulNotes}
+          allHelpfulNotes={helpfulNotes}
           topAuthors={topAuthors}
           topAuthorsLastMonth={topAuthorsLastMonth}
           topAuthorsLastWeek={topAuthorsLastWeek}
         />
-        <LineChart allHelpfulNotes={allHelpfulNotes} />
+        <NoteActivity
+          allNotes={allNotes}
+          allHelpfulNotes={helpfulNotes}
+          allNotHelpfulNotes={notHelpfulNotes}
+          allNeedsMoreRatingsNotes={needsMoreRatingsNotes}
+        />
       </main>
       <Footer />
     </div>
   );
 }
 export async function getStaticProps() {
-  let allHelpfulNotes = await getAllHelpfulNotes();
+  let { allNotes, helpfulNotes, notHelpfulNotes, needsMoreRatingsNotes } =
+    await getAllNotes();
   let topAuthors = await getTopAuthors();
   let topAuthorsLastMonth = await getTopAuthors("last month");
   let topAuthorsLastWeek = await getTopAuthors("last week");
-  console.log(topAuthorsLastWeek.length);
   return {
     props: {
+      allNotes,
+      helpfulNotes,
+      notHelpfulNotes,
+      needsMoreRatingsNotes,
       topAuthors,
       topAuthorsLastMonth,
       topAuthorsLastWeek,
-      allHelpfulNotes,
     },
   };
 }
