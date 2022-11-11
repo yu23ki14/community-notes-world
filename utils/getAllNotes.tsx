@@ -12,10 +12,38 @@ export default async function getAllHelpfulNotes() {
   const res = await fetch(noteStatusHistoryUrl);
   const text = await res.text();
 
-  const records = parse(text, {
+  const helpfulNotes = parse(text, {
     columns: true,
     skip_empty_lines: true,
     delimiter: "\t",
   }).filter((item: note) => item.currentStatus === "CURRENTLY_RATED_HELPFUL");
-  return records;
+
+  const notHelpfulNotes = parse(text, {
+    columns: true,
+    skip_empty_lines: true,
+    delimiter: "\t",
+  }).filter(
+    (item: note) => item.currentStatus === "CURRENTLY_RATED_NOT_HELPFUL"
+  );
+
+  const needsMoreRatingsNotes = parse(text, {
+    columns: true,
+    skip_empty_lines: true,
+    delimiter: "\t",
+  }).filter((item: note) => item.currentStatus === "NEEDS_MORE_RATINGS");
+
+  const allNotes = parse(text, {
+    columns: true,
+    skip_empty_lines: true,
+    delimiter: "\t",
+  });
+
+  const notes = {
+    allNotes: allNotes,
+    helpfulNotes: helpfulNotes,
+    notHelpfulNotes: notHelpfulNotes,
+    needsMoreRatingsNotes: needsMoreRatingsNotes,
+  };
+
+  return notes;
 }

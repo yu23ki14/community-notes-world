@@ -3,8 +3,10 @@ import Footer from "../components/footer";
 import Header from "../components/header";
 import TopWritersLeaderBoard from "../components/topWritersLeaderBoard";
 import styles from "../styles/Home.module.css";
-import { author } from "../utils/types";
+import { author, notes } from "../utils/types";
 import getTopAuthors from "../utils/getTopAuthors";
+import getAllNotes from "../utils/getAllNotes";
+import NoteActivity from "../components/noteActivity";
 
 type authorArray = author[];
 
@@ -12,10 +14,18 @@ export default function Home({
   topAuthors,
   topAuthorsLastMonth,
   topAuthorsLastWeek,
+  helpfulNotes,
+  notHelpfulNotes,
+  needsMoreRatingsNotes,
+  allNotes,
 }: {
   topAuthors: authorArray;
   topAuthorsLastMonth: authorArray;
   topAuthorsLastWeek: authorArray;
+  allNotes: notes;
+  helpfulNotes: notes;
+  notHelpfulNotes: notes;
+  needsMoreRatingsNotes: notes;
 }) {
   return (
     <div className={styles.container}>
@@ -26,9 +36,16 @@ export default function Home({
       <Header />
       <main className={styles.main}>
         <TopWritersLeaderBoard
+          allHelpfulNotes={helpfulNotes}
           topAuthors={topAuthors}
           topAuthorsLastMonth={topAuthorsLastMonth}
           topAuthorsLastWeek={topAuthorsLastWeek}
+        />
+        <NoteActivity
+          allNotes={allNotes}
+          allHelpfulNotes={helpfulNotes}
+          allNotHelpfulNotes={notHelpfulNotes}
+          allNeedsMoreRatingsNotes={needsMoreRatingsNotes}
         />
       </main>
       <Footer />
@@ -36,11 +53,20 @@ export default function Home({
   );
 }
 export async function getStaticProps() {
+  let { allNotes, helpfulNotes, notHelpfulNotes, needsMoreRatingsNotes } =
+    await getAllNotes();
   let topAuthors = await getTopAuthors();
   let topAuthorsLastMonth = await getTopAuthors("last month");
   let topAuthorsLastWeek = await getTopAuthors("last week");
-  console.log(topAuthorsLastWeek.length);
   return {
-    props: { topAuthors, topAuthorsLastMonth, topAuthorsLastWeek },
+    props: {
+      allNotes,
+      helpfulNotes,
+      notHelpfulNotes,
+      needsMoreRatingsNotes,
+      topAuthors,
+      topAuthorsLastMonth,
+      topAuthorsLastWeek,
+    },
   };
 }

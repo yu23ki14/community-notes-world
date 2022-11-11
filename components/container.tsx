@@ -5,7 +5,7 @@ const StyledContainer = styled("div", {
   maxWidth: "900px",
   display: "flex",
   flexDirection: "column",
-  margin: "5rem",
+  margin: "0 0 3rem 0",
   width: "100%",
   border: "1px solid $gray6",
   borderRadius: "5px",
