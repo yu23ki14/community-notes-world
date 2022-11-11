@@ -6,7 +6,7 @@ const Row = styled("div", {
   display: "flex",
   width: "100%",
   padding: "1rem",
-  borderTop: "1px solid dimGray",
+  borderTop: "1px solid $gray6",
   justifyContent: "space-between",
 });
 const AuthorWrapper = styled("div", {
