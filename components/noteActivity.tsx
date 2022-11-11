@@ -40,10 +40,6 @@ ChartJS.register(
 );
 
 const options = {
-  interatcions: {
-    intersect: false,
-  },
-  animation: false,
   responsive: true,
   plugins: {
     legend: {
