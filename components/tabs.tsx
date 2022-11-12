@@ -9,24 +9,27 @@ export const TabContent = styled(Tabs.Content, {
 
 export const TabList = styled(Tabs.List, {
   display: "flex",
+  padding: "0 .75rem",
 });
 
 export const TabTrigger = styled(Tabs.Trigger, {
-  backgroundColor: "$gray0",
+  backgroundColor: "$slate0",
   width: "100%",
   padding: "1em",
   borderColor: "transparent",
   borderWidth: "0 0 4px 0",
   borderBottom: "4px solid transparent",
-  color: "$gray11",
-  fontWeight: "bolder",
+  margin: "0 4px",
+  color: "$slate11",
+  fontWeight: "600",
+  fontSize: "small",
   '&[data-state="active"]': {
-    borderColor: "$blue11",
-    color: "$gray12",
+    borderColor: "$blue9",
+    color: "$slate12",
   },
   "&:hover": {
     cursor: "pointer",
-    background: "$gray3",
+    background: "$slate3",
   },
 });
 

@@ -5,10 +5,11 @@ const StyledContainer = styled("div", {
   maxWidth: "900px",
   display: "flex",
   flexDirection: "column",
-  margin: "0 0 3rem 0",
+  margin: "0 0 1rem 0",
   width: "100%",
-  border: "1px solid $gray6",
-  borderRadius: "5px",
+  border: "1px solid $slate6",
+  borderRadius: "13px",
+  backgroundColor: "$slate1",
 });
 
 type props = {

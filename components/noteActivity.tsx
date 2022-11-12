@@ -16,7 +16,7 @@ import {
   Legend,
 } from "chart.js";
 const StyledTabContent = styled(TabContent, {
-  borderTop: "1px solid $gray6",
+  borderTop: "1px solid $slate6",
   padding: "2rem",
   '&[data-state="inactive"]': {
     display: "none",

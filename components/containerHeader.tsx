@@ -10,6 +10,7 @@ const ContainerHeader = ({ text }: props) => {
     marginBottom: "0",
     fontSize: "1rem",
     marginTop: "0",
+    fontWeight: "600",
   });
   return <ModuleHeader>{text}</ModuleHeader>;
 };
