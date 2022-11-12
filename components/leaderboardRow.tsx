@@ -5,8 +5,10 @@ const Row = styled("div", {
   display: "flex",
   width: "100%",
   padding: "1rem",
-  borderTop: "1px solid $gray6",
+  borderTop: "1px solid $slate6",
   justifyContent: "space-between",
+  fontSize: "small",
+  color: "$slate11",
 });
 const AuthorWrapper = styled("div", {
   display: "flex",
@@ -24,7 +26,7 @@ const StyledTrophy = styled(Trophy, {
         color: "brown",
       },
       neutral: {
-        color: "$gray6",
+        color: "$slate6",
       },
     },
   },

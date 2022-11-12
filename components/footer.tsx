@@ -8,7 +8,8 @@ import Link from "next/link";
 const StyledFooter = styled("footer", {
   padding: "2rem",
   fontSize: "x-small",
-  background: "#ffffff10",
+  background: "$slate12",
+  color: "$slate10",
 });
 const Footer = () => {
   return (

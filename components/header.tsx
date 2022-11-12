@@ -3,7 +3,7 @@ import Image from "next/image";
 const StyledHeader = styled("nav", {
   width: "100%",
   padding: "1rem 1rem",
-  borderBottom: "1px solid $gray6",
+  borderBottom: "1px solid $slate6",
   display: "flex",
   alignItems: "center",
 });

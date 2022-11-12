@@ -7,9 +7,16 @@ import { author, notes } from "../utils/types";
 import getTopAuthors from "../utils/getTopAuthors";
 import getAllNotes from "../utils/getAllNotes";
 import NoteActivity from "../components/noteActivity";
+import { styled } from "../utils/styles";
 
 type authorArray = author[];
-
+const StyledMain = styled("main", {
+  backgroundColor: "$slate3",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  padding: "2rem",
+});
 export default function Home({
   topAuthors,
   topAuthorsLastMonth,
@@ -34,7 +41,7 @@ export default function Home({
         <link rel="icon" href="/favicon/favicon.ico" />
       </Head>
       <Header />
-      <main className={styles.main}>
+      <StyledMain>
         <TopWritersLeaderBoard
           allHelpfulNotes={helpfulNotes}
           topAuthors={topAuthors}
@@ -47,7 +54,7 @@ export default function Home({
           allNotHelpfulNotes={notHelpfulNotes}
           allNeedsMoreRatingsNotes={needsMoreRatingsNotes}
         />
-      </main>
+      </StyledMain>
       <Footer />
     </div>
   );

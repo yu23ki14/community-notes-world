@@ -1,6 +1,6 @@
 import { createStitches } from "@stitches/react";
 import {
-  gray,
+  slate,
   blue,
   red,
   green,
@@ -12,7 +12,7 @@ import {
 export const { styled, css } = createStitches({
   theme: {
     colors: {
-      ...gray,
+      ...slate,
       ...blue,
       ...red,
       ...green,
