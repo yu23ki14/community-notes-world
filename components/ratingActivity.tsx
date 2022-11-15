@@ -1,5 +1,5 @@
 import { Line } from "react-chartjs-2";
-import { note } from "../utils/types";
+import { rating } from "../utils/types";
 import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
 import Container from "./container";
 import ContainerHeader from "./containerHeader";
@@ -22,11 +22,11 @@ const StyledTabContent = styled(TabContent, {
     display: "none",
   },
 });
+
 type props = {
-  helpfulNotesTimeSeries: any;
-  notHelpfulNotesTimeSeries: any;
-  needsMoreRatingsNotesTimeSeries: any;
-  allNotesTimeSeries: any;
+  helpfulRatingsTimeSeries: any;
+  notHelpfulRatingsTimeSeries: any;
+  somewhatHelpfulRatingsTimeSeries: any;
 };
 
 ChartJS.register(
@@ -51,66 +51,79 @@ const options = {
   },
 };
 
-const NoteActivity = ({
-  allNotesTimeSeries,
-  helpfulNotesTimeSeries,
-  notHelpfulNotesTimeSeries,
-  needsMoreRatingsNotesTimeSeries,
+const RatingActivity = ({
+  helpfulRatingsTimeSeries,
+  notHelpfulRatingsTimeSeries,
+  somewhatHelpfulRatingsTimeSeries,
 }: props) => {
   const helpfulData = {
-    labels: Object.keys(helpfulNotesTimeSeries),
+    labels: Object.keys(helpfulRatingsTimeSeries),
     datasets: [
       {
-        label: "Helpful Notes",
+        label: "Helpful Ratings",
         borderColor: "green",
-        data: helpfulNotesTimeSeries,
+        data: helpfulRatingsTimeSeries,
       },
     ],
   };
   const notHelpfulData = {
-    labels: Object.keys(notHelpfulNotesTimeSeries),
+    labels: Object.keys(notHelpfulRatingsTimeSeries),
     datasets: [
       {
         label: "Not Helpful Notes",
         borderColor: "red",
-        data: notHelpfulNotesTimeSeries,
+        data: notHelpfulRatingsTimeSeries,
       },
     ],
   };
-  const allNotesData = {
-    labels: Object.keys(allNotesTimeSeries),
+  const somewhatHelpfulData = {
+    labels: Object.keys(somewhatHelpfulRatingsTimeSeries),
+    datasets: [
+      {
+        label: "Not Helpful Notes",
+        borderColor: "gray",
+        data: somewhatHelpfulRatingsTimeSeries,
+      },
+    ],
+  };
+  const allData = {
+    labels: Object.keys(helpfulRatingsTimeSeries),
     datasets: [
       {
         label: "Helpful Notes",
         borderColor: "green",
-        data: helpfulNotesTimeSeries,
+        data: helpfulRatingsTimeSeries,
       },
       {
         label: "Not Helpful Notes",
         borderColor: "red",
-        data: notHelpfulNotesTimeSeries,
+        data: notHelpfulRatingsTimeSeries,
       },
       {
         label: "Needs More Ratings Notes",
         borderColor: "gray",
-        data: needsMoreRatingsNotesTimeSeries,
+        data: somewhatHelpfulRatingsTimeSeries,
       },
     ],
   };
   return (
     <Container>
-      <ContainerHeader text="Note activity" />
+      <ContainerHeader text="Rating activity" />
       <TabRoot defaultValue="all" orientation="horizontal">
         <TabList aria-label="leaderboard">
-          <TabTrigger value="all">All notes</TabTrigger>
-          <TabTrigger value="helpful">Helpful </TabTrigger>
+          <TabTrigger value="all">All</TabTrigger>
+          <TabTrigger value="helpful">Helpful</TabTrigger>
+          <TabTrigger value="somewhat">Somewhat Helpful </TabTrigger>
           <TabTrigger value="notHelpful">Not Helpful</TabTrigger>
         </TabList>
         <StyledTabContent value="all">
-          <Line options={options} data={allNotesData} />
+          <Line options={options} data={allData} />
         </StyledTabContent>
         <StyledTabContent value="helpful">
           <Line options={options} data={helpfulData} />
+        </StyledTabContent>
+        <StyledTabContent value="somewhat">
+          <Line options={options} data={somewhatHelpfulData} />
         </StyledTabContent>
         <StyledTabContent value="notHelpful">
           <Line options={options} data={notHelpfulData} />
@@ -120,4 +133,4 @@ const NoteActivity = ({
   );
 };
 
-export default NoteActivity;
+export default RatingActivity;

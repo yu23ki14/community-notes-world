@@ -1,8 +1,8 @@
-import { note } from "../utils/types";
-export default function getTimeSeries(notes: note[]) {
+import { note, rating } from "./types";
+export default function getMonthlyTimeSeries(items: note[] | rating[]) {
   const o: any = {};
-  notes.map((note: note) => {
-    let date = new Date(+note.createdAtMillis);
+  items.map((item: note | rating) => {
+    let date = new Date(+item.createdAtMillis);
     var month = date.getMonth() + 1;
     var formattedMonth = date.getMonth() + 1 < 10 ? "0" + month : month;
     var key = date.getFullYear() + "-" + formattedMonth;
