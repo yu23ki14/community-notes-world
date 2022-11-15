@@ -9,8 +9,8 @@ type rating = {
   helpfulnessLevel: string;
   createdAtMillis: number;
   noteId: string;
-  helpful: number;
-  notHelpful: number;
+  helpful: string;
+  notHelpful: string;
 };
 
 type author = {
