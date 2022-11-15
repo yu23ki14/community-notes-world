@@ -70,7 +70,7 @@ const RatingActivity = ({
     labels: Object.keys(notHelpfulRatingsTimeSeries),
     datasets: [
       {
-        label: "Not Helpful Notes",
+        label: "Not Helpful Ratings",
         borderColor: "red",
         data: notHelpfulRatingsTimeSeries,
       },
@@ -80,7 +80,7 @@ const RatingActivity = ({
     labels: Object.keys(somewhatHelpfulRatingsTimeSeries),
     datasets: [
       {
-        label: "Not Helpful Notes",
+        label: "Somewhat Helpful Ratings",
         borderColor: "gray",
         data: somewhatHelpfulRatingsTimeSeries,
       },
@@ -90,17 +90,17 @@ const RatingActivity = ({
     labels: Object.keys(helpfulRatingsTimeSeries),
     datasets: [
       {
-        label: "Helpful Notes",
+        label: "Helpful Ratings",
         borderColor: "green",
         data: helpfulRatingsTimeSeries,
       },
       {
-        label: "Not Helpful Notes",
+        label: "Not Helpful Ratings",
         borderColor: "red",
         data: notHelpfulRatingsTimeSeries,
       },
       {
-        label: "Needs More Ratings Notes",
+        label: "Somewhat Helpful Ratings",
         borderColor: "gray",
         data: somewhatHelpfulRatingsTimeSeries,
       },
