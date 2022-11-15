@@ -23,10 +23,10 @@ const StyledTabContent = styled(TabContent, {
   },
 });
 type props = {
-  allNeedsMoreRatingsNotes: note[];
-  allHelpfulNotes: note[];
-  allNotHelpfulNotes: note[];
-  allNotes: note[];
+  helpfulNotesTimeSeries: any;
+  notHelpfulNotesTimeSeries: any;
+  needsMoreRatingsNotesTimeSeries: any;
+  allNotesTimeSeries: any;
 };
 
 ChartJS.register(
@@ -52,17 +52,11 @@ const options = {
 };
 
 const NoteActivity = ({
-  allHelpfulNotes,
-  allNotes,
-  allNotHelpfulNotes,
-  allNeedsMoreRatingsNotes,
+  allNotesTimeSeries,
+  helpfulNotesTimeSeries,
+  notHelpfulNotesTimeSeries,
+  needsMoreRatingsNotesTimeSeries,
 }: props) => {
-  const helpfulNotesTimeSeries = getMonthlyTimeSeries(allHelpfulNotes);
-  const notHelpfulNotesTimeSeries = getMonthlyTimeSeries(allNotHelpfulNotes);
-  const needsMoreRatingsTimeSeries = getMonthlyTimeSeries(
-    allNeedsMoreRatingsNotes
-  );
-  const allTimeSeries = getMonthlyTimeSeries(allNotes);
   const helpfulData = {
     labels: Object.keys(helpfulNotesTimeSeries),
     datasets: [
@@ -84,7 +78,7 @@ const NoteActivity = ({
     ],
   };
   const allNotesData = {
-    labels: Object.keys(allTimeSeries),
+    labels: Object.keys(allNotesTimeSeries),
     datasets: [
       {
         label: "Helpful Notes",
@@ -99,7 +93,7 @@ const NoteActivity = ({
       {
         label: "Needs More Ratings Notes",
         borderColor: "gray",
-        data: needsMoreRatingsTimeSeries,
+        data: needsMoreRatingsNotesTimeSeries,
       },
     ],
   };

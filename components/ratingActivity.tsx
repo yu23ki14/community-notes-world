@@ -22,10 +22,11 @@ const StyledTabContent = styled(TabContent, {
     display: "none",
   },
 });
+
 type props = {
-  helpfulRatings: rating[];
-  notHelpfulRatings: rating[];
-  somewhatHelpfulRatings: rating[];
+  helpfulRatingsTimeSeries: any;
+  notHelpfulRatingsTimeSeries: any;
+  somewhatHelpfulRatingsTimeSeries: any;
 };
 
 ChartJS.register(
@@ -51,15 +52,10 @@ const options = {
 };
 
 const RatingActivity = ({
-  helpfulRatings,
-  notHelpfulRatings,
-  somewhatHelpfulRatings,
+  helpfulRatingsTimeSeries,
+  notHelpfulRatingsTimeSeries,
+  somewhatHelpfulRatingsTimeSeries,
 }: props) => {
-  const helpfulRatingsTimeSeries = getMonthlyTimeSeries(helpfulRatings);
-  const notHelpfulRatingsTimeSeries = getMonthlyTimeSeries(notHelpfulRatings);
-  const somewhatHelpfulRatingsTimeSeries = getMonthlyTimeSeries(
-    somewhatHelpfulRatings
-  );
   const helpfulData = {
     labels: Object.keys(helpfulRatingsTimeSeries),
     datasets: [

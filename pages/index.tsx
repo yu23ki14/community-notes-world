@@ -10,6 +10,7 @@ import getAllRatings from "../utils/getAllRatings";
 import NoteActivity from "../components/noteActivity";
 import { styled } from "../utils/styles";
 import RatingActivity from "../components/ratingActivity";
+import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
 
 type authorArray = author[];
 const StyledMain = styled("main", {
@@ -23,24 +24,28 @@ export default function Home({
   topAuthors,
   topAuthorsLastMonth,
   topAuthorsLastWeek,
+  allNotesTimeSeries,
+  helpfulNotesTimeSeries,
+  notHelpfulNotesTimeSeries,
+  needsMoreRatingsNotesTimeSeries,
   helpfulNotes,
-  notHelpfulNotes,
-  needsMoreRatingsNotes,
-  allNotes,
-  helpfulRatings,
-  notHelpfulRatings,
-  somewhatHelpfulRatings,
+  helpfulRatingsTimeSeries,
+  notHelpfulRatingsTimeSeries,
+  somewhatHelpfulRatingsTimeSeries,
 }: {
   topAuthors: authorArray;
   topAuthorsLastMonth: authorArray;
   topAuthorsLastWeek: authorArray;
-  allNotes: notes;
+  allNotesTimeSeries: any;
   helpfulNotes: notes;
   notHelpfulNotes: notes;
   needsMoreRatingsNotes: notes;
-  helpfulRatings: rating[];
-  notHelpfulRatings: rating[];
-  somewhatHelpfulRatings: rating[];
+  helpfulNotesTimeSeries: any;
+  notHelpfulNotesTimeSeries: any;
+  needsMoreRatingsNotesTimeSeries: any;
+  helpfulRatingsTimeSeries: any;
+  notHelpfulRatingsTimeSeries: any;
+  somewhatHelpfulRatingsTimeSeries: any;
 }) {
   return (
     <div className={styles.container}>
@@ -57,15 +62,15 @@ export default function Home({
           topAuthorsLastWeek={topAuthorsLastWeek}
         />
         <NoteActivity
-          allNotes={allNotes}
-          allHelpfulNotes={helpfulNotes}
-          allNotHelpfulNotes={notHelpfulNotes}
-          allNeedsMoreRatingsNotes={needsMoreRatingsNotes}
+          allNotesTimeSeries={allNotesTimeSeries}
+          helpfulNotesTimeSeries={helpfulNotesTimeSeries}
+          notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
+          needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
         />
         <RatingActivity
-          helpfulRatings={helpfulRatings}
-          notHelpfulRatings={notHelpfulRatings}
-          somewhatHelpfulRatings={somewhatHelpfulRatings}
+          helpfulRatingsTimeSeries={helpfulRatingsTimeSeries}
+          notHelpfulRatingsTimeSeries={notHelpfulRatingsTimeSeries}
+          somewhatHelpfulRatingsTimeSeries={somewhatHelpfulRatingsTimeSeries}
         />
       </StyledMain>
       <Footer />
@@ -77,21 +82,32 @@ export async function getStaticProps() {
     await getAllNotes();
   let { helpfulRatings, notHelpfulRatings, somewhatHelpfulRatings } =
     await getAllRatings();
+  const helpfulNotesTimeSeries = getMonthlyTimeSeries(helpfulNotes);
+  const notHelpfulNotesTimeSeries = getMonthlyTimeSeries(notHelpfulNotes);
+  const allNotesTimeSeries = getMonthlyTimeSeries(allNotes);
+  const needsMoreRatingsNotesTimeSeries = getMonthlyTimeSeries(
+    needsMoreRatingsNotes
+  );
+  const helpfulRatingsTimeSeries = getMonthlyTimeSeries(helpfulRatings);
+  const notHelpfulRatingsTimeSeries = getMonthlyTimeSeries(notHelpfulRatings);
+  const somewhatHelpfulRatingsTimeSeries = getMonthlyTimeSeries(
+    somewhatHelpfulRatings
+  );
   let topAuthors = await getTopAuthors();
   let topAuthorsLastMonth = await getTopAuthors("last month");
   let topAuthorsLastWeek = await getTopAuthors("last week");
   return {
     props: {
-      allNotes,
-      helpfulNotes,
-      notHelpfulNotes,
-      needsMoreRatingsNotes,
+      allNotesTimeSeries,
+      helpfulNotesTimeSeries,
+      notHelpfulNotesTimeSeries,
+      needsMoreRatingsNotesTimeSeries,
       topAuthors,
       topAuthorsLastMonth,
       topAuthorsLastWeek,
-      helpfulRatings,
-      notHelpfulRatings,
-      somewhatHelpfulRatings,
+      helpfulRatingsTimeSeries,
+      notHelpfulRatingsTimeSeries,
+      somewhatHelpfulRatingsTimeSeries,
     },
   };
 }
