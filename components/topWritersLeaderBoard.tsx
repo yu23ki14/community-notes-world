@@ -1,6 +1,6 @@
 import { styled } from "../utils/styles";
 import LeaderboardRow from "../components/leaderboardRow";
-import { author, note } from "../utils/types";
+import { author } from "../utils/types";
 import Container from "./container";
 import ContainerHeader from "./containerHeader";
 import { TabContent, TabList, TabTrigger, TabRoot } from "./tabs";
@@ -15,14 +15,12 @@ type props = {
   topAuthors: author[];
   topAuthorsLastMonth: author[];
   topAuthorsLastWeek: author[];
-  allHelpfulNotes: note[];
 };
 
 const TopWritersLeaderBoard = ({
   topAuthors,
   topAuthorsLastMonth,
   topAuthorsLastWeek,
-  allHelpfulNotes,
 }: props) => {
   return (
     <Container>

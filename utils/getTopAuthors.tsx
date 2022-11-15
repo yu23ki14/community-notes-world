@@ -15,7 +15,12 @@ export default async function getTopAuthors(range?: string): Promise<author[]> {
       return currentTime - noteDate < 604800000;
     });
   }
-  const authors: author[] = [];
+  type leanAuthor = {
+    participantId: string;
+    numberOfHelpfulNotes: number;
+    noteExample: string;
+  };
+  const authors: leanAuthor[] = [];
 
   helpfulNotes.forEach((note: note) => {
     let authorIndex = authors.findIndex((author) => {
@@ -25,23 +30,10 @@ export default async function getTopAuthors(range?: string): Promise<author[]> {
       authors.push({
         participantId: note.participantId,
         numberOfHelpfulNotes: 1,
-        notes: [
-          {
-            noteId: note.noteId,
-            createdAtMillis: note.createdAtMillis,
-            participantId: note.participantId,
-            currentStatus: note.currentStatus,
-          },
-        ],
+        noteExample: note.noteId,
       });
     } else {
       authors[authorIndex].numberOfHelpfulNotes++;
-      authors[authorIndex].notes.push({
-        noteId: note.noteId,
-        createdAtMillis: note.createdAtMillis,
-        participantId: note.participantId,
-        currentStatus: note.currentStatus,
-      });
     }
   });
 
