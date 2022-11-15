@@ -39,8 +39,6 @@ export default async function getAllRatings() {
     (item: rating) => item.helpfulnessLevel === "SOMEWHAT_HELPFUL"
   );
 
-  console.log(allRatings[0]);
-
   const ratings = {
     helpfulRatings: helpfulRatings,
     notHelpfulRatings: notHelpfulRatings,
