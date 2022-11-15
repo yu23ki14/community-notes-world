@@ -15,6 +15,13 @@ export default async function getAllHelpfulNotes() {
     columns: true,
     skip_empty_lines: true,
     delimiter: "\t",
+  }).map((note: note) => {
+    return {
+      currentStatus: note.currentStatus,
+      createdAtMillis: note.createdAtMillis,
+      participantId: note.participantId,
+      noteId: note.noteId,
+    };
   });
 
   const helpfulNotes = allNotes.filter(

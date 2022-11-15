@@ -1,5 +1,5 @@
 import { Line } from "react-chartjs-2";
-import { note } from "../utils/types";
+import { rating } from "../utils/types";
 import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
 import Container from "./container";
 import ContainerHeader from "./containerHeader";
@@ -23,10 +23,9 @@ const StyledTabContent = styled(TabContent, {
   },
 });
 type props = {
-  allNeedsMoreRatingsNotes: note[];
-  allHelpfulNotes: note[];
-  allNotHelpfulNotes: note[];
-  allNotes: note[];
+  helpfulRatings: rating[];
+  notHelpfulRatings: rating[];
+  somewhatHelpfulRatings: rating[];
 };
 
 ChartJS.register(
@@ -51,72 +50,84 @@ const options = {
   },
 };
 
-const NoteActivity = ({
-  allHelpfulNotes,
-  allNotes,
-  allNotHelpfulNotes,
-  allNeedsMoreRatingsNotes,
+const RatingActivity = ({
+  helpfulRatings,
+  notHelpfulRatings,
+  somewhatHelpfulRatings,
 }: props) => {
-  const helpfulNotesTimeSeries = getMonthlyTimeSeries(allHelpfulNotes);
-  const notHelpfulNotesTimeSeries = getMonthlyTimeSeries(allNotHelpfulNotes);
-  const needsMoreRatingsTimeSeries = getMonthlyTimeSeries(
-    allNeedsMoreRatingsNotes
+  const helpfulRatingsTimeSeries = getMonthlyTimeSeries(helpfulRatings);
+  const notHelpfulRatingsTimeSeries = getMonthlyTimeSeries(notHelpfulRatings);
+  const somewhatHelpfulRatingsTimeSeries = getMonthlyTimeSeries(
+    somewhatHelpfulRatings
   );
-  const allTimeSeries = getMonthlyTimeSeries(allNotes);
   const helpfulData = {
-    labels: Object.keys(helpfulNotesTimeSeries),
+    labels: Object.keys(helpfulRatingsTimeSeries),
     datasets: [
       {
-        label: "Helpful Notes",
+        label: "Helpful Ratings",
         borderColor: "green",
-        data: helpfulNotesTimeSeries,
+        data: helpfulRatingsTimeSeries,
       },
     ],
   };
   const notHelpfulData = {
-    labels: Object.keys(notHelpfulNotesTimeSeries),
+    labels: Object.keys(notHelpfulRatingsTimeSeries),
     datasets: [
       {
         label: "Not Helpful Notes",
         borderColor: "red",
-        data: notHelpfulNotesTimeSeries,
+        data: notHelpfulRatingsTimeSeries,
       },
     ],
   };
-  const allNotesData = {
-    labels: Object.keys(allTimeSeries),
+  const somewhatHelpfulData = {
+    labels: Object.keys(somewhatHelpfulRatingsTimeSeries),
+    datasets: [
+      {
+        label: "Not Helpful Notes",
+        borderColor: "gray",
+        data: somewhatHelpfulRatingsTimeSeries,
+      },
+    ],
+  };
+  const allData = {
+    labels: Object.keys(helpfulRatingsTimeSeries),
     datasets: [
       {
         label: "Helpful Notes",
         borderColor: "green",
-        data: helpfulNotesTimeSeries,
+        data: helpfulRatingsTimeSeries,
       },
       {
         label: "Not Helpful Notes",
         borderColor: "red",
-        data: notHelpfulNotesTimeSeries,
+        data: notHelpfulRatingsTimeSeries,
       },
       {
         label: "Needs More Ratings Notes",
         borderColor: "gray",
-        data: needsMoreRatingsTimeSeries,
+        data: somewhatHelpfulRatingsTimeSeries,
       },
     ],
   };
   return (
     <Container>
-      <ContainerHeader text="Note activity" />
+      <ContainerHeader text="Rating activity" />
       <TabRoot defaultValue="all" orientation="horizontal">
         <TabList aria-label="leaderboard">
-          <TabTrigger value="all">All notes</TabTrigger>
-          <TabTrigger value="helpful">Helpful </TabTrigger>
+          <TabTrigger value="all">All</TabTrigger>
+          <TabTrigger value="helpful">Helpful</TabTrigger>
+          <TabTrigger value="somewhat">Somewhat Helpful </TabTrigger>
           <TabTrigger value="notHelpful">Not Helpful</TabTrigger>
         </TabList>
         <StyledTabContent value="all">
-          <Line options={options} data={allNotesData} />
+          <Line options={options} data={allData} />
         </StyledTabContent>
         <StyledTabContent value="helpful">
           <Line options={options} data={helpfulData} />
+        </StyledTabContent>
+        <StyledTabContent value="somewhat">
+          <Line options={options} data={somewhatHelpfulData} />
         </StyledTabContent>
         <StyledTabContent value="notHelpful">
           <Line options={options} data={notHelpfulData} />
@@ -126,4 +137,4 @@ const NoteActivity = ({
   );
 };
 
-export default NoteActivity;
+export default RatingActivity;

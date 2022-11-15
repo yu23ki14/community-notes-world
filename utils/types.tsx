@@ -5,6 +5,14 @@ type note = {
   createdAtMillis: number;
 };
 
+type rating = {
+  helpfulnessLevel: string;
+  createdAtMillis: number;
+  noteId: string;
+  helpful: number;
+  notHelpful: number;
+};
+
 type author = {
   participantId: string;
   numberOfHelpfulNotes: number;
@@ -13,4 +21,4 @@ type author = {
 
 type notes = Array<note>;
 
-export type { note, author, notes };
+export type { note, author, notes, rating };
