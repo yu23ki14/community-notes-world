@@ -5,3 +5,5 @@ export const currentMonthFormatted =
 export const currentDay = new Date().getDate();
 export const currentDayFormatted =
   currentDay < 10 ? "0" + currentDay : currentDay;
+
+// TODO: #21 Generate date from last data file downloaded. Current date in footer is wrong, reclecting current date of the viewer, not the deploy

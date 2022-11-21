@@ -1,8 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Community Notes Dashboard
+
+A dashboard to display Twitter's [Community Notes](https://twitter.github.io/communitynotes) program data.
+
+Twitter [publishes data](https://www.twitter.com/i/communitynotes/download-data/) about program's notes, ratings, and (anonymized) users daily, so people have free access to analyze it, identify problems, and spot opportunities to make Community Notes better.
+
+This site is built with Next.js and deployed to Vercel. It currently only uses static page rendering, but future features could require implementing server-side rendering.
+
+## Stack
+
+- Next.js
+- Typescript
+- Vercel
+- Radix UI
+
+## How it works
+
+1. Every day, a Github Action runs
+2. It calls Vercel's Deploy hook, triggering a new build
+3. During the build, we download Twitter's latest data files and build static pages
+4. Site is deployed, and static pages reflect new data
+
+## Contributing
+
+We welcome contributions with new dashboard modules, bug fixes, and code improvements. See issues for suggestions.
 
 ## Getting Started
 
-First, run the development server:
+Clone this repository, and make sure you have Node installed.
+To run the development server and preview the site locally:
 
 ```bash
 npm run dev
@@ -10,15 +35,7 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
+## Learn More about Next.js
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -27,8 +44,8 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Disclaimer
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This dashboard is open-source and not officially maintained by Twitter Inc. All intellectual proerty (Twitter and Community Notes name, brand, etc) are property of Twitter Inc.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Your use of the datasets is governed by the Twitter Developer Agreement and Policy. By downloading using the data, you agree to the [Twitter Developer Agreement and Policy](https://developer.twitter.com/en/developer-terms).
