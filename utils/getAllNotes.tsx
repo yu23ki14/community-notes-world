@@ -45,3 +45,5 @@ export default async function getAllHelpfulNotes() {
 
   return notes;
 }
+
+//TODO: #22 Rename this file and function to getAllNotesStatus

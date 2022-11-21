@@ -18,7 +18,7 @@ export default async function getTopAuthors(range?: string): Promise<author[]> {
   type leanAuthor = {
     participantId: string;
     numberOfHelpfulNotes: number;
-    noteExample: string;
+    noteExampleId: string;
   };
   const authors: leanAuthor[] = [];
 
@@ -30,7 +30,7 @@ export default async function getTopAuthors(range?: string): Promise<author[]> {
       authors.push({
         participantId: note.participantId,
         numberOfHelpfulNotes: 1,
-        noteExample: note.noteId,
+        noteExampleId: note.noteId,
       });
     } else {
       authors[authorIndex].numberOfHelpfulNotes++;

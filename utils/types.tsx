@@ -16,7 +16,8 @@ type rating = {
 type author = {
   participantId: string;
   numberOfHelpfulNotes: number;
-  notes: Array<note>;
+  notes?: Array<note>;
+  noteExampleId?: string;
 };
 
 type notes = Array<note>;

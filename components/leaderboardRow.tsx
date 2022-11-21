@@ -58,7 +58,7 @@ const leaderBoardRow = ({ author, index }: props) => {
         <a
           target="_blank"
           rel="noreferrer"
-          href={`https://twitter.com/i/birdwatch/n/${author.noteExample}`}
+          href={`https://twitter.com/i/birdwatch/n/${author.noteExampleId}`}
         >
           Top writer nº
           {index + 1}

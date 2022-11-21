@@ -56,7 +56,6 @@ export default function Home({
       <Header />
       <StyledMain>
         <TopWritersLeaderBoard
-          allHelpfulNotes={helpfulNotes}
           topAuthors={topAuthors}
           topAuthorsLastMonth={topAuthorsLastMonth}
           topAuthorsLastWeek={topAuthorsLastWeek}
