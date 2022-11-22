@@ -6,23 +6,26 @@ Twitter [publishes data](https://www.twitter.com/i/communitynotes/download-data/
 
 This site is built with Next.js and deployed to Vercel. It currently only uses static page rendering, but future features could require implementing server-side rendering.
 
+See the site live here: [communitynotes.world](https://www.communitynotes.world)
+
 ## Stack
 
 - Next.js
 - Typescript
-- Vercel
 - Radix UI
+- Vercel
 
 ## How it works
 
-1. Every day, a Github Action runs
-2. It calls Vercel's Deploy hook, triggering a new build
-3. During the build, we download Twitter's latest data files and build static pages
-4. Site is deployed, and static pages reflect new data
+1. Every day, a Github Action triggers a new build in Vercel
+3. During the build, we download Twitter's latest data files and build the static dashboard
+4. Site is deployed, reflecting new data
+
+Twitter's data is published daily and has a built-in 48h delay.
 
 ## Contributing
 
-We welcome contributions with new dashboard modules, bug fixes, and code improvements. See issues for suggestions.
+We welcome contributions with new dashboard tiles, bug fixes, and code improvements. See issues for suggestions.
 
 ## Getting Started
 
