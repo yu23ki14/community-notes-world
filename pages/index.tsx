@@ -32,6 +32,7 @@ export default function Home({
   helpfulRatingsTimeSeries,
   notHelpfulRatingsTimeSeries,
   somewhatHelpfulRatingsTimeSeries,
+  lastUpdated,
 }: {
   topAuthors: authorArray;
   topAuthorsLastMonth: authorArray;
@@ -46,6 +47,7 @@ export default function Home({
   helpfulRatingsTimeSeries: any;
   notHelpfulRatingsTimeSeries: any;
   somewhatHelpfulRatingsTimeSeries: any;
+  lastUpdated: string;
 }) {
   return (
     <div className={styles.container}>
@@ -72,13 +74,18 @@ export default function Home({
           somewhatHelpfulRatingsTimeSeries={somewhatHelpfulRatingsTimeSeries}
         />
       </StyledMain>
-      <Footer />
+      <Footer lastUpdated={lastUpdated} />
     </div>
   );
 }
 export async function getStaticProps() {
-  let { allNotes, helpfulNotes, notHelpfulNotes, needsMoreRatingsNotes } =
-    await getAllNotes();
+  let {
+    allNotes,
+    helpfulNotes,
+    notHelpfulNotes,
+    needsMoreRatingsNotes,
+    lastUpdated,
+  } = await getAllNotes();
   let { helpfulRatings, notHelpfulRatings, somewhatHelpfulRatings } =
     await getAllRatings();
   const helpfulNotesTimeSeries = getMonthlyTimeSeries(helpfulNotes);
@@ -107,6 +114,7 @@ export async function getStaticProps() {
       helpfulRatingsTimeSeries,
       notHelpfulRatingsTimeSeries,
       somewhatHelpfulRatingsTimeSeries,
+      lastUpdated,
     },
   };
 }

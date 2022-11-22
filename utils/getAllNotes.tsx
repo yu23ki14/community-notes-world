@@ -37,6 +37,7 @@ export default async function getAllHelpfulNotes() {
   );
 
   const notes = {
+    lastUpdated: `${currentYear}-${currentMonthFormatted}-${currentDayFormatted}`,
     allNotes: allNotes,
     helpfulNotes: helpfulNotes,
     notHelpfulNotes: notHelpfulNotes,
