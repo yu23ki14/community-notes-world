@@ -5,7 +5,6 @@ import {
   currentMonthFormatted,
   currentDayFormatted,
 } from "./dates";
-import { stringify } from "querystring";
 export default async function getAllRatings() {
   const ratingsUrl = `https://ton.twimg.com/birdwatch-public-data/${currentYear}/${currentMonthFormatted}/${currentDayFormatted}/noteRatings/ratings-00000.tsv`;
 

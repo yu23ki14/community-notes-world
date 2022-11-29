@@ -11,6 +11,7 @@ import NoteActivity from "../components/noteActivity";
 import { styled } from "../utils/styles";
 import RatingActivity from "../components/ratingActivity";
 import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
+import getMostRecentRatingTimestamp from "../utils/getMostRecentRatingTimestamp";
 
 type authorArray = author[];
 const StyledMain = styled("main", {
@@ -79,13 +80,8 @@ export default function Home({
   );
 }
 export async function getStaticProps() {
-  let {
-    allNotes,
-    helpfulNotes,
-    notHelpfulNotes,
-    needsMoreRatingsNotes,
-    lastUpdated,
-  } = await getAllNotes();
+  let { allNotes, helpfulNotes, notHelpfulNotes, needsMoreRatingsNotes } =
+    await getAllNotes();
   let { helpfulRatings, notHelpfulRatings, somewhatHelpfulRatings } =
     await getAllRatings();
   const helpfulNotesTimeSeries = getMonthlyTimeSeries(helpfulNotes);
@@ -102,6 +98,8 @@ export async function getStaticProps() {
   let topAuthors = await getTopAuthors();
   let topAuthorsLastMonth = await getTopAuthors("last month");
   let topAuthorsLastWeek = await getTopAuthors("last week");
+  let lastUpdated = getMostRecentRatingTimestamp(helpfulRatings);
+
   return {
     props: {
       allNotesTimeSeries,

@@ -59,7 +59,9 @@ const Footer = ({ lastUpdated }: props) => {
           </StyledLink>
         </p>
       </FooterItemWrapper>
-      <FooterItemWrapper>Last updated {lastUpdated}</FooterItemWrapper>
+      <FooterItemWrapper>
+        Includes contributions up to {lastUpdated}
+      </FooterItemWrapper>
     </StyledFooter>
   );
 };
