@@ -1,6 +1,6 @@
 type note = {
   noteId: string;
-  participantId: string;
+  noteAuthorParticipantId: string;
   currentStatus: string;
   createdAtMillis: number;
 };

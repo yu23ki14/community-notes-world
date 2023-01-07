@@ -5,6 +5,7 @@ import {
   currentMonthFormatted,
   currentDayFormatted,
 } from "./dates";
+
 export default async function getAllHelpfulNotes() {
   const noteStatusHistoryUrl = `https://ton.twimg.com/birdwatch-public-data/${currentYear}/${currentMonthFormatted}/${currentDayFormatted}/noteStatusHistory/noteStatusHistory-00000.tsv`;
 
@@ -19,7 +20,7 @@ export default async function getAllHelpfulNotes() {
     return {
       currentStatus: note.currentStatus,
       createdAtMillis: note.createdAtMillis,
-      participantId: note.participantId,
+      noteAuthorParticipantId: note.noteAuthorParticipantId,
       noteId: note.noteId,
     };
   });

@@ -24,11 +24,11 @@ export default async function getTopAuthors(range?: string): Promise<author[]> {
 
   helpfulNotes.forEach((note: note) => {
     let authorIndex = authors.findIndex((author) => {
-      return author.participantId === note.participantId;
+      return author.participantId === note.noteAuthorParticipantId;
     });
     if (authorIndex === -1) {
       authors.push({
-        participantId: note.participantId,
+        participantId: note.noteAuthorParticipantId,
         numberOfHelpfulNotes: 1,
         noteExampleId: note.noteId,
       });
