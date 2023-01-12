@@ -1,6 +1,5 @@
 import { Line } from "react-chartjs-2";
-import { rating } from "../utils/types";
-import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
+import { ratingTimeSeries } from "../utils/types";
 import Container from "./container";
 import ContainerHeader from "./containerHeader";
 import { TabContent, TabList, TabTrigger, TabRoot } from "./tabs";
@@ -25,9 +24,9 @@ const StyledTabContent = styled(TabContent, {
 });
 
 type props = {
-  helpfulRatingsTimeSeries: any;
-  notHelpfulRatingsTimeSeries: any;
-  somewhatHelpfulRatingsTimeSeries: any;
+  helpfulRatingsTimeSeries: ratingTimeSeries;
+  notHelpfulRatingsTimeSeries: ratingTimeSeries;
+  somewhatHelpfulRatingsTimeSeries: ratingTimeSeries;
 };
 
 ChartJS.register(

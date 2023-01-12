@@ -20,6 +20,9 @@ type author = {
   noteExampleId?: string;
 };
 
+type noteTimeSeries = { [key: string]: note[] };
+type ratingTimeSeries = { [key: string]: rating[] };
+
 type notes = Array<note>;
 
-export type { note, author, notes, rating };
+export type { note, author, notes, rating, noteTimeSeries, ratingTimeSeries };

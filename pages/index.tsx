@@ -3,7 +3,13 @@ import Footer from "../components/footer";
 import Header from "../components/header";
 import TopWritersLeaderBoard from "../components/topWritersLeaderBoard";
 import styles from "../styles/Home.module.css";
-import { author, notes, rating } from "../utils/types";
+import {
+  author,
+  notes,
+  rating,
+  noteTimeSeries,
+  ratingTimeSeries,
+} from "../utils/types";
 import getTopAuthors from "../utils/getTopAuthors";
 import getAllNotes from "../utils/getAllNotes";
 import getAllRatings from "../utils/getAllRatings";
@@ -41,17 +47,17 @@ export default function Home({
   topAuthors: authorArray;
   topAuthorsLastMonth: authorArray;
   topAuthorsLastWeek: authorArray;
-  activeAuthors: any;
-  allNotesTimeSeries: any;
+  activeAuthors: { [key: string]: number };
+  allNotesTimeSeries: noteTimeSeries;
   helpfulNotes: notes;
   notHelpfulNotes: notes;
   needsMoreRatingsNotes: notes;
-  helpfulNotesTimeSeries: any;
-  notHelpfulNotesTimeSeries: any;
-  needsMoreRatingsNotesTimeSeries: any;
-  helpfulRatingsTimeSeries: any;
-  notHelpfulRatingsTimeSeries: any;
-  somewhatHelpfulRatingsTimeSeries: any;
+  helpfulNotesTimeSeries: noteTimeSeries;
+  notHelpfulNotesTimeSeries: noteTimeSeries;
+  needsMoreRatingsNotesTimeSeries: noteTimeSeries;
+  helpfulRatingsTimeSeries: ratingTimeSeries;
+  notHelpfulRatingsTimeSeries: ratingTimeSeries;
+  somewhatHelpfulRatingsTimeSeries: ratingTimeSeries;
   lastUpdated: string;
 }) {
   return (

@@ -2,8 +2,8 @@ import getAllNotes from "./getAllNotes";
 import { author, note } from "../utils/types";
 
 function getMonthlyActiveAuthors(items: note[]) {
-  const o: any = {};
-  const finalObject: { [key: string]: number } = {};
+  const o: { [key: string]: { notes: note[]; count: number } } = {};
+  const finalObject: { [key: string]: any } = {};
   items.map((item: note) => {
     //create keys for all dates for which there are notes
     let noteDate = new Date(+item.createdAtMillis);
@@ -42,9 +42,7 @@ function getMonthlyActiveAuthors(items: note[]) {
   return timeSeries;
 }
 
-export default async function getActiveAuthors(
-  range?: string
-): Promise<author[]> {
+export default async function getActiveAuthors(range?: string): Promise<{}> {
   let { allNotes } = await getAllNotes();
   const activeAuthors = getMonthlyActiveAuthors(allNotes);
   return activeAuthors;

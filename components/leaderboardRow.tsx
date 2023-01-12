@@ -4,14 +4,16 @@ import Trophy from "../public/icons/trophy.svg";
 const Row = styled("div", {
   display: "flex",
   width: "100%",
-  padding: "1rem",
+  padding: "1.25rem 2rem",
   borderTop: "1px solid $slate6",
   justifyContent: "space-between",
   fontSize: "small",
   color: "$slate11",
+  alignItems: "center",
 });
 const AuthorWrapper = styled("div", {
   display: "flex",
+  alignItems: "center",
 });
 const StyledTrophy = styled(Trophy, {
   variants: {

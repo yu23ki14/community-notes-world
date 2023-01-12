@@ -1,7 +1,7 @@
 import { Line } from "react-chartjs-2";
 import Container from "./container";
 import ContainerHeader from "./containerHeader";
-import { TabContent, TabList, TabTrigger, TabRoot } from "./tabs";
+import Number from "./number";
 import { styled } from "../utils/styles";
 import {
   Chart as ChartJS,
@@ -13,13 +13,17 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+
 const StyledContent = styled("div", {
-  // borderTop: "1px solid $slate6",
-  padding: "2rem",
+  padding: "1rem 2rem",
+});
+
+const NumberRow = styled("div", {
+  display: "flex",
 });
 
 type props = {
-  activeAuthorsTimeSeries: any;
+  activeAuthorsTimeSeries: { [key: string]: number };
 };
 
 ChartJS.register(
@@ -55,10 +59,26 @@ const ActiveAuthors = ({ activeAuthorsTimeSeries }: props) => {
       },
     ],
   };
+  const currentMonthCount =
+    activeAuthorsTimeSeries[
+      Object.keys(activeAuthorsTimeSeries)[
+        Object.keys(activeAuthorsTimeSeries).length - 1
+      ]
+    ];
+  const previousMonthCount =
+    activeAuthorsTimeSeries[
+      Object.keys(activeAuthorsTimeSeries)[
+        Object.keys(activeAuthorsTimeSeries).length - 2
+      ]
+    ];
   return (
     <Container>
       <ContainerHeader text="Active note writers monthly" />
       <StyledContent>
+        <NumberRow>
+          <Number number={currentMonthCount} label={"this month"} />
+          <Number number={previousMonthCount} label={"previous month"} />
+        </NumberRow>
         <Line options={options} data={activeAuthorsData} />
       </StyledContent>
     </Container>
