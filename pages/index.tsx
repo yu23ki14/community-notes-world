@@ -12,6 +12,8 @@ import { styled } from "../utils/styles";
 import RatingActivity from "../components/ratingActivity";
 import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
 import getMostRecentRatingTimestamp from "../utils/getMostRecentRatingTimestamp";
+import ActiveAuthors from "../components/activeAuthors";
+import getActiveAuthors from "../utils/getActiveAuthors";
 
 type authorArray = author[];
 const StyledMain = styled("main", {
@@ -30,6 +32,7 @@ export default function Home({
   notHelpfulNotesTimeSeries,
   needsMoreRatingsNotesTimeSeries,
   helpfulNotes,
+  activeAuthors,
   helpfulRatingsTimeSeries,
   notHelpfulRatingsTimeSeries,
   somewhatHelpfulRatingsTimeSeries,
@@ -38,6 +41,7 @@ export default function Home({
   topAuthors: authorArray;
   topAuthorsLastMonth: authorArray;
   topAuthorsLastWeek: authorArray;
+  activeAuthors: any;
   allNotesTimeSeries: any;
   helpfulNotes: notes;
   notHelpfulNotes: notes;
@@ -58,6 +62,7 @@ export default function Home({
       </Head>
       <Header />
       <StyledMain>
+        <ActiveAuthors activeAuthorsTimeSeries={activeAuthors} />
         <TopWritersLeaderBoard
           topAuthors={topAuthors}
           topAuthorsLastMonth={topAuthorsLastMonth}
@@ -96,6 +101,7 @@ export async function getStaticProps() {
     somewhatHelpfulRatings
   );
   let topAuthors = await getTopAuthors();
+  let activeAuthors = await getActiveAuthors();
   let topAuthorsLastMonth = await getTopAuthors("last month");
   let topAuthorsLastWeek = await getTopAuthors("last week");
   let lastUpdated = getMostRecentRatingTimestamp(helpfulRatings);
@@ -107,6 +113,7 @@ export async function getStaticProps() {
       notHelpfulNotesTimeSeries,
       needsMoreRatingsNotesTimeSeries,
       topAuthors,
+      activeAuthors,
       topAuthorsLastMonth,
       topAuthorsLastWeek,
       helpfulRatingsTimeSeries,
