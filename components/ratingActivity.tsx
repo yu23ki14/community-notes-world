@@ -15,6 +15,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+
 const StyledTabContent = styled(TabContent, {
   borderTop: "1px solid $slate6",
   padding: "2rem",
