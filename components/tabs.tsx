@@ -9,7 +9,7 @@ export const TabContent = styled(Tabs.Content, {
 
 export const TabList = styled(Tabs.List, {
   display: "flex",
-  padding: "0 .75rem",
+  padding: "0 1.5rem",
 });
 
 export const TabTrigger = styled(Tabs.Trigger, {

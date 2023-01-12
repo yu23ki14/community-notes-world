@@ -1,6 +1,6 @@
 import { note, rating } from "./types";
 export default function getMonthlyTimeSeries(items: note[] | rating[]) {
-  const o: any = {};
+  const o: { [key: string]: number } = {};
   items.map((item: note | rating) => {
     let date = new Date(+item.createdAtMillis);
     var month = date.getMonth() + 1;

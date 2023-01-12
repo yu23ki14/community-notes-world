@@ -22,11 +22,14 @@ const StyledTabContent = styled(TabContent, {
     display: "none",
   },
 });
+
+type noteTimeSeries = { [key: string]: note[] };
+
 type props = {
-  helpfulNotesTimeSeries: any;
-  notHelpfulNotesTimeSeries: any;
-  needsMoreRatingsNotesTimeSeries: any;
-  allNotesTimeSeries: any;
+  helpfulNotesTimeSeries: noteTimeSeries;
+  notHelpfulNotesTimeSeries: noteTimeSeries;
+  needsMoreRatingsNotesTimeSeries: noteTimeSeries;
+  allNotesTimeSeries: noteTimeSeries;
 };
 
 ChartJS.register(
