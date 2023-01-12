@@ -19,7 +19,9 @@ import RatingActivity from "../components/ratingActivity";
 import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
 import getMostRecentRatingTimestamp from "../utils/getMostRecentRatingTimestamp";
 import ActiveAuthors from "../components/activeAuthors";
+import ActiveRaters from "../components/activeRaters";
 import getActiveAuthors from "../utils/getActiveAuthors";
+import getActiveRaters from "../utils/getActiveRaters";
 
 type authorArray = author[];
 const StyledMain = styled("main", {
@@ -39,6 +41,7 @@ export default function Home({
   needsMoreRatingsNotesTimeSeries,
   helpfulNotes,
   activeAuthors,
+  activeRaters,
   helpfulRatingsTimeSeries,
   notHelpfulRatingsTimeSeries,
   somewhatHelpfulRatingsTimeSeries,
@@ -48,6 +51,7 @@ export default function Home({
   topAuthorsLastMonth: authorArray;
   topAuthorsLastWeek: authorArray;
   activeAuthors: { [key: string]: number };
+  activeRaters: { [key: string]: number };
   allNotesTimeSeries: noteTimeSeries;
   helpfulNotes: notes;
   notHelpfulNotes: notes;
@@ -69,6 +73,7 @@ export default function Home({
       <Header />
       <StyledMain>
         <ActiveAuthors activeAuthorsTimeSeries={activeAuthors} />
+        <ActiveRaters activeRatersTimeSeries={activeRaters} />
         <TopWritersLeaderBoard
           topAuthors={topAuthors}
           topAuthorsLastMonth={topAuthorsLastMonth}
@@ -108,6 +113,7 @@ export async function getStaticProps() {
   );
   let topAuthors = await getTopAuthors();
   let activeAuthors = await getActiveAuthors();
+  let activeRaters = await getActiveRaters();
   let topAuthorsLastMonth = await getTopAuthors("last month");
   let topAuthorsLastWeek = await getTopAuthors("last week");
   let lastUpdated = getMostRecentRatingTimestamp(helpfulRatings);
@@ -120,6 +126,7 @@ export async function getStaticProps() {
       needsMoreRatingsNotesTimeSeries,
       topAuthors,
       activeAuthors,
+      activeRaters,
       topAuthorsLastMonth,
       topAuthorsLastWeek,
       helpfulRatingsTimeSeries,

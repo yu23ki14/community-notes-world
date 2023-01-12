@@ -38,7 +38,6 @@ function getMonthlyActiveAuthors(items: note[]) {
       obj[key] = finalObject[key];
       return obj;
     }, {});
-  console.log(finalObject);
   return timeSeries;
 }
 

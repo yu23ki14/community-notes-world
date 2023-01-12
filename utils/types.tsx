@@ -11,6 +11,7 @@ type rating = {
   noteId: string;
   helpful: string;
   notHelpful: string;
+  raterParticipantId: string;
 };
 
 type author = {

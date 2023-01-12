@@ -19,6 +19,7 @@ export default async function getAllRatings() {
     return {
       createdAtMillis: rating.createdAtMillis,
       helpfulnessLevel: rating.helpfulnessLevel,
+      raterParticipantId: rating.raterParticipantId,
       helpful: rating.helpful,
       notHelpful: rating.notHelpful,
     };
@@ -39,6 +40,7 @@ export default async function getAllRatings() {
   );
 
   const ratings = {
+    allRatings: allRatings,
     helpfulRatings: helpfulRatings,
     notHelpfulRatings: notHelpfulRatings,
     somewhatHelpfulRatings: somewhatHelpfulRatings,
