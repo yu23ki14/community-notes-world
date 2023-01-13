@@ -21,7 +21,7 @@ type author = {
   noteExampleId?: string;
 };
 
-type noteTimeSeries = { [key: string]: note[] };
+type noteTimeSeries = { [key: string]: number };
 type ratingTimeSeries = { [key: string]: rating[] };
 
 type notes = Array<note>;

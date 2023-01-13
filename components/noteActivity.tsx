@@ -23,7 +23,7 @@ const StyledTabContent = styled(TabContent, {
   },
 });
 
-type noteTimeSeries = { [key: string]: note[] };
+type noteTimeSeries = { [key: string]: number };
 
 type props = {
   helpfulNotesTimeSeries: noteTimeSeries;

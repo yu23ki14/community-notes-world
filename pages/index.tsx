@@ -1,29 +1,23 @@
-import Head from "next/head";
-import Footer from "../components/footer";
-import Header from "../components/header";
+import ActiveAuthors from "../components/activeAuthors";
+import ActiveRaters from "../components/activeRaters";
 import Layout from "../components/layout";
-import Nav from "../components/nav";
+import HelpfulNoteActivity from "../components/helpfulNoteActivity";
+import RatingActivity from "../components/ratingActivity";
 import TopWritersLeaderBoard from "../components/topWritersLeaderBoard";
-import styles from "../styles/Home.module.css";
+import getActiveAuthors from "../utils/getActiveAuthors";
+import getActiveRaters from "../utils/getActiveRaters";
+import getAllNotes from "../utils/getAllNotes";
+import getAllRatings from "../utils/getAllRatings";
+import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
+import getMostRecentRatingTimestamp from "../utils/getMostRecentRatingTimestamp";
+import getTopAuthors from "../utils/getTopAuthors";
+import { styled } from "../utils/styles";
 import {
   author,
   notes,
-  rating,
   noteTimeSeries,
   ratingTimeSeries,
 } from "../utils/types";
-import getTopAuthors from "../utils/getTopAuthors";
-import getAllNotes from "../utils/getAllNotes";
-import getAllRatings from "../utils/getAllRatings";
-import NoteActivity from "../components/noteActivity";
-import { styled } from "../utils/styles";
-import RatingActivity from "../components/ratingActivity";
-import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
-import getMostRecentRatingTimestamp from "../utils/getMostRecentRatingTimestamp";
-import ActiveAuthors from "../components/activeAuthors";
-import ActiveRaters from "../components/activeRaters";
-import getActiveAuthors from "../utils/getActiveAuthors";
-import getActiveRaters from "../utils/getActiveRaters";
 
 type authorArray = author[];
 const StyledMain = styled("main", {
@@ -68,6 +62,12 @@ export default function Home({
 }) {
   return (
     <Layout lastUpdated={lastUpdated}>
+      <HelpfulNoteActivity
+        allNotesTimeSeries={allNotesTimeSeries}
+        helpfulNotesTimeSeries={helpfulNotesTimeSeries}
+        notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
+        needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
+      />
       <ActiveAuthors activeAuthorsTimeSeries={activeAuthors} />
       <ActiveRaters activeRatersTimeSeries={activeRaters} />
       <TopWritersLeaderBoard
@@ -75,17 +75,11 @@ export default function Home({
         topAuthorsLastMonth={topAuthorsLastMonth}
         topAuthorsLastWeek={topAuthorsLastWeek}
       />
-      <NoteActivity
-        allNotesTimeSeries={allNotesTimeSeries}
-        helpfulNotesTimeSeries={helpfulNotesTimeSeries}
-        notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
-        needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
-      />
-      <RatingActivity
+      {/* <RatingActivity
         helpfulRatingsTimeSeries={helpfulRatingsTimeSeries}
         notHelpfulRatingsTimeSeries={notHelpfulRatingsTimeSeries}
         somewhatHelpfulRatingsTimeSeries={somewhatHelpfulRatingsTimeSeries}
-      />
+      /> */}
     </Layout>
   );
 }
