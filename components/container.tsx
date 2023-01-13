@@ -2,7 +2,6 @@ import { styled } from "../utils/styles";
 import React from "react";
 
 const StyledContainer = styled("div", {
-  maxWidth: "900px",
   display: "flex",
   flexDirection: "column",
   margin: "0 0 1rem 0",
