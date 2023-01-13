@@ -6,6 +6,8 @@ import {
   currentDayFormatted,
 } from "./dates";
 
+const dev = process.env.NODE_ENV === "development";
+
 export default async function getAllHelpfulNotes() {
   const noteStatusHistoryUrl = `https://ton.twimg.com/birdwatch-public-data/${currentYear}/${currentMonthFormatted}/${currentDayFormatted}/noteStatusHistory/noteStatusHistory-00000.tsv`;
 
@@ -16,6 +18,7 @@ export default async function getAllHelpfulNotes() {
     columns: true,
     skip_empty_lines: true,
     delimiter: "\t",
+    to: dev ? 5000 : undefined,
   }).map((note: note) => {
     return {
       currentStatus: note.currentStatus,

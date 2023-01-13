@@ -5,6 +5,9 @@ import {
   currentMonthFormatted,
   currentDayFormatted,
 } from "./dates";
+
+const dev = process.env.NODE_ENV === "development";
+
 export default async function getAllRatings() {
   const ratingsUrl = `https://ton.twimg.com/birdwatch-public-data/${currentYear}/${currentMonthFormatted}/${currentDayFormatted}/noteRatings/ratings-00000.tsv`;
 
@@ -15,6 +18,7 @@ export default async function getAllRatings() {
     columns: true,
     skip_empty_lines: true,
     delimiter: "\t",
+    to: dev ? 5000 : undefined,
   }).map((rating: rating) => {
     return {
       createdAtMillis: rating.createdAtMillis,
