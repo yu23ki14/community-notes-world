@@ -4,6 +4,7 @@ import { styled } from "../utils/styles";
 type props = {
   number: number;
   label: string;
+  size?: "primary" | "secondary" | undefined;
 };
 
 const StyledContent = styled("div", {
@@ -12,6 +13,15 @@ const StyledContent = styled("div", {
   marginTop: "0",
   fontWeight: "bolder",
   fontSize: "xx-large",
+  variants: {
+    size: {
+      primary: { color: "$slate12" },
+      secondary: { color: "$slate11" },
+    },
+  },
+  defaultVariants: {
+    size: "primary",
+  },
 });
 
 const StyledLabel = styled("div", {
@@ -20,9 +30,9 @@ const StyledLabel = styled("div", {
   fontSize: "small",
 });
 
-export default function Number({ number, label }: props) {
+export default function Number({ number, label, size }: props) {
   return (
-    <StyledContent>
+    <StyledContent size={size}>
       {number}
       <StyledLabel>{label}</StyledLabel>
     </StyledContent>

@@ -20,6 +20,7 @@ const StyledContent = styled("div", {
 
 const NumberRow = styled("div", {
   display: "flex",
+  alignItems: "end",
 });
 
 type props = {
@@ -77,7 +78,11 @@ const ActiveAuthors = ({ activeAuthorsTimeSeries }: props) => {
       <StyledContent>
         <NumberRow>
           <Number number={currentMonthCount} label={"this month"} />
-          <Number number={previousMonthCount} label={"previous month"} />
+          <Number
+            number={previousMonthCount}
+            label="previous month"
+            size="secondary"
+          />
         </NumberRow>
         <Line options={options} data={activeAuthorsData} />
       </StyledContent>
