@@ -5,12 +5,26 @@ import Footer from "../components/footer";
 import Header from "../components/header";
 import Nav from "../components/nav";
 import { styled } from "../utils/styles";
-const StyledMain = styled("main", {
+
+const StyledBackground = styled("div", {
   backgroundColor: "$slate3",
+  display: "flex",
+  width: "100%",
+});
+
+const StyledWrapper = styled("div", {
+  display: "flex",
+  maxWidth: "1280px",
+  width: "100%",
+  margin: "0 auto",
+  padding: "2rem",
+});
+
+const StyledMain = styled("main", {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  padding: "2rem",
+  width: "100%",
 });
 
 const Layout = ({
@@ -27,8 +41,12 @@ const Layout = ({
         <link rel="icon" href="/favicon/favicon.ico" />
       </Head>
       <Header />
-      <Nav></Nav>
-      <StyledMain>{children}</StyledMain>
+      <StyledBackground>
+        <StyledWrapper>
+          <Nav></Nav>
+          <StyledMain>{children}</StyledMain>
+        </StyledWrapper>
+      </StyledBackground>
       <Footer lastUpdated={lastUpdated} />
     </div>
   );
