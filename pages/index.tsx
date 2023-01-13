@@ -68,18 +68,13 @@ export default function Home({
         notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
         needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
       />
-      <ActiveAuthors activeAuthorsTimeSeries={activeAuthors} />
-      <ActiveRaters activeRatersTimeSeries={activeRaters} />
       <TopWritersLeaderBoard
         topAuthors={topAuthors}
         topAuthorsLastMonth={topAuthorsLastMonth}
         topAuthorsLastWeek={topAuthorsLastWeek}
       />
-      {/* <RatingActivity
-        helpfulRatingsTimeSeries={helpfulRatingsTimeSeries}
-        notHelpfulRatingsTimeSeries={notHelpfulRatingsTimeSeries}
-        somewhatHelpfulRatingsTimeSeries={somewhatHelpfulRatingsTimeSeries}
-      /> */}
+      {/* <ActiveAuthors activeAuthorsTimeSeries={activeAuthors} />
+      <ActiveRaters activeRatersTimeSeries={activeRaters} /> */}
     </Layout>
   );
 }

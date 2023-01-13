@@ -18,7 +18,7 @@ export default async function getAllHelpfulNotes() {
     columns: true,
     skip_empty_lines: true,
     delimiter: "\t",
-    to: dev ? 5000 : undefined,
+    to: dev ? 150000 : undefined,
   }).map((note: note) => {
     return {
       currentStatus: note.currentStatus,

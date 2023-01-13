@@ -18,7 +18,7 @@ export default async function getAllRatings() {
     columns: true,
     skip_empty_lines: true,
     delimiter: "\t",
-    to: dev ? 5000 : undefined,
+    to: dev ? 150000 : undefined,
   }).map((rating: rating) => {
     return {
       createdAtMillis: rating.createdAtMillis,

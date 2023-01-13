@@ -10,10 +10,8 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { styled } from "../utils/styles";
-import { note } from "../utils/types";
 import Container from "./container";
 import ContainerHeader from "./containerHeader";
-import { TabContent, TabList, TabRoot, TabTrigger } from "./tabs";
 import Number from "./number";
 const StyledContent = styled("div", {
   padding: "1rem 2rem",
