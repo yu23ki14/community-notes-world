@@ -1,38 +1,24 @@
-import Head from "next/head";
-import Footer from "../components/footer";
-import Header from "../components/header";
+import React from "react";
+import ActiveAuthors from "../components/activeAuthors";
 import Layout from "../components/layout";
-import Nav from "../components/nav";
+import NoteActivity from "../components/noteActivity";
 import TopWritersLeaderBoard from "../components/topWritersLeaderBoard";
-import styles from "../styles/Home.module.css";
+import getActiveAuthors from "../utils/getActiveAuthors";
+import getAllNotes from "../utils/getAllNotes";
+import getAllRatings from "../utils/getAllRatings";
+import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
+import getMostRecentRatingTimestamp from "../utils/getMostRecentRatingTimestamp";
+import getTopAuthors from "../utils/getTopAuthors";
+
 import {
   author,
   notes,
-  rating,
   noteTimeSeries,
   ratingTimeSeries,
 } from "../utils/types";
-import getTopAuthors from "../utils/getTopAuthors";
-import getAllNotes from "../utils/getAllNotes";
-import getAllRatings from "../utils/getAllRatings";
-import NoteActivity from "../components/noteActivity";
-import { styled } from "../utils/styles";
-import RatingActivity from "../components/ratingActivity";
-import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
-import getMostRecentRatingTimestamp from "../utils/getMostRecentRatingTimestamp";
-import ActiveAuthors from "../components/activeAuthors";
-import ActiveRaters from "../components/activeRaters";
-import getActiveAuthors from "../utils/getActiveAuthors";
-import getActiveRaters from "../utils/getActiveRaters";
 
 type authorArray = author[];
-const StyledMain = styled("main", {
-  backgroundColor: "$slate3",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  padding: "2rem",
-});
+
 export default function Home({
   topAuthors,
   topAuthorsLastMonth,
@@ -41,12 +27,7 @@ export default function Home({
   helpfulNotesTimeSeries,
   notHelpfulNotesTimeSeries,
   needsMoreRatingsNotesTimeSeries,
-  helpfulNotes,
   activeAuthors,
-  activeRaters,
-  helpfulRatingsTimeSeries,
-  notHelpfulRatingsTimeSeries,
-  somewhatHelpfulRatingsTimeSeries,
   lastUpdated,
 }: {
   topAuthors: authorArray;
@@ -69,7 +50,6 @@ export default function Home({
   return (
     <Layout lastUpdated={lastUpdated}>
       <ActiveAuthors activeAuthorsTimeSeries={activeAuthors} />
-      <ActiveRaters activeRatersTimeSeries={activeRaters} />
       <TopWritersLeaderBoard
         topAuthors={topAuthors}
         topAuthorsLastMonth={topAuthorsLastMonth}
@@ -80,11 +60,6 @@ export default function Home({
         helpfulNotesTimeSeries={helpfulNotesTimeSeries}
         notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
         needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
-      />
-      <RatingActivity
-        helpfulRatingsTimeSeries={helpfulRatingsTimeSeries}
-        notHelpfulRatingsTimeSeries={notHelpfulRatingsTimeSeries}
-        somewhatHelpfulRatingsTimeSeries={somewhatHelpfulRatingsTimeSeries}
       />
     </Layout>
   );
@@ -100,14 +75,8 @@ export async function getStaticProps() {
   const needsMoreRatingsNotesTimeSeries = getMonthlyTimeSeries(
     needsMoreRatingsNotes
   );
-  const helpfulRatingsTimeSeries = getMonthlyTimeSeries(helpfulRatings);
-  const notHelpfulRatingsTimeSeries = getMonthlyTimeSeries(notHelpfulRatings);
-  const somewhatHelpfulRatingsTimeSeries = getMonthlyTimeSeries(
-    somewhatHelpfulRatings
-  );
   let topAuthors = await getTopAuthors();
   let activeAuthors = await getActiveAuthors();
-  let activeRaters = await getActiveRaters();
   let topAuthorsLastMonth = await getTopAuthors("last month");
   let topAuthorsLastWeek = await getTopAuthors("last week");
   let lastUpdated = getMostRecentRatingTimestamp(helpfulRatings);
@@ -120,12 +89,8 @@ export async function getStaticProps() {
       needsMoreRatingsNotesTimeSeries,
       topAuthors,
       activeAuthors,
-      activeRaters,
       topAuthorsLastMonth,
       topAuthorsLastWeek,
-      helpfulRatingsTimeSeries,
-      notHelpfulRatingsTimeSeries,
-      somewhatHelpfulRatingsTimeSeries,
       lastUpdated,
     },
   };

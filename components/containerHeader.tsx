@@ -6,7 +6,7 @@ const ContainerHeader = ({ text }: props) => {
   const ModuleHeader = styled("h2", {
     width: "100%",
     textAlign: "left",
-    padding: "1.75rem 2rem 1rem",
+    padding: "1.75rem 2rem .75rem",
     marginBottom: "0",
     fontSize: "1rem",
     marginTop: "0",
