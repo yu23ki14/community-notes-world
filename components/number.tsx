@@ -2,7 +2,7 @@ import * as React from "react";
 import { styled } from "../utils/styles";
 
 type props = {
-  number: number;
+  number: number | string;
   label: string;
   size?: "primary" | "secondary" | undefined;
 };

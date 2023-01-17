@@ -3,7 +3,6 @@ import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import Footer from "../components/footer";
 import Header from "../components/header";
-import Nav from "../components/nav";
 import { styled } from "../utils/styles";
 
 const StyledBackground = styled("div", {
@@ -13,18 +12,13 @@ const StyledBackground = styled("div", {
 });
 
 const StyledWrapper = styled("div", {
-  display: "flex",
+  display: "grid",
+  gridTemplateColumns: "50% 50%",
+  gridGap: "1rem",
   maxWidth: "1280px",
   width: "100%",
   margin: "0 auto",
   padding: "2rem",
-});
-
-const StyledMain = styled("main", {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  width: "100%",
 });
 
 const Layout = ({
@@ -42,10 +36,7 @@ const Layout = ({
       </Head>
       <Header />
       <StyledBackground>
-        <StyledWrapper>
-          <Nav></Nav>
-          <StyledMain>{children}</StyledMain>
-        </StyledWrapper>
+        <StyledWrapper>{children}</StyledWrapper>
       </StyledBackground>
       <Footer lastUpdated={lastUpdated} />
     </div>

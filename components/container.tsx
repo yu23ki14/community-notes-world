@@ -4,7 +4,7 @@ import React from "react";
 const StyledContainer = styled("div", {
   display: "flex",
   flexDirection: "column",
-  margin: "0 0 1rem 0",
+  margin: "0",
   width: "100%",
   border: "1px solid $slate6",
   borderRadius: "13px",

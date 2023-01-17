@@ -12,6 +12,7 @@ import { Line } from "react-chartjs-2";
 import { styled } from "../utils/styles";
 import Container from "./container";
 import ContainerHeader from "./containerHeader";
+
 import Number from "./number";
 const StyledContent = styled("div", {
   padding: "1rem 2rem",
@@ -21,6 +22,7 @@ const NumberRow = styled("div", {
   alignItems: "end",
 });
 type noteTimeSeries = { [key: string]: number };
+
 type props = {
   helpfulNotesTimeSeries: noteTimeSeries;
   notHelpfulNotesTimeSeries: noteTimeSeries;
@@ -50,42 +52,54 @@ const options = {
   },
 };
 
-const HelpfulNoteActivity = ({ helpfulNotesTimeSeries }: props) => {
+const HelpfulNotePercentage = ({
+  notHelpfulNotesTimeSeries,
+  needsMoreRatingsNotesTimeSeries,
+  helpfulNotesTimeSeries,
+  allNotesTimeSeries,
+}: props) => {
+  const percentageTimeSeries: { [key: string]: string } = {};
+  Object.keys(allNotesTimeSeries).forEach((month) => {
+    percentageTimeSeries[month] = (
+      (helpfulNotesTimeSeries[month] /
+        (notHelpfulNotesTimeSeries[month] +
+          needsMoreRatingsNotesTimeSeries[month] +
+          helpfulNotesTimeSeries[month])) *
+      100
+    ).toFixed(1);
+  });
   const timestamps = Object.keys(helpfulNotesTimeSeries);
-
-  const helpfulData = {
-    labels: timestamps,
+  const allNotesData = {
+    labels: Object.keys(allNotesTimeSeries),
     datasets: [
       {
         label: "Helpful Notes",
         borderColor: "green",
-        data: helpfulNotesTimeSeries,
+        data: percentageTimeSeries,
       },
     ],
   };
+  const currentMonthCount: string =
+    percentageTimeSeries[timestamps[timestamps.length - 1]];
 
-  const currentMonthCount: number =
-    helpfulNotesTimeSeries[timestamps[timestamps.length - 1]];
-
-  const previousMonthCount: number =
-    helpfulNotesTimeSeries[timestamps[timestamps.length - 2]];
-
+  const previousMonthCount: string =
+    percentageTimeSeries[timestamps[timestamps.length - 2]];
   return (
     <Container>
-      <ContainerHeader text="Number of helpful notes written each month" />
+      <ContainerHeader text="Percentage of notes written that reach Helpful status" />
       <StyledContent>
         <NumberRow>
-          <Number number={currentMonthCount} label={"this month"} />
+          <Number number={currentMonthCount + "%"} label={"this month"} />
           <Number
-            number={previousMonthCount}
+            number={previousMonthCount + "%"}
             label="previous month"
             size="secondary"
           />
         </NumberRow>
-        <Line options={options} data={helpfulData} />
+        <Line options={options} data={allNotesData} />
       </StyledContent>
     </Container>
   );
 };
 
-export default HelpfulNoteActivity;
+export default HelpfulNotePercentage;

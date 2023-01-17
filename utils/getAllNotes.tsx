@@ -37,7 +37,9 @@ export default async function getAllHelpfulNotes() {
   );
 
   const needsMoreRatingsNotes = allNotes.filter(
-    (item: note) => item.currentStatus === "NEEDS_MORE_RATINGS"
+    (item: note) =>
+      item.currentStatus !== "CURRENTLY_RATED_HELPFUL" &&
+      item.currentStatus !== "CURRENTLY_RATED_NOT_HELPFUL"
   );
 
   const notes = {

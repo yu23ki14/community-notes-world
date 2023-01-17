@@ -1,11 +1,13 @@
 import ActiveAuthors from "../components/activeAuthors";
 import ActiveRaters from "../components/activeRaters";
-import Layout from "../components/layout";
 import HelpfulNoteActivity from "../components/helpfulNoteActivity";
-import RatingActivity from "../components/ratingActivity";
+import NoteActivity from "../components/noteActivity";
+import AllNotes from "../components/allNotes";
+import Layout from "../components/layout";
 import TopWritersLeaderBoard from "../components/topWritersLeaderBoard";
 import getActiveAuthors from "../utils/getActiveAuthors";
 import getActiveRaters from "../utils/getActiveRaters";
+import HelpfulNotePercentage from "../components/helpfulNotePercentage";
 import getAllNotes from "../utils/getAllNotes";
 import getAllRatings from "../utils/getAllRatings";
 import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
@@ -18,14 +20,12 @@ import {
   noteTimeSeries,
   ratingTimeSeries,
 } from "../utils/types";
+import RatingActivity from "../components/ratingActivity";
 
 type authorArray = author[];
-const StyledMain = styled("main", {
-  backgroundColor: "$slate3",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  padding: "2rem",
+const StyledTitle = styled("h1", {
+  gridColumn: "span 2",
+  margin: "1rem .25rem 2rem",
 });
 export default function Home({
   topAuthors,
@@ -62,19 +62,40 @@ export default function Home({
 }) {
   return (
     <Layout lastUpdated={lastUpdated}>
+      <StyledTitle>Notes</StyledTitle>
+      <AllNotes allNotesTimeSeries={allNotesTimeSeries} />
       <HelpfulNoteActivity
         allNotesTimeSeries={allNotesTimeSeries}
         helpfulNotesTimeSeries={helpfulNotesTimeSeries}
         notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
         needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
       />
+      <HelpfulNotePercentage
+        allNotesTimeSeries={allNotesTimeSeries}
+        helpfulNotesTimeSeries={helpfulNotesTimeSeries}
+        notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
+        needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
+      />
+      <NoteActivity
+        allNotesTimeSeries={allNotesTimeSeries}
+        helpfulNotesTimeSeries={helpfulNotesTimeSeries}
+        notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
+        needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
+      />
+      <StyledTitle>Writers</StyledTitle>
       <TopWritersLeaderBoard
         topAuthors={topAuthors}
         topAuthorsLastMonth={topAuthorsLastMonth}
         topAuthorsLastWeek={topAuthorsLastWeek}
       />
-      {/* <ActiveAuthors activeAuthorsTimeSeries={activeAuthors} />
-      <ActiveRaters activeRatersTimeSeries={activeRaters} /> */}
+      <ActiveAuthors activeAuthorsTimeSeries={activeAuthors} />
+      <StyledTitle>Ratings</StyledTitle>
+      <ActiveRaters activeRatersTimeSeries={activeRaters} />
+      <RatingActivity
+        helpfulRatingsTimeSeries={helpfulRatingsTimeSeries}
+        notHelpfulRatingsTimeSeries={notHelpfulRatingsTimeSeries}
+        somewhatHelpfulRatingsTimeSeries={somewhatHelpfulRatingsTimeSeries}
+      />
     </Layout>
   );
 }
