@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { chartConfig } from "../utils/chartStyle";
+import { chartConfig, chartColors } from "../utils/chartStyle";
 import { styled } from "../utils/styles";
 import Container from "./container";
 import ContainerHeader from "./containerHeader";
@@ -47,7 +47,7 @@ const HelpfulNoteActivity = ({ helpfulNotesTimeSeries }: props) => {
     datasets: [
       {
         label: "Helpful Notes",
-        borderColor: "green",
+        borderColor: chartColors.green,
         data: helpfulNotesTimeSeries,
       },
     ],
@@ -61,7 +61,7 @@ const HelpfulNoteActivity = ({ helpfulNotesTimeSeries }: props) => {
 
   return (
     <Container>
-      <ContainerHeader text="Number of helpful notes written each month" />
+      <ContainerHeader text="Notes that reached a status of Helpful" />
       <StyledContent>
         <NumberRow>
           <Number number={currentMonthCount} label={"this month"} />

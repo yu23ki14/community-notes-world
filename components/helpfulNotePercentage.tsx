@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { chartConfig } from "../utils/chartStyle";
+import { chartConfig, chartColors } from "../utils/chartStyle";
 import { styled } from "../utils/styles";
 import Container from "./container";
 import ContainerHeader from "./containerHeader";
@@ -63,7 +63,7 @@ const HelpfulNotePercentage = ({
     datasets: [
       {
         label: "Helpful Notes",
-        borderColor: "green",
+        borderColor: chartColors.green,
         data: percentageTimeSeries,
       },
     ],
@@ -75,7 +75,7 @@ const HelpfulNotePercentage = ({
     percentageTimeSeries[timestamps[timestamps.length - 2]];
   return (
     <Container>
-      <ContainerHeader text="Percentage of notes written that reach Helpful status" />
+      <ContainerHeader text="Percentage of notes that reached a status of Helpful" />
       <StyledContent>
         <NumberRow>
           <Number number={currentMonthCount + "%"} label={"this month"} />

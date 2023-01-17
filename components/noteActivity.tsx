@@ -15,7 +15,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { chartConfig } from "../utils/chartStyle";
+import { chartConfig, chartColors } from "../utils/chartStyle";
 const StyledTabContent = styled(TabContent, {
   borderTop: "1px solid $slate6",
   padding: "2rem",
@@ -54,7 +54,7 @@ const NoteActivity = ({
     datasets: [
       {
         label: "Helpful Notes",
-        borderColor: "green",
+        borderColor: chartColors.green,
         data: helpfulNotesTimeSeries,
       },
     ],
@@ -64,7 +64,7 @@ const NoteActivity = ({
     datasets: [
       {
         label: "Not Helpful Notes",
-        borderColor: "red",
+        borderColor: chartColors.red,
         data: notHelpfulNotesTimeSeries,
       },
     ],
@@ -74,17 +74,17 @@ const NoteActivity = ({
     datasets: [
       {
         label: "Helpful Notes",
-        borderColor: "green",
+        borderColor: chartColors.green,
         data: helpfulNotesTimeSeries,
       },
       {
         label: "Not Helpful Notes",
-        borderColor: "red",
+        borderColor: chartColors.red,
         data: notHelpfulNotesTimeSeries,
       },
       {
         label: "Needs More Ratings Notes",
-        borderColor: "gray",
+        borderColor: chartColors.gray,
         data: needsMoreRatingsNotesTimeSeries,
       },
     ],

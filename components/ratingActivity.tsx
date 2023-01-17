@@ -14,7 +14,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { chartConfig } from "../utils/chartStyle";
+import { chartConfig, chartColors } from "../utils/chartStyle";
 
 const StyledTabContent = styled(TabContent, {
   borderTop: "1px solid $slate6",
@@ -50,7 +50,7 @@ const RatingActivity = ({
     datasets: [
       {
         label: "Helpful Ratings",
-        borderColor: "green",
+        borderColor: chartColors.green,
         data: helpfulRatingsTimeSeries,
       },
     ],
@@ -60,7 +60,7 @@ const RatingActivity = ({
     datasets: [
       {
         label: "Not Helpful Ratings",
-        borderColor: "red",
+        borderColor: chartColors.red,
         data: notHelpfulRatingsTimeSeries,
       },
     ],
@@ -70,7 +70,7 @@ const RatingActivity = ({
     datasets: [
       {
         label: "Somewhat Helpful Ratings",
-        borderColor: "gray",
+        borderColor: chartColors.gray,
         data: somewhatHelpfulRatingsTimeSeries,
       },
     ],
@@ -80,17 +80,17 @@ const RatingActivity = ({
     datasets: [
       {
         label: "Helpful Ratings",
-        borderColor: "green",
+        borderColor: chartColors.green,
         data: helpfulRatingsTimeSeries,
       },
       {
         label: "Not Helpful Ratings",
-        borderColor: "red",
+        borderColor: chartColors.red,
         data: notHelpfulRatingsTimeSeries,
       },
       {
         label: "Somewhat Helpful Ratings",
-        borderColor: "gray",
+        borderColor: chartColors.gray,
         data: somewhatHelpfulRatingsTimeSeries,
       },
     ],

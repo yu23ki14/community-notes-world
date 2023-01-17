@@ -12,6 +12,12 @@ const months = [
   "Nov",
   "Dez",
 ];
+export const chartColors = {
+  blue: "#1D9BF0",
+  green: "#00BA7C",
+  red: "#F4212E",
+  gray: "#829AAB",
+};
 export const chartConfig = {
   scales: {
     x: {
@@ -21,8 +27,28 @@ export const chartConfig = {
         },
         maxRotation: 0,
       },
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      ticks: {
+        callback: function (value: any, index: number, ticks: any): any {
+          let label = this.getLabelForValue(value);
+          if (label.length >= 4) {
+            let subLabel = label.slice(0, 3);
+            if (subLabel[2] != 0) {
+              return subLabel + "k";
+            }
+            return subLabel[0] + "k";
+          }
+          return label;
+        },
+        maxRotation: 0,
+      },
     },
   },
+
   elements: {
     point: {
       radius: 0,
