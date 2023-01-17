@@ -23,6 +23,7 @@ export const chartConfig = {
     x: {
       ticks: {
         callback: function (value: any, index: number, ticks: any): any {
+          // @ts-ignore
           return months[Math.floor(this.getLabelForValue(value).slice(5)) - 1];
         },
         maxRotation: 0,
@@ -34,6 +35,7 @@ export const chartConfig = {
     y: {
       ticks: {
         callback: function (value: any, index: number, ticks: any): any {
+          // @ts-ignore
           let label = this.getLabelForValue(value);
           if (label.length >= 4) {
             let subLabel = label.slice(0, 3);
