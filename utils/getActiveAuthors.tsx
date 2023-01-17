@@ -1,7 +1,11 @@
 import getAllNotes from "./getAllNotes";
 import { author, note } from "../utils/types";
+const readline = require("readline");
 
 function getMonthlyActiveAuthors(items: note[]) {
+  var startTime = Date.now();
+  process.stdout.write("getActiveAuthors...");
+
   const o: { [key: string]: { notes: note[]; count: number } } = {};
   const finalObject: { [key: string]: any } = {};
   items.map((item: note) => {
@@ -38,6 +42,15 @@ function getMonthlyActiveAuthors(items: note[]) {
       obj[key] = finalObject[key];
       return obj;
     }, {});
+
+  let elapsed = Date.now() - startTime;
+  readline.clearLine(process.stdout, 0);
+  readline.cursorTo(process.stdout, 0);
+  process.stdout.write(
+    `getActiveAuthors...Done ✅ ${(elapsed / 1000).toFixed(3)}s`
+  );
+  process.stdout.write("\n");
+
   return timeSeries;
 }
 

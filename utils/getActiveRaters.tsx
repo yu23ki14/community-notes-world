@@ -1,7 +1,10 @@
-import getAllRatings from "./getAllRatings";
 import { author, note, rating } from "./types";
+const readline = require("readline");
 
 function getMonthlyActiveRaters(items: rating[]) {
+  var startTime = Date.now();
+  process.stdout.write("getActiveRaters...");
+
   const o: { [key: string]: { ratings: rating[]; count: number } } = {};
   const finalObject: { [key: string]: any } = {};
   items.map((item: rating) => {
@@ -38,11 +41,27 @@ function getMonthlyActiveRaters(items: rating[]) {
       obj[key] = finalObject[key];
       return obj;
     }, {});
+
+  let elapsed = Date.now() - startTime;
+  readline.clearLine(process.stdout, 0);
+  readline.cursorTo(process.stdout, 0);
+  process.stdout.write(
+    `getActiveRaters...Done ✅ ${(elapsed / 1000).toFixed(3)}s`
+  );
+  process.stdout.write("\n");
+
   return timeSeries;
 }
 
-export default async function getActiveAuthors(range?: string): Promise<{}> {
-  let { allRatings } = await getAllRatings();
+type props = {
+  range?: string;
+  allRatings: any;
+};
+
+export default async function getActiveRaters({
+  range,
+  allRatings,
+}: props): Promise<{}> {
   const activeRaters = getMonthlyActiveRaters(allRatings);
   return activeRaters;
 }

@@ -57,6 +57,7 @@ export default async function getAllNotes() {
   readline.cursorTo(process.stdout, 0);
   process.stdout.write(`getAllNotes...Done ✅ ${(elapsed / 1000).toFixed(3)}s`);
   process.stdout.write("\n");
+
   return notes;
 }
 

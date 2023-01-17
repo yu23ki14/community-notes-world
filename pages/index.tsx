@@ -128,7 +128,7 @@ export async function getStaticProps() {
   );
   let topAuthors = await getTopAuthors({ helpfulNotes: helpfulNotes });
   let activeAuthors = await getActiveAuthors(allNotes);
-  let activeRaters = await getActiveRaters();
+  let activeRaters = await getActiveRaters({ allRatings });
   let topAuthorsLastMonth = await getTopAuthors({
     helpfulNotes: helpfulNotes,
     range: "last month",
