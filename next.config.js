@@ -3,7 +3,6 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  staticPageGenerationTimeout: 240,
 };
 
 module.exports = nextConfig;
@@ -15,7 +14,7 @@ module.exports = {
       issuer: /\.[jt]sx?$/,
       use: ["@svgr/webpack"],
     });
-
     return config;
   },
+  staticPageGenerationTimeout: 2000,
 };
