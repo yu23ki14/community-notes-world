@@ -9,6 +9,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { chartConfig } from "../utils/chartStyle";
 import { styled } from "../utils/styles";
 import Container from "./container";
 import ContainerHeader from "./containerHeader";
@@ -37,18 +38,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: false,
-    },
-  },
-};
 
 const HelpfulNoteActivity = ({ helpfulNotesTimeSeries }: props) => {
   const timestamps = Object.keys(helpfulNotesTimeSeries);
@@ -82,7 +71,7 @@ const HelpfulNoteActivity = ({ helpfulNotesTimeSeries }: props) => {
             size="secondary"
           />
         </NumberRow>
-        <Line options={options} data={helpfulData} />
+        <Line options={chartConfig} data={helpfulData} />
       </StyledContent>
     </Container>
   );

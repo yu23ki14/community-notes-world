@@ -14,6 +14,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { chartConfig } from "../utils/chartStyle";
 
 const StyledTabContent = styled(TabContent, {
   borderTop: "1px solid $slate6",
@@ -38,18 +39,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: false,
-    },
-  },
-};
 
 const RatingActivity = ({
   helpfulRatingsTimeSeries,
@@ -117,16 +106,16 @@ const RatingActivity = ({
           <TabTrigger value="notHelpful">Not Helpful</TabTrigger>
         </TabList>
         <StyledTabContent value="all">
-          <Line options={options} data={allData} />
+          <Line options={chartConfig} data={allData} />
         </StyledTabContent>
         <StyledTabContent value="helpful">
-          <Line options={options} data={helpfulData} />
+          <Line options={chartConfig} data={helpfulData} />
         </StyledTabContent>
         <StyledTabContent value="somewhat">
-          <Line options={options} data={somewhatHelpfulData} />
+          <Line options={chartConfig} data={somewhatHelpfulData} />
         </StyledTabContent>
         <StyledTabContent value="notHelpful">
-          <Line options={options} data={notHelpfulData} />
+          <Line options={chartConfig} data={notHelpfulData} />
         </StyledTabContent>
       </TabRoot>
     </Container>

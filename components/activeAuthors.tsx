@@ -13,6 +13,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { chartConfig } from "../utils/chartStyle";
 
 const StyledContent = styled("div", {
   padding: "1rem 2rem",
@@ -36,18 +37,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: false,
-    },
-  },
-};
 
 const ActiveAuthors = ({ activeAuthorsTimeSeries }: props) => {
   const activeAuthorsData = {
@@ -84,7 +73,7 @@ const ActiveAuthors = ({ activeAuthorsTimeSeries }: props) => {
             size="secondary"
           />
         </NumberRow>
-        <Line options={options} data={activeAuthorsData} />
+        <Line options={chartConfig} data={activeAuthorsData} />
       </StyledContent>
     </Container>
   );

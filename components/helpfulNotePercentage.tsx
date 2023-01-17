@@ -9,6 +9,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { chartConfig } from "../utils/chartStyle";
 import { styled } from "../utils/styles";
 import Container from "./container";
 import ContainerHeader from "./containerHeader";
@@ -39,18 +40,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: false,
-    },
-  },
-};
 
 const HelpfulNotePercentage = ({
   notHelpfulNotesTimeSeries,
@@ -96,7 +85,7 @@ const HelpfulNotePercentage = ({
             size="secondary"
           />
         </NumberRow>
-        <Line options={options} data={allNotesData} />
+        <Line options={chartConfig} data={allNotesData} />
       </StyledContent>
     </Container>
   );

@@ -10,6 +10,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { styled } from "../utils/styles";
+import { chartConfig } from "../utils/chartStyle";
 import { numberWithCommas } from "../utils/math";
 import Container from "./container";
 import ContainerHeader from "./containerHeader";
@@ -27,6 +28,7 @@ const NumberRow = styled("div", {
   display: "flex",
   alignItems: "end",
 });
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -36,18 +38,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: false,
-    },
-  },
-};
 
 const AllNotes = ({ allNotesTimeSeries }: props) => {
   const data = {
@@ -71,7 +61,7 @@ const AllNotes = ({ allNotesTimeSeries }: props) => {
         <NumberRow>
           <Number number={numberWithCommas(count)} label={"all time"} />
         </NumberRow>
-        <Line options={options} data={data} />
+        <Line options={chartConfig} data={data} />
       </StyledContent>
     </Container>
   );
