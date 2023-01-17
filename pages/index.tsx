@@ -3,6 +3,7 @@ import ActiveRaters from "../components/activeRaters";
 import HelpfulNoteActivity from "../components/helpfulNoteActivity";
 import NoteActivity from "../components/noteActivity";
 import AllNotes from "../components/allNotes";
+import AllRatings from "../components/allRatings";
 import Layout from "../components/layout";
 import TopWritersLeaderBoard from "../components/topWritersLeaderBoard";
 import getActiveAuthors from "../utils/getActiveAuthors";
@@ -25,45 +26,54 @@ import RatingActivity from "../components/ratingActivity";
 type authorArray = author[];
 const StyledTitle = styled("h1", {
   gridColumn: "span 2",
-  margin: "1rem .25rem 2rem",
+  letterSpacing: "-0.04em",
+  margin: "2rem .25rem 2rem",
 });
 export default function Home({
+  activeAuthors,
+  activeRaters,
+  allNotesTimeSeries,
+  allRatingsTimeSeries,
+  helpfulNotes,
+  helpfulNotesTimeSeries,
+  helpfulRatingsTimeSeries,
+  lastUpdated,
+  needsMoreRatingsNotesTimeSeries,
+  notHelpfulNotesTimeSeries,
+  notHelpfulRatingsTimeSeries,
+  somewhatHelpfulRatingsTimeSeries,
   topAuthors,
   topAuthorsLastMonth,
   topAuthorsLastWeek,
-  allNotesTimeSeries,
-  helpfulNotesTimeSeries,
-  notHelpfulNotesTimeSeries,
-  needsMoreRatingsNotesTimeSeries,
-  helpfulNotes,
-  activeAuthors,
-  activeRaters,
-  helpfulRatingsTimeSeries,
-  notHelpfulRatingsTimeSeries,
-  somewhatHelpfulRatingsTimeSeries,
-  lastUpdated,
 }: {
-  topAuthors: authorArray;
-  topAuthorsLastMonth: authorArray;
-  topAuthorsLastWeek: authorArray;
   activeAuthors: { [key: string]: number };
   activeRaters: { [key: string]: number };
   allNotesTimeSeries: noteTimeSeries;
+  allRatingsTimeSeries: ratingTimeSeries;
   helpfulNotes: notes;
-  notHelpfulNotes: notes;
-  needsMoreRatingsNotes: notes;
   helpfulNotesTimeSeries: noteTimeSeries;
-  notHelpfulNotesTimeSeries: noteTimeSeries;
-  needsMoreRatingsNotesTimeSeries: noteTimeSeries;
   helpfulRatingsTimeSeries: ratingTimeSeries;
+  lastUpdated: string;
+  needsMoreRatingsNotes: notes;
+  needsMoreRatingsNotesTimeSeries: noteTimeSeries;
+  notHelpfulNotes: notes;
+  notHelpfulNotesTimeSeries: noteTimeSeries;
   notHelpfulRatingsTimeSeries: ratingTimeSeries;
   somewhatHelpfulRatingsTimeSeries: ratingTimeSeries;
-  lastUpdated: string;
+  topAuthors: authorArray;
+  topAuthorsLastMonth: authorArray;
+  topAuthorsLastWeek: authorArray;
 }) {
   return (
     <Layout lastUpdated={lastUpdated}>
       <StyledTitle>Notes</StyledTitle>
       <AllNotes allNotesTimeSeries={allNotesTimeSeries} />
+      <NoteActivity
+        allNotesTimeSeries={allNotesTimeSeries}
+        helpfulNotesTimeSeries={helpfulNotesTimeSeries}
+        notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
+        needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
+      />
       <HelpfulNoteActivity
         allNotesTimeSeries={allNotesTimeSeries}
         helpfulNotesTimeSeries={helpfulNotesTimeSeries}
@@ -71,12 +81,6 @@ export default function Home({
         needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
       />
       <HelpfulNotePercentage
-        allNotesTimeSeries={allNotesTimeSeries}
-        helpfulNotesTimeSeries={helpfulNotesTimeSeries}
-        notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
-        needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
-      />
-      <NoteActivity
         allNotesTimeSeries={allNotesTimeSeries}
         helpfulNotesTimeSeries={helpfulNotesTimeSeries}
         notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
@@ -90,26 +94,32 @@ export default function Home({
       />
       <ActiveAuthors activeAuthorsTimeSeries={activeAuthors} />
       <StyledTitle>Ratings</StyledTitle>
-      <ActiveRaters activeRatersTimeSeries={activeRaters} />
+      <AllRatings allRatingsTimeSeries={allRatingsTimeSeries} />
       <RatingActivity
         helpfulRatingsTimeSeries={helpfulRatingsTimeSeries}
         notHelpfulRatingsTimeSeries={notHelpfulRatingsTimeSeries}
         somewhatHelpfulRatingsTimeSeries={somewhatHelpfulRatingsTimeSeries}
       />
+      <ActiveRaters activeRatersTimeSeries={activeRaters} />
     </Layout>
   );
 }
 export async function getStaticProps() {
   let { allNotes, helpfulNotes, notHelpfulNotes, needsMoreRatingsNotes } =
     await getAllNotes();
-  let { helpfulRatings, notHelpfulRatings, somewhatHelpfulRatings } =
-    await getAllRatings();
+  let {
+    allRatings,
+    helpfulRatings,
+    notHelpfulRatings,
+    somewhatHelpfulRatings,
+  } = await getAllRatings();
   const helpfulNotesTimeSeries = getMonthlyTimeSeries(helpfulNotes);
   const notHelpfulNotesTimeSeries = getMonthlyTimeSeries(notHelpfulNotes);
   const allNotesTimeSeries = getMonthlyTimeSeries(allNotes);
   const needsMoreRatingsNotesTimeSeries = getMonthlyTimeSeries(
     needsMoreRatingsNotes
   );
+  const allRatingsTimeSeries = getMonthlyTimeSeries(allRatings);
   const helpfulRatingsTimeSeries = getMonthlyTimeSeries(helpfulRatings);
   const notHelpfulRatingsTimeSeries = getMonthlyTimeSeries(notHelpfulRatings);
   const somewhatHelpfulRatingsTimeSeries = getMonthlyTimeSeries(
@@ -124,19 +134,20 @@ export async function getStaticProps() {
 
   return {
     props: {
-      allNotesTimeSeries,
-      helpfulNotesTimeSeries,
-      notHelpfulNotesTimeSeries,
-      needsMoreRatingsNotesTimeSeries,
-      topAuthors,
       activeAuthors,
       activeRaters,
-      topAuthorsLastMonth,
-      topAuthorsLastWeek,
+      allNotesTimeSeries,
+      allRatingsTimeSeries,
+      helpfulNotesTimeSeries,
       helpfulRatingsTimeSeries,
+      lastUpdated,
+      needsMoreRatingsNotesTimeSeries,
+      notHelpfulNotesTimeSeries,
       notHelpfulRatingsTimeSeries,
       somewhatHelpfulRatingsTimeSeries,
-      lastUpdated,
+      topAuthors,
+      topAuthorsLastMonth,
+      topAuthorsLastWeek,
     },
   };
 }

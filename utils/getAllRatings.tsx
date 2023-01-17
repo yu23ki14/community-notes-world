@@ -49,6 +49,5 @@ export default async function getAllRatings() {
     notHelpfulRatings: notHelpfulRatings,
     somewhatHelpfulRatings: somewhatHelpfulRatings,
   };
-
   return ratings;
 }

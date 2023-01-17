@@ -39,7 +39,7 @@ export default async function getTopAuthors(range?: string): Promise<author[]> {
 
   let topAuthors = authors
     .sort((a, b) => b.numberOfHelpfulNotes - a.numberOfHelpfulNotes)
-    .slice(0, 10);
+    .slice(0, 6);
 
   return topAuthors;
 }

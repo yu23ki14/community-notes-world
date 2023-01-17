@@ -1,6 +1,6 @@
 import * as React from "react";
 import { styled } from "../utils/styles";
-
+import { numberWithCommas } from "../utils/math";
 type props = {
   number: number | string;
   label: string;
@@ -30,10 +30,14 @@ const StyledLabel = styled("div", {
   fontSize: "small",
 });
 
+const StyledNumber = styled("div", {
+  letterSpacing: "-0.05em",
+});
+
 export default function Number({ number, label, size }: props) {
   return (
     <StyledContent size={size}>
-      {number}
+      <StyledNumber>{numberWithCommas(number)}</StyledNumber>
       <StyledLabel>{label}</StyledLabel>
     </StyledContent>
   );

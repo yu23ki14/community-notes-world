@@ -15,10 +15,10 @@ import Container from "./container";
 import ContainerHeader from "./containerHeader";
 import Number from "./number";
 
-type noteTimeSeries = { [key: string]: number };
+type ratingTimeSeries = { [key: string]: number };
 
 type props = {
-  allNotesTimeSeries: noteTimeSeries;
+  allRatingsTimeSeries: ratingTimeSeries;
 };
 const StyledContent = styled("div", {
   padding: "1rem 2rem",
@@ -38,24 +38,24 @@ ChartJS.register(
   Legend
 );
 
-const AllNotes = ({ allNotesTimeSeries }: props) => {
+const allRatings = ({ allRatingsTimeSeries }: props) => {
   const data = {
-    labels: Object.keys(allNotesTimeSeries),
+    labels: Object.keys(allRatingsTimeSeries),
     datasets: [
       {
         label: "Notes written",
         borderColor: "hsl(206, 100%, 50%)",
-        data: allNotesTimeSeries,
+        data: allRatingsTimeSeries,
       },
     ],
   };
   let count: number = 0;
-  Object.keys(allNotesTimeSeries).forEach((month) => {
-    count = count + allNotesTimeSeries[month];
+  Object.keys(allRatingsTimeSeries).forEach((month) => {
+    count = count + allRatingsTimeSeries[month];
   });
   return (
     <Container>
-      <ContainerHeader text="All notes written by contributors" />
+      <ContainerHeader text="All ratings submitted by contributors" />
       <StyledContent>
         <NumberRow>
           <Number number={count} label={"all time"} />
@@ -66,4 +66,4 @@ const AllNotes = ({ allNotesTimeSeries }: props) => {
   );
 };
 
-export default AllNotes;
+export default allRatings;

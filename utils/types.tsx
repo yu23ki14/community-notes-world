@@ -22,7 +22,7 @@ type author = {
 };
 
 type noteTimeSeries = { [key: string]: number };
-type ratingTimeSeries = { [key: string]: rating[] };
+type ratingTimeSeries = { [key: string]: number };
 
 type notes = Array<note>;
 

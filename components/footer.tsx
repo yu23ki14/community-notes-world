@@ -1,12 +1,6 @@
-import {
-  currentYear,
-  currentMonthFormatted,
-  currentDayFormatted,
-} from "../utils/dates";
 import { styled } from "@stitches/react";
-import Link from "next/link";
-import TwitterIcon from "../public/icons/twitter.svg";
 import GithubIcon from "../public/icons/github.svg";
+import TwitterIcon from "../public/icons/twitter.svg";
 const StyledTwitterIcon = styled(TwitterIcon, {
   color: "$slate1",
   marginRight: "12px",
@@ -25,6 +19,12 @@ const StyledFooter = styled("footer", {
   display: "flex",
   flexDirection: "column",
 });
+const StyledContentWrapper = styled("div", {
+  maxWidth: "1280px",
+  width: "100%",
+  padding: "0 2.5rem",
+  margin: "0 auto",
+});
 const FooterItemWrapper = styled("div", {
   display: "flex",
   alignContent: "center",
@@ -37,31 +37,42 @@ const StyledLink = styled("a", {
 type props = {
   lastUpdated: string;
 };
+
 const Footer = ({ lastUpdated }: props) => {
   return (
     <StyledFooter>
-      <FooterItemWrapper>
-        <StyledTwitterIcon width={"24px"} height={"24px"} viewBox="0 0 24 24" />
-        <p>
-          Built using Twitter’s Community Notes{" "}
-          <StyledLink href="https://twitter.github.io/birdwatch/download-data/">
-            public data
-          </StyledLink>
-          . Not officially maintained by Twitter Inc.
-        </p>
-      </FooterItemWrapper>
-      <FooterItemWrapper>
-        <StyledGithubIcon width={"24px"} height={"24px"} viewBox="0 0 24 24" />
-        <p>
-          This dashboard is open-source,{" "}
-          <StyledLink href="https://github.com/lucasnantonio/community-notes-world">
-            contribute in Github.
-          </StyledLink>
-        </p>
-      </FooterItemWrapper>
-      <FooterItemWrapper>
-        Includes contributions up to {lastUpdated}
-      </FooterItemWrapper>
+      <StyledContentWrapper>
+        <FooterItemWrapper>
+          <StyledTwitterIcon
+            width={"24px"}
+            height={"24px"}
+            viewBox="0 0 24 24"
+          />
+          <p>
+            Built using Twitter’s Community Notes{" "}
+            <StyledLink href="https://twitter.github.io/birdwatch/download-data/">
+              public data
+            </StyledLink>
+            . Not officially maintained by Twitter Inc.
+          </p>
+        </FooterItemWrapper>
+        <FooterItemWrapper>
+          <StyledGithubIcon
+            width={"24px"}
+            height={"24px"}
+            viewBox="0 0 24 24"
+          />
+          <p>
+            This dashboard is open-source,{" "}
+            <StyledLink href="https://github.com/lucasnantonio/community-notes-world">
+              contribute in Github.
+            </StyledLink>
+          </p>
+        </FooterItemWrapper>
+        <FooterItemWrapper>
+          Includes contributions up to {lastUpdated}
+        </FooterItemWrapper>
+      </StyledContentWrapper>
     </StyledFooter>
   );
 };
