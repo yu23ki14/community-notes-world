@@ -1,9 +1,20 @@
-import getAllHelpfulNotes from "./getAllNotes";
+import getAllNotes from "./getAllNotes";
 import { author, notes, note } from "../utils/types";
 let currentTime = Date.now();
+const readline = require("readline");
 
-export default async function getTopAuthors(range?: string): Promise<author[]> {
-  let { helpfulNotes } = await getAllHelpfulNotes();
+type props = {
+  range?: string;
+  helpfulNotes: any;
+};
+
+export default async function getTopAuthors({
+  range,
+  helpfulNotes,
+}: props): Promise<author[]> {
+  var startTime = Date.now();
+  process.stdout.write("getTopAuthor...");
+
   if (range === "last month") {
     helpfulNotes = helpfulNotes.filter((note: note) => {
       let noteDate = note.createdAtMillis;
@@ -40,6 +51,12 @@ export default async function getTopAuthors(range?: string): Promise<author[]> {
   let topAuthors = authors
     .sort((a, b) => b.numberOfHelpfulNotes - a.numberOfHelpfulNotes)
     .slice(0, 6);
-
+  let elapsed = Date.now() - startTime;
+  readline.clearLine(process.stdout, 0);
+  readline.cursorTo(process.stdout, 0);
+  process.stdout.write(
+    `getTopAuthors...Done ✅ ${(elapsed / 1000).toFixed(3)}s`
+  );
+  process.stdout.write("\n");
   return topAuthors;
 }

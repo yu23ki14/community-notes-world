@@ -5,10 +5,14 @@ import {
   currentMonthFormatted,
   currentDayFormatted,
 } from "./dates";
+const readline = require("readline");
 
 const dev = process.env.NODE_ENV === "development";
 
-export default async function getAllHelpfulNotes() {
+export default async function getAllNotes() {
+  var startTime = Date.now();
+  process.stdout.write("getAllNotes...");
+
   const noteStatusHistoryUrl = `https://ton.twimg.com/birdwatch-public-data/${currentYear}/${currentMonthFormatted}/${currentDayFormatted}/noteStatusHistory/noteStatusHistory-00000.tsv`;
 
   const res = await fetch(noteStatusHistoryUrl);
@@ -48,7 +52,11 @@ export default async function getAllHelpfulNotes() {
     notHelpfulNotes: notHelpfulNotes,
     needsMoreRatingsNotes: needsMoreRatingsNotes,
   };
-
+  let elapsed = Date.now() - startTime;
+  readline.clearLine(process.stdout, 0);
+  readline.cursorTo(process.stdout, 0);
+  process.stdout.write(`getAllNotes...Done ✅ ${(elapsed / 1000).toFixed(3)}s`);
+  process.stdout.write("\n");
   return notes;
 }
 

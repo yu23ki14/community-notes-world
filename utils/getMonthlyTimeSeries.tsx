@@ -1,5 +1,8 @@
 import { note, rating } from "./types";
 export default function getMonthlyTimeSeries(items: note[] | rating[]) {
+  const readline = require("readline");
+  var startTime = Date.now();
+  process.stdout.write("getMonthlyTimeSeries...");
   const o: { [key: string]: number } = {};
   items.map((item: note | rating) => {
     let date = new Date(+item.createdAtMillis);
@@ -17,5 +20,12 @@ export default function getMonthlyTimeSeries(items: note[] | rating[]) {
       obj[key] = o[key];
       return obj;
     }, {});
+  let elapsed = Date.now() - startTime;
+  readline.clearLine(process.stdout, 0);
+  readline.cursorTo(process.stdout, 0);
+  process.stdout.write(
+    `getMonthlyTimeSeries...Done ✅ ${(elapsed / 1000).toFixed(3)}s`
+  );
+  process.stdout.write("\n");
   return timeSeries;
 }

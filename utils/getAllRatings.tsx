@@ -5,10 +5,14 @@ import {
   currentMonthFormatted,
   currentDayFormatted,
 } from "./dates";
+const readline = require("readline");
 
 const dev = process.env.NODE_ENV === "development";
 
 export default async function getAllRatings() {
+  var startTime = Date.now();
+  process.stdout.write("getAllRatings...");
+
   const ratingsUrl = `https://ton.twimg.com/birdwatch-public-data/${currentYear}/${currentMonthFormatted}/${currentDayFormatted}/noteRatings/ratings-00000.tsv`;
 
   const res = await fetch(ratingsUrl);
@@ -49,5 +53,12 @@ export default async function getAllRatings() {
     notHelpfulRatings: notHelpfulRatings,
     somewhatHelpfulRatings: somewhatHelpfulRatings,
   };
+  let elapsed = Date.now() - startTime;
+  readline.clearLine(process.stdout, 0);
+  readline.cursorTo(process.stdout, 0);
+  process.stdout.write(
+    `getAllRatings...Done ✅ ${(elapsed / 1000).toFixed(3)}s`
+  );
+  process.stdout.write("\n");
   return ratings;
 }

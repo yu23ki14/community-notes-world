@@ -105,6 +105,7 @@ export default function Home({
   );
 }
 export async function getStaticProps() {
+  console.log("getting static props");
   let { allNotes, helpfulNotes, notHelpfulNotes, needsMoreRatingsNotes } =
     await getAllNotes();
   let {
@@ -125,11 +126,17 @@ export async function getStaticProps() {
   const somewhatHelpfulRatingsTimeSeries = getMonthlyTimeSeries(
     somewhatHelpfulRatings
   );
-  let topAuthors = await getTopAuthors();
-  let activeAuthors = await getActiveAuthors();
+  let topAuthors = await getTopAuthors({ helpfulNotes: helpfulNotes });
+  let activeAuthors = await getActiveAuthors(allNotes);
   let activeRaters = await getActiveRaters();
-  let topAuthorsLastMonth = await getTopAuthors("last month");
-  let topAuthorsLastWeek = await getTopAuthors("last week");
+  let topAuthorsLastMonth = await getTopAuthors({
+    helpfulNotes: helpfulNotes,
+    range: "last month",
+  });
+  let topAuthorsLastWeek = await getTopAuthors({
+    helpfulNotes: helpfulNotes,
+    range: "last week",
+  });
   let lastUpdated = getMostRecentRatingTimestamp(helpfulRatings);
 
   return {

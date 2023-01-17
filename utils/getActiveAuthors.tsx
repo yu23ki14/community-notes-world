@@ -41,8 +41,7 @@ function getMonthlyActiveAuthors(items: note[]) {
   return timeSeries;
 }
 
-export default async function getActiveAuthors(range?: string): Promise<{}> {
-  let { allNotes } = await getAllNotes();
-  const activeAuthors = getMonthlyActiveAuthors(allNotes);
+export default async function getActiveAuthors(allNotes: any): Promise<{}> {
+  const activeAuthors = await getMonthlyActiveAuthors(allNotes);
   return activeAuthors;
 }
