@@ -10,6 +10,7 @@ import getActiveAuthors from "../utils/getActiveAuthors";
 import getActiveRaters from "../utils/getActiveRaters";
 import HelpfulNotePercentage from "../components/helpfulNotePercentage";
 import getAllNotes from "../utils/getAllNotes";
+import getTopWords from "../utils/getTopWords";
 import getAllRatings from "../utils/getAllRatings";
 import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
 import getMostRecentRatingTimestamp from "../utils/getMostRecentRatingTimestamp";
@@ -126,6 +127,10 @@ export async function getStaticProps() {
   const somewhatHelpfulRatingsTimeSeries = getMonthlyTimeSeries(
     somewhatHelpfulRatings
   );
+  let topHelpfulWords = await getTopWords({
+    helpfulNotes: helpfulNotes,
+    notHelpfulNotes: notHelpfulNotes,
+  });
   let topAuthors = await getTopAuthors({ helpfulNotes: helpfulNotes });
   let activeAuthors = await getActiveAuthors(allNotes);
   let activeRaters = await getActiveRaters({ allRatings });

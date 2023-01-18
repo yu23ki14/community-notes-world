@@ -1,10 +1,10 @@
 import { parse } from "csv-parse/sync";
-import { note } from "./types";
 import {
-  currentYear,
-  currentMonthFormatted,
   currentDayFormatted,
+  currentMonthFormatted,
+  currentYear,
 } from "./dates";
+import { note } from "./types";
 const readline = require("readline");
 
 const dev = process.env.NODE_ENV === "development";

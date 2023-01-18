@@ -5,6 +5,12 @@ type note = {
   createdAtMillis: number;
 };
 
+type noteText = {
+  noteId: string;
+  createdAtMillis: number;
+  summary: string;
+};
+
 type rating = {
   helpfulnessLevel: string;
   createdAtMillis: number;
@@ -26,4 +32,12 @@ type ratingTimeSeries = { [key: string]: number };
 
 type notes = Array<note>;
 
-export type { note, author, notes, rating, noteTimeSeries, ratingTimeSeries };
+export type {
+  note,
+  author,
+  notes,
+  noteText,
+  rating,
+  noteTimeSeries,
+  ratingTimeSeries,
+};
