@@ -10,16 +10,16 @@ const List = styled("ol", {
 });
 
 type props = {
-  topHelpfulWords: [string, number][];
+  topWords: [string, number][];
+  title: string;
 };
 
-const TopWritersLeaderBoard = ({ topHelpfulWords }: props) => {
-  console.log("from component", topHelpfulWords);
+const TopWritersLeaderBoard = ({ topWords, title }: props) => {
   return (
     <Container>
-      <ContainerHeader text="Most frequent words" />
+      <ContainerHeader text={title} />
       <List>
-        {topHelpfulWords.map((word: [string, number]) => (
+        {topWords.map((word: [string, number]) => (
           <TopWordRow key={word[0]} word={word[0]} count={word[1]} />
         ))}
       </List>

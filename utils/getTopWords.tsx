@@ -1,14 +1,15 @@
 import { parse } from "csv-parse/sync";
-const wordFrequency = require("word-freq-counter");
-var stripCommon = require("strip-common-words");
+import { createImportSpecifier } from "typescript";
+import { notes } from "../utils/types";
 import {
   currentDayFormatted,
   currentMonthFormatted,
   currentYear,
 } from "./dates";
-import { noteText } from "./types";
+import { noteText, note } from "./types";
+const wordFrequency = require("word-freq-counter");
+var stripCommon = require("strip-common-words");
 const readline = require("readline");
-//@ts-ignore
 
 const dev = process.env.NODE_ENV === "development";
 
@@ -16,8 +17,8 @@ export default async function getTopWords({
   helpfulNotes,
   notHelpfulNotes,
 }: {
-  helpfulNotes: any;
-  notHelpfulNotes: any;
+  helpfulNotes: notes;
+  notHelpfulNotes: notes;
 }) {
   var startTime = Date.now();
   process.stdout.write("getAllNoteText...");
@@ -35,28 +36,59 @@ export default async function getTopWords({
   }).map((note: noteText) => {
     return {
       createdAtMillis: note.createdAtMillis,
-      text: note.summary,
+      summary: note.summary,
       noteId: note.noteId,
     };
   });
 
   const helpfulNotesText = allNotes.filter((item: noteText) => {
     return helpfulNotes.some(
-      (helpfulNote: any) => helpfulNote.noteId === item.noteId
+      (helpfulNote: note) => helpfulNote.noteId === item.noteId
+    );
+  });
+
+  const notHelpfulNotesText = allNotes.filter((item: noteText) => {
+    return notHelpfulNotes.some(
+      (notHelpfulNote: note) => notHelpfulNote.noteId === item.noteId
     );
   });
 
   let helpfulNotesCompleteString = "";
+  let notHelpfulNotesCompleteString = "";
 
   helpfulNotesText.forEach(
-    (item: any) =>
-      (helpfulNotesCompleteString = helpfulNotesCompleteString + item.text)
+    (item: noteText) =>
+      (helpfulNotesCompleteString = helpfulNotesCompleteString + item.summary)
   );
-  let stripped = stripCommon(helpfulNotesCompleteString);
-  let rankedWords = wordFrequency(stripped, false);
-  let sortable = [];
-  for (var item in rankedWords) {
-    sortable.push([item, rankedWords[item]]);
+
+  notHelpfulNotesText.forEach(
+    (item: noteText) =>
+      (notHelpfulNotesCompleteString =
+        notHelpfulNotesCompleteString + item.summary)
+  );
+
+  let strippedHelpful = stripCommon(helpfulNotesCompleteString);
+  let strippedNotHelpful = stripCommon(notHelpfulNotesCompleteString);
+
+  let rankedHelpful: { [key: string]: number } = wordFrequency(
+    strippedHelpful,
+    false
+  );
+  let rankedNotHelpful: { [key: string]: number } = wordFrequency(
+    strippedNotHelpful,
+    false
+  );
+
+  let sortableHelpful: any = [];
+  let sortableNotHelpful: any = [];
+
+  for (var item in rankedHelpful) {
+    let newItem = [item, rankedHelpful[item]];
+    sortableHelpful.push(newItem);
+  }
+  for (var item in rankedNotHelpful) {
+    let newItem = [item, rankedNotHelpful[item]];
+    sortableNotHelpful.push(newItem);
   }
 
   const removedWords = [
@@ -90,16 +122,29 @@ export default async function getTopWords({
     "made",
     "tweet",
     ",",
+    "he",
+    "'s",
   ];
 
-  let filteredHelpfulWords = sortable
-    .sort(function (a, b) {
+  let filteredHelpfulWords = sortableHelpful
+    .sort(function (a: [string, number], b: [string, number]) {
       return b[1] - a[1];
     })
-    .filter((item) => !removedWords.some((word: string) => item[0] === word))
+    .filter(
+      (item: [string, number]) =>
+        !removedWords.some((word: string) => item[0] === word)
+    )
     .slice(0, 9);
 
-  let topNotHelpfulWords;
+  let filteredNotHelpfulWords = sortableNotHelpful
+    .sort(function (a: [string, number], b: [string, number]) {
+      return b[1] - a[1];
+    })
+    .filter(
+      (item: [string, number]) =>
+        !removedWords.some((word: string) => item[0] === word)
+    )
+    .slice(0, 9);
 
   let elapsed = Date.now() - startTime;
   readline.clearLine(process.stdout, 0);
@@ -108,9 +153,9 @@ export default async function getTopWords({
     `getAllNotesText...Done ✅ ${(elapsed / 1000).toFixed(3)}s`
   );
   process.stdout.write("\n");
-  console.log("from get", filteredHelpfulWords);
   return {
     topHelpfulWords: filteredHelpfulWords,
+    topNotHelpfulWords: filteredNotHelpfulWords,
   };
 }
 

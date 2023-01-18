@@ -47,7 +47,7 @@ export default function Home({
   topAuthors,
   topAuthorsLastMonth,
   topAuthorsLastWeek,
-  topHelpfulWords,
+  topWords,
 }: {
   activeAuthors: { [key: string]: number };
   activeRaters: { [key: string]: number };
@@ -66,7 +66,7 @@ export default function Home({
   topAuthors: authorArray;
   topAuthorsLastMonth: authorArray;
   topAuthorsLastWeek: authorArray;
-  topHelpfulWords: any;
+  topWords: any;
 }) {
   return (
     <Layout lastUpdated={lastUpdated}>
@@ -90,7 +90,14 @@ export default function Home({
         notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
         needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
       />
-      <TopWords topHelpfulWords={topHelpfulWords.topHelpfulWords} />
+      <TopWords
+        title="Frequent words in notes with status of Helpful"
+        topWords={topWords.topHelpfulWords}
+      />
+      <TopWords
+        title="Frequent words in notes with status of Not Helpful"
+        topWords={topWords.topNotHelpfulWords}
+      />
       <StyledTitle>Writers</StyledTitle>
       <TopWritersLeaderBoard
         topAuthors={topAuthors}
@@ -131,11 +138,10 @@ export async function getStaticProps() {
   const somewhatHelpfulRatingsTimeSeries = getMonthlyTimeSeries(
     somewhatHelpfulRatings
   );
-  let topHelpfulWords = await getTopWords({
+  let topWords = await getTopWords({
     helpfulNotes: helpfulNotes,
     notHelpfulNotes: notHelpfulNotes,
   });
-  console.log("from index", topHelpfulWords);
   let topAuthors = await getTopAuthors({ helpfulNotes: helpfulNotes });
   let activeAuthors = await getActiveAuthors(allNotes);
   let activeRaters = await getActiveRaters({ allRatings });
@@ -153,7 +159,7 @@ export async function getStaticProps() {
     props: {
       activeAuthors,
       activeRaters,
-      topHelpfulWords,
+      topWords,
       allNotesTimeSeries,
       allRatingsTimeSeries,
       helpfulNotesTimeSeries,
