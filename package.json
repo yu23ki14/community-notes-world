@@ -27,8 +27,7 @@
     "react-dom": "18.2.0",
     "strip-common-words": "^0.1.1",
     "typescript": "4.8.4",
-    "word-freq-counter": "^1.0.0",
-    "word-frequency-basic": "^1.0.0"
+    "word-freq-counter": "^1.0.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.5.1"
