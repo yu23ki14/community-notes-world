@@ -91,7 +91,7 @@ const NoteActivity = ({
   };
   return (
     <Container>
-      <ContainerHeader text="Notes written by current status" />
+      <ContainerHeader text="Notes by current status" />
       <TabRoot defaultValue="all" orientation="horizontal">
         <TabList aria-label="leaderboard">
           <TabTrigger value="all">All notes</TabTrigger>

@@ -92,35 +92,13 @@ export default async function getTopWords({
     ",",
   ];
 
-  let sortable2 = sortable
+  let filteredHelpfulWords = sortable
     .sort(function (a, b) {
       return b[1] - a[1];
     })
-    .filter((item) => !removedWords.some((word: string) => item[0] === word));
+    .filter((item) => !removedWords.some((word: string) => item[0] === word))
+    .slice(0, 9);
 
-  console.log(sortable2[0]);
-  console.log(sortable2[1]);
-  console.log(sortable2[2]);
-  console.log(sortable2[3]);
-  console.log(sortable2[4]);
-  console.log(sortable2[5]);
-  console.log(sortable2[6]);
-  console.log(sortable2[7]);
-  console.log(sortable2[8]);
-  console.log(sortable2[9]);
-  console.log(sortable2[10]);
-  console.log(sortable2[11]);
-  console.log(sortable2[12]);
-  console.log(sortable2[13]);
-  console.log(sortable2[14]);
-  console.log(sortable2[15]);
-  console.log(sortable2[16]);
-  console.log(sortable2[17]);
-  console.log(sortable2[18]);
-  console.log(sortable2[19]);
-  console.log(sortable2[20]);
-
-  let topHelpfulWords;
   let topNotHelpfulWords;
 
   let elapsed = Date.now() - startTime;
@@ -130,10 +108,9 @@ export default async function getTopWords({
     `getAllNotesText...Done ✅ ${(elapsed / 1000).toFixed(3)}s`
   );
   process.stdout.write("\n");
-
+  console.log("from get", filteredHelpfulWords);
   return {
-    topHelpfulWords: topHelpfulWords,
-    topNotHelpfulWords: topNotHelpfulWords,
+    topHelpfulWords: filteredHelpfulWords,
   };
 }
 
