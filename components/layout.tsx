@@ -32,7 +32,7 @@ const Layout = ({
   lastUpdated,
 }: {
   children: React.ReactNode;
-  lastUpdated: string;
+  lastUpdated?: string;
 }) => {
   return (
     <div className={styles.container}>

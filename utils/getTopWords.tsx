@@ -17,15 +17,20 @@ export default async function getTopWords({
   helpfulNotes,
   notHelpfulNotes,
 }: {
-  helpfulNotes: notes;
-  notHelpfulNotes: notes;
+  helpfulNotes: notes | undefined;
+  notHelpfulNotes: notes | undefined;
 }) {
   var startTime = Date.now();
   process.stdout.write("getAllNoteText...");
-
+  if (helpfulNotes === undefined || notHelpfulNotes === undefined) {
+    return null;
+  }
   const notesUrl = `https://ton.twimg.com/birdwatch-public-data/${currentYear}/${currentMonthFormatted}/${currentDayFormatted}/notes/notes-00000.tsv`;
 
   const res = await fetch(notesUrl);
+  if (!res.ok) {
+    return null;
+  }
   const text = await res.text();
 
   const allNotes = parse(text, {

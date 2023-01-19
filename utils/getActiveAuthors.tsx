@@ -2,9 +2,13 @@ import getAllNotes from "./getAllNotes";
 import { author, note } from "../utils/types";
 const readline = require("readline");
 
-function getMonthlyActiveAuthors(items: note[]) {
+function getMonthlyActiveAuthors(items: note[] | undefined) {
   var startTime = Date.now();
   process.stdout.write("getActiveAuthors...");
+
+  if (items === undefined) {
+    return null;
+  }
 
   const o: { [key: string]: { notes: note[]; count: number } } = {};
   const finalObject: { [key: string]: any } = {};
@@ -54,7 +58,9 @@ function getMonthlyActiveAuthors(items: note[]) {
   return timeSeries;
 }
 
-export default async function getActiveAuthors(allNotes: any): Promise<{}> {
+export default async function getActiveAuthors(
+  allNotes: any
+): Promise<{} | null> {
   const activeAuthors = await getMonthlyActiveAuthors(allNotes);
   return activeAuthors;
 }

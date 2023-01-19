@@ -1,7 +1,11 @@
 import { author, note, rating } from "./types";
 const readline = require("readline");
 
-function getMonthlyActiveRaters(items: rating[]) {
+function getMonthlyActiveRaters(items: rating[] | undefined) {
+  if (items === undefined) {
+    return null;
+  }
+
   var startTime = Date.now();
   process.stdout.write("getActiveRaters...");
 
@@ -61,7 +65,7 @@ type props = {
 export default async function getActiveRaters({
   range,
   allRatings,
-}: props): Promise<{}> {
+}: props): Promise<{} | null> {
   const activeRaters = getMonthlyActiveRaters(allRatings);
   return activeRaters;
 }

@@ -16,6 +16,14 @@ export default async function getAllNotes() {
   const noteStatusHistoryUrl = `https://ton.twimg.com/birdwatch-public-data/${currentYear}/${currentMonthFormatted}/${currentDayFormatted}/noteStatusHistory/noteStatusHistory-00000.tsv`;
 
   const res = await fetch(noteStatusHistoryUrl);
+  if (!res.ok) {
+    return {
+      allNotes: undefined,
+      helpfulNotes: undefined,
+      notHelpfulNotes: undefined,
+      needsMoreRatingsNotes: undefined,
+    };
+  }
   const text = await res.text();
 
   const allNotes = parse(text, {

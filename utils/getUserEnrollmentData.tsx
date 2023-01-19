@@ -17,7 +17,13 @@ export default async function getUserEnrollmentData() {
   const userEnrollmentDataUrl = `https://ton.twimg.com/birdwatch-public-data/${currentYear}/${currentMonthFormatted}/${currentDayFormatted}/userEnrollment/userEnrollment-00000.tsv`;
 
   const res = await fetch(userEnrollmentDataUrl);
+
+  if (!res.ok) {
+    return null;
+  }
+
   const text = await res.text();
+  console.log(res.text, res.type);
 
   const allUserStates = parse(text, {
     columns: true,
@@ -55,6 +61,7 @@ export default async function getUserEnrollmentData() {
     at_risk: atRisk,
   };
   endLogging("getUserEnrollmentData", startTime);
+  console.log(userStates);
   return userStates;
 }
 

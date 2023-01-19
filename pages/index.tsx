@@ -26,6 +26,8 @@ import {
 import RatingActivity from "../components/ratingActivity";
 import getUserEnrollmentData from "../utils/getUserEnrollmentData";
 import UserEnrollmentState from "../components/userEnrollmentState";
+import EmptyState from "../components/emptyState";
+import React from "react";
 
 type authorArray = author[];
 const StyledTitle = styled("h1", {
@@ -52,25 +54,25 @@ export default function Home({
   topWords,
   userStates,
 }: {
-  activeAuthors: { [key: string]: number };
-  activeRaters: { [key: string]: number };
-  allNotesTimeSeries: noteTimeSeries;
-  allRatingsTimeSeries: ratingTimeSeries;
-  helpfulNotes: notes;
-  helpfulNotesTimeSeries: noteTimeSeries;
-  helpfulRatingsTimeSeries: ratingTimeSeries;
-  lastUpdated: string;
-  needsMoreRatingsNotes: notes;
-  needsMoreRatingsNotesTimeSeries: noteTimeSeries;
-  notHelpfulNotes: notes;
-  notHelpfulNotesTimeSeries: noteTimeSeries;
-  notHelpfulRatingsTimeSeries: ratingTimeSeries;
-  somewhatHelpfulRatingsTimeSeries: ratingTimeSeries;
-  topAuthors: authorArray;
-  topAuthorsLastMonth: authorArray;
-  topAuthorsLastWeek: authorArray;
-  topWords: any;
-  userStates: {
+  activeAuthors?: { [key: string]: number };
+  activeRaters?: { [key: string]: number };
+  allNotesTimeSeries?: noteTimeSeries;
+  allRatingsTimeSeries?: ratingTimeSeries;
+  helpfulNotes?: notes;
+  helpfulNotesTimeSeries?: noteTimeSeries;
+  helpfulRatingsTimeSeries?: ratingTimeSeries;
+  lastUpdated?: string;
+  needsMoreRatingsNotes?: notes;
+  needsMoreRatingsNotesTimeSeries?: noteTimeSeries;
+  notHelpfulNotes?: notes;
+  notHelpfulNotesTimeSeries?: noteTimeSeries;
+  notHelpfulRatingsTimeSeries?: ratingTimeSeries;
+  somewhatHelpfulRatingsTimeSeries?: ratingTimeSeries;
+  topAuthors?: authorArray;
+  topAuthorsLastMonth?: authorArray;
+  topAuthorsLastWeek?: authorArray;
+  topWords?: any;
+  userStates?: {
     earned_in: number;
     earned_out: number;
     new_user: number;
@@ -80,50 +82,102 @@ export default function Home({
   return (
     <Layout lastUpdated={lastUpdated}>
       <StyledTitle>Notes</StyledTitle>
-      <AllNotes allNotesTimeSeries={allNotesTimeSeries} />
-      <NoteActivity
-        allNotesTimeSeries={allNotesTimeSeries}
-        helpfulNotesTimeSeries={helpfulNotesTimeSeries}
-        notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
-        needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
-      />
-      <HelpfulNoteActivity
-        allNotesTimeSeries={allNotesTimeSeries}
-        helpfulNotesTimeSeries={helpfulNotesTimeSeries}
-        notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
-        needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
-      />
-      <HelpfulNotePercentage
-        allNotesTimeSeries={allNotesTimeSeries}
-        helpfulNotesTimeSeries={helpfulNotesTimeSeries}
-        notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
-        needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
-      />
-      <TopWords
-        title="Frequent words in notes with status of Helpful"
-        topWords={topWords.topHelpfulWords}
-      />
-      <TopWords
-        title="Frequent words in notes with status of Not Helpful"
-        topWords={topWords.topNotHelpfulWords}
-      />
+      {allNotesTimeSeries ? (
+        <AllNotes allNotesTimeSeries={allNotesTimeSeries} />
+      ) : (
+        <EmptyState />
+      )}
+      {allNotesTimeSeries &&
+      helpfulNotesTimeSeries &&
+      notHelpfulNotesTimeSeries &&
+      needsMoreRatingsNotesTimeSeries ? (
+        <React.Fragment>
+          <NoteActivity
+            allNotesTimeSeries={allNotesTimeSeries}
+            helpfulNotesTimeSeries={helpfulNotesTimeSeries}
+            notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
+            needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
+          />
+          <HelpfulNoteActivity
+            allNotesTimeSeries={allNotesTimeSeries}
+            helpfulNotesTimeSeries={helpfulNotesTimeSeries}
+            notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
+            needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
+          />
+          <HelpfulNotePercentage
+            allNotesTimeSeries={allNotesTimeSeries}
+            helpfulNotesTimeSeries={helpfulNotesTimeSeries}
+            notHelpfulNotesTimeSeries={notHelpfulNotesTimeSeries}
+            needsMoreRatingsNotesTimeSeries={needsMoreRatingsNotesTimeSeries}
+          />
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <EmptyState />
+          <EmptyState />
+          <EmptyState />
+        </React.Fragment>
+      )}
+      {topWords ? (
+        <React.Fragment>
+          <TopWords
+            title="Frequent words in notes with status of Helpful"
+            topWords={topWords.topHelpfulWords}
+          />
+          <TopWords
+            title="Frequent words in notes with status of Not Helpful"
+            topWords={topWords.topNotHelpfulWords}
+          />
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <EmptyState />
+          <EmptyState />
+        </React.Fragment>
+      )}
       <StyledTitle>Writers</StyledTitle>
-      <TopWritersLeaderBoard
-        topAuthors={topAuthors}
-        topAuthorsLastMonth={topAuthorsLastMonth}
-        topAuthorsLastWeek={topAuthorsLastWeek}
-      />
-      <ActiveAuthors activeAuthorsTimeSeries={activeAuthors} />
+      {topAuthors && topAuthorsLastMonth && topAuthorsLastWeek ? (
+        <TopWritersLeaderBoard
+          topAuthors={topAuthors}
+          topAuthorsLastMonth={topAuthorsLastMonth}
+          topAuthorsLastWeek={topAuthorsLastWeek}
+        />
+      ) : (
+        <EmptyState />
+      )}
+      {activeAuthors ? (
+        <ActiveAuthors activeAuthorsTimeSeries={activeAuthors} />
+      ) : (
+        <EmptyState />
+      )}
       <StyledTitle>Ratings</StyledTitle>
-      <AllRatings allRatingsTimeSeries={allRatingsTimeSeries} />
-      <RatingActivity
-        helpfulRatingsTimeSeries={helpfulRatingsTimeSeries}
-        notHelpfulRatingsTimeSeries={notHelpfulRatingsTimeSeries}
-        somewhatHelpfulRatingsTimeSeries={somewhatHelpfulRatingsTimeSeries}
-      />
-      <ActiveRaters activeRatersTimeSeries={activeRaters} />
+      {allRatingsTimeSeries ? (
+        <AllRatings allRatingsTimeSeries={allRatingsTimeSeries} />
+      ) : (
+        <EmptyState />
+      )}
+      {helpfulRatingsTimeSeries &&
+      notHelpfulRatingsTimeSeries &&
+      somewhatHelpfulRatingsTimeSeries ? (
+        <RatingActivity
+          helpfulRatingsTimeSeries={helpfulRatingsTimeSeries}
+          notHelpfulRatingsTimeSeries={notHelpfulRatingsTimeSeries}
+          somewhatHelpfulRatingsTimeSeries={somewhatHelpfulRatingsTimeSeries}
+        />
+      ) : (
+        <EmptyState />
+      )}
+      {activeRaters ? (
+        <ActiveRaters activeRatersTimeSeries={activeRaters} />
+      ) : (
+        <EmptyState />
+      )}
       <StyledTitle>Contributor states</StyledTitle>
-      <UserEnrollmentState userStates={userStates} />
+      {userStates ? (
+        <UserEnrollmentState userStates={userStates} />
+      ) : (
+        <EmptyState />
+      )}
     </Layout>
   );
 }

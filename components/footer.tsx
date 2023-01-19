@@ -38,7 +38,7 @@ const StyledLink = styled("a", {
   textDecoration: "underline",
 });
 type props = {
-  lastUpdated: string;
+  lastUpdated?: string;
 };
 
 const Footer = ({ lastUpdated }: props) => {
@@ -72,9 +72,11 @@ const Footer = ({ lastUpdated }: props) => {
             </StyledLink>
           </p>
         </FooterItemWrapper>
-        <FooterItemWrapper>
-          Includes contributions up to {lastUpdated}
-        </FooterItemWrapper>
+        {lastUpdated && (
+          <FooterItemWrapper>
+            Includes contributions up to {lastUpdated}
+          </FooterItemWrapper>
+        )}
       </StyledContentWrapper>
     </StyledFooter>
   );

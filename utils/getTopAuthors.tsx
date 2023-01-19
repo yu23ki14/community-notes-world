@@ -5,15 +5,19 @@ const readline = require("readline");
 
 type props = {
   range?: string;
-  helpfulNotes: any;
+  helpfulNotes: any | undefined;
 };
 
 export default async function getTopAuthors({
   range,
   helpfulNotes,
-}: props): Promise<author[]> {
+}: props): Promise<author[] | null> {
   var startTime = Date.now();
   process.stdout.write("getTopAuthor...");
+
+  if (helpfulNotes === undefined) {
+    return null;
+  }
 
   if (range === "last month") {
     helpfulNotes = helpfulNotes.filter((note: note) => {
