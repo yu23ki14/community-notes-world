@@ -23,7 +23,6 @@ export default async function getUserEnrollmentData() {
   }
 
   const text = await res.text();
-  console.log(res.text, res.type);
 
   const allUserStates = parse(text, {
     columns: true,
@@ -61,7 +60,6 @@ export default async function getUserEnrollmentData() {
     at_risk: atRisk,
   };
   endLogging("getUserEnrollmentData", startTime);
-  console.log(userStates);
   return userStates;
 }
 

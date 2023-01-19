@@ -28,6 +28,7 @@ import getUserEnrollmentData from "../utils/getUserEnrollmentData";
 import UserEnrollmentState from "../components/userEnrollmentState";
 import EmptyState from "../components/emptyState";
 import React from "react";
+import { endLogging, startLogging } from "../utils/logging";
 
 type authorArray = author[];
 const StyledTitle = styled("h1", {
@@ -182,7 +183,8 @@ export default function Home({
   );
 }
 export async function getStaticProps() {
-  console.log("getting static props");
+  startLogging("Starting site build...");
+  const startTime = Date.now();
   let { allNotes, helpfulNotes, notHelpfulNotes, needsMoreRatingsNotes } =
     await getAllNotes();
   let {
@@ -220,6 +222,7 @@ export async function getStaticProps() {
   });
   let lastUpdated = getMostRecentRatingTimestamp(helpfulRatings);
   let userStates = await getUserEnrollmentData();
+  endLogging("Finished building site in", startTime);
   return {
     props: {
       activeAuthors,
