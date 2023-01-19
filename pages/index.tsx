@@ -74,6 +74,7 @@ export default function Home({
     earned_in: number;
     earned_out: number;
     new_user: number;
+    at_risk: number;
   };
 }) {
   return (

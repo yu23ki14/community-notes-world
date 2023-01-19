@@ -23,7 +23,7 @@ export default async function getUserEnrollmentData() {
     columns: true,
     skip_empty_lines: true,
     delimiter: "\t",
-    to: dev ? 15000 : undefined,
+    to: dev ? 1500000 : undefined,
   }).map((user: userEnrollmentItem) => {
     return {
       enrollmentState: user.enrollmentState,
@@ -44,14 +44,17 @@ export default async function getUserEnrollmentData() {
       item.enrollmentState === "earnedOutAcknowledged" ||
       item.enrollmentState === "earnedOutNoAcknowledge"
   ).length;
+  const atRisk = allUserStates.filter((item: userEnrollmentItem) => {
+    return item.enrollmentState === "atRisk";
+  }).length;
 
   const userStates = {
     new_user: newUsers,
     earned_in: earnedIn,
     earned_out: earnedOut,
+    at_risk: atRisk,
   };
   endLogging("getUserEnrollmentData", startTime);
-  console.log(userStates);
   return userStates;
 }
 

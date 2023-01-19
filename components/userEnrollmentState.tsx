@@ -25,6 +25,7 @@ type props = {
     earned_in: number;
     earned_out: number;
     new_user: number;
+    at_risk: number;
   };
 };
 
@@ -35,6 +36,7 @@ const UserEnrollmentState = ({ userStates }: props) => {
     labels: [
       "New users, no writing ability",
       "Earned writing ability",
+      "At risk",
       "Lost writing ability",
     ],
     datasets: [
@@ -43,9 +45,15 @@ const UserEnrollmentState = ({ userStates }: props) => {
         data: [
           userStates.new_user,
           userStates.earned_in,
+          userStates.at_risk,
           userStates.earned_out,
         ],
-        backgroundColor: [chartColors.gray, chartColors.green, chartColors.red],
+        backgroundColor: [
+          chartColors.gray,
+          chartColors.green,
+          chartColors.orange,
+          chartColors.red,
+        ],
         borderWidth: 1,
         borderColor: "#fff",
       },
@@ -69,6 +77,7 @@ const UserEnrollmentState = ({ userStates }: props) => {
             number={userStates.earned_in}
             label="Earned writing ability"
           />
+          <Number dot="orange" number={userStates.at_risk} label="At risk" />
           <Number
             dot="red"
             number={userStates.earned_out}
