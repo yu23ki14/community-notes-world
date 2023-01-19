@@ -14,16 +14,17 @@ const StyledBackground = styled("div", {
 const StyledWrapper = styled("div", {
   display: "flex",
   flexDirection: "column",
-  // gridTemplateColumns: "100%",
   "@bp2": {
     display: "grid",
     gridTemplateColumns: "50% 50%",
+    padding: "1rem 2rem 2rem",
+    gridGap: "1rem",
   },
-  gridGap: "1rem",
   maxWidth: "1280px",
   width: "100%",
   margin: "0 auto 3rem",
-  padding: "1rem 2rem 2rem",
+  padding: ".5rem .5rem 2rem",
+  gridGap: ".5rem",
 });
 
 const Layout = ({
