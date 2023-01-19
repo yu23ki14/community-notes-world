@@ -24,11 +24,13 @@ import {
   ratingTimeSeries,
 } from "../utils/types";
 import RatingActivity from "../components/ratingActivity";
+import getUserEnrollmentData from "../utils/getUserEnrollmentData";
+import UserEnrollmentState from "../components/userEnrollmentState";
 
 type authorArray = author[];
 const StyledTitle = styled("h1", {
   gridColumn: "span 2",
-  letterSpacing: "-0.04em",
+  letterSpacing: "-0.04rem",
   margin: "2rem .25rem 2rem",
 });
 export default function Home({
@@ -48,6 +50,7 @@ export default function Home({
   topAuthorsLastMonth,
   topAuthorsLastWeek,
   topWords,
+  userStates,
 }: {
   activeAuthors: { [key: string]: number };
   activeRaters: { [key: string]: number };
@@ -67,6 +70,11 @@ export default function Home({
   topAuthorsLastMonth: authorArray;
   topAuthorsLastWeek: authorArray;
   topWords: any;
+  userStates: {
+    earned_in: number;
+    earned_out: number;
+    new_user: number;
+  };
 }) {
   return (
     <Layout lastUpdated={lastUpdated}>
@@ -113,6 +121,8 @@ export default function Home({
         somewhatHelpfulRatingsTimeSeries={somewhatHelpfulRatingsTimeSeries}
       />
       <ActiveRaters activeRatersTimeSeries={activeRaters} />
+      <StyledTitle>Contributor states</StyledTitle>
+      <UserEnrollmentState userStates={userStates} />
     </Layout>
   );
 }
@@ -154,7 +164,7 @@ export async function getStaticProps() {
     range: "last week",
   });
   let lastUpdated = getMostRecentRatingTimestamp(helpfulRatings);
-
+  let userStates = await getUserEnrollmentData();
   return {
     props: {
       activeAuthors,
@@ -172,6 +182,7 @@ export async function getStaticProps() {
       topAuthors,
       topAuthorsLastMonth,
       topAuthorsLastWeek,
+      userStates,
     },
   };
 }

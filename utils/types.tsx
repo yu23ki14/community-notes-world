@@ -27,17 +27,24 @@ type author = {
   noteExampleId?: string;
 };
 
+type userEnrollmentItem = {
+  participantId: string;
+  enrollmentState: string;
+  timestampOfLastStateChange: string;
+};
+
 type noteTimeSeries = { [key: string]: number };
 type ratingTimeSeries = { [key: string]: number };
 
 type notes = Array<note>;
 
 export type {
-  note,
   author,
+  note,
   notes,
   noteText,
-  rating,
   noteTimeSeries,
+  rating,
   ratingTimeSeries,
+  userEnrollmentItem,
 };

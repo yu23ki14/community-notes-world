@@ -12,9 +12,11 @@ const StyledBackground = styled("div", {
 });
 
 const StyledWrapper = styled("div", {
-  display: "grid",
-  gridTemplateColumns: "100%",
+  display: "flex",
+  flexDirection: "column",
+  // gridTemplateColumns: "100%",
   "@bp2": {
+    display: "grid",
     gridTemplateColumns: "50% 50%",
   },
   gridGap: "1rem",
