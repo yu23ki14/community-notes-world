@@ -19,6 +19,7 @@ export default async function getUserEnrollmentData() {
   const res = await fetch(userEnrollmentDataUrl);
 
   if (!res.ok) {
+    console.log("Error", res.status);
     return null;
   }
 
