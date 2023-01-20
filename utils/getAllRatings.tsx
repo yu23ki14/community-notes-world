@@ -6,6 +6,8 @@ import {
   currentDayFormatted,
 } from "./dates";
 const readline = require("readline");
+import createFetch from "@vercel/fetch";
+const fetch = createFetch();
 
 const dev = process.env.NODE_ENV === "development";
 
@@ -16,6 +18,14 @@ export default async function getAllRatings() {
   const ratingsUrl = `https://ton.twimg.com/birdwatch-public-data/${currentYear}/${currentMonthFormatted}/${currentDayFormatted}/noteRatings/ratings-00000.tsv`;
 
   const res = await fetch(ratingsUrl);
+  if (!res.ok) {
+    return {
+      allRatings: undefined,
+      helpfulRatings: undefined,
+      notHelpfulRatings: undefined,
+      somewhatHelpfulRatings: undefined,
+    };
+  }
   const text = await res.text();
 
   const allRatings = parse(text, {

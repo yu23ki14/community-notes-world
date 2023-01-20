@@ -1,5 +1,10 @@
 import { note, rating } from "./types";
-export default function getMonthlyTimeSeries(items: note[] | rating[]) {
+export default function getMonthlyTimeSeries(
+  items: note[] | rating[] | undefined
+) {
+  if (items === undefined) {
+    return null;
+  }
   const readline = require("readline");
   var startTime = Date.now();
   process.stdout.write("getMonthlyTimeSeries...");

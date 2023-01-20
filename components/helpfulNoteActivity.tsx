@@ -68,7 +68,7 @@ const HelpfulNoteActivity = ({ helpfulNotesTimeSeries }: props) => {
           <Number
             number={previousMonthCount}
             label="previous month"
-            size="secondary"
+            color="gray"
           />
         </NumberRow>
         <Line options={chartConfig} data={helpfulData} />

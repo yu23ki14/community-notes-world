@@ -12,16 +12,19 @@ const StyledBackground = styled("div", {
 });
 
 const StyledWrapper = styled("div", {
-  display: "grid",
-  gridTemplateColumns: "100%",
+  display: "flex",
+  flexDirection: "column",
   "@bp2": {
+    display: "grid",
     gridTemplateColumns: "50% 50%",
+    padding: "1rem 2rem 2rem",
+    gridGap: "1rem",
   },
-  gridGap: "1rem",
   maxWidth: "1280px",
   width: "100%",
   margin: "0 auto 3rem",
-  padding: "1rem 2rem 2rem",
+  padding: ".5rem .5rem 2rem",
+  gridGap: ".5rem",
 });
 
 const Layout = ({
@@ -29,7 +32,7 @@ const Layout = ({
   lastUpdated,
 }: {
   children: React.ReactNode;
-  lastUpdated: string;
+  lastUpdated?: string;
 }) => {
   return (
     <div className={styles.container}>

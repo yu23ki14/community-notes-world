@@ -21,6 +21,7 @@ const StyledContent = styled("div", {
 
 const NumberRow = styled("div", {
   display: "flex",
+  flexWrap: "wrap",
   alignItems: "end",
 });
 
@@ -70,7 +71,7 @@ const ActiveAuthors = ({ activeAuthorsTimeSeries }: props) => {
           <Number
             number={previousMonthCount}
             label="previous month"
-            size="secondary"
+            color="gray"
           />
         </NumberRow>
         <Line options={chartConfig} data={activeAuthorsData} />

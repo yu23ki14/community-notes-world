@@ -17,6 +17,7 @@ export const chartColors = {
   green: "#00BA7C",
   red: "#F4212E",
   gray: "#829AAB",
+  orange: "#FF7A00",
 };
 export const chartConfig = {
   scales: {

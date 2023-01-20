@@ -12,7 +12,10 @@ const StyledGithubIcon = styled(GithubIcon, {
   flexShrink: "0",
 });
 const StyledFooter = styled("footer", {
-  padding: "2rem",
+  padding: "2rem 1rem",
+  "@bp2": {
+    padding: "2rem",
+  },
   fontSize: "small",
   background: "$slate12",
   color: "$slate10",
@@ -22,7 +25,7 @@ const StyledFooter = styled("footer", {
 const StyledContentWrapper = styled("div", {
   maxWidth: "1280px",
   width: "100%",
-  padding: "0 2.5rem",
+  padding: "0 1rem",
   margin: "0 auto",
 });
 const FooterItemWrapper = styled("div", {
@@ -35,7 +38,7 @@ const StyledLink = styled("a", {
   textDecoration: "underline",
 });
 type props = {
-  lastUpdated: string;
+  lastUpdated?: string;
 };
 
 const Footer = ({ lastUpdated }: props) => {
@@ -69,9 +72,11 @@ const Footer = ({ lastUpdated }: props) => {
             </StyledLink>
           </p>
         </FooterItemWrapper>
-        <FooterItemWrapper>
-          Includes contributions up to {lastUpdated}
-        </FooterItemWrapper>
+        {lastUpdated && (
+          <FooterItemWrapper>
+            Includes contributions up to {lastUpdated}
+          </FooterItemWrapper>
+        )}
       </StyledContentWrapper>
     </StyledFooter>
   );
