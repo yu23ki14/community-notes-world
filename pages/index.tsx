@@ -220,7 +220,7 @@ export async function getStaticProps() {
     helpfulNotes: helpfulNotes,
     range: "last week",
   });
-  let lastUpdated = getMostRecentRatingTimestamp(helpfulRatings);
+  let lastUpdated = getMostRecentRatingTimestamp(allRatings);
   let userStates = await getUserEnrollmentData();
   endLogging("Finished building site in", startTime);
   return {
