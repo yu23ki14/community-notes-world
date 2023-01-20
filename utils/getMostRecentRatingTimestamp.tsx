@@ -1,4 +1,4 @@
-import { rating } from "./types";
+import { rating, note } from "./types";
 
 export default function getMostRecentRatingTimestamp(
   ratings: rating[] | undefined
@@ -6,6 +6,7 @@ export default function getMostRecentRatingTimestamp(
   if (ratings === undefined) {
     return null;
   }
+  ratings.sort((a, b) => a.createdAtMillis - b.createdAtMillis);
   const timestamp = ratings[ratings.length - 1].createdAtMillis;
   const date = new Date(+timestamp);
   return date.toString();
