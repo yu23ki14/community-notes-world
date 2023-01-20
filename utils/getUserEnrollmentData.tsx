@@ -7,7 +7,8 @@ import {
 import { userEnrollmentItem } from "./types";
 import { startLogging, endLogging } from "./logging";
 const readline = require("readline");
-import fetch from "node-fetch";
+import createFetch from "@vercel/fetch";
+const fetch = createFetch();
 
 const dev = process.env.NODE_ENV === "development";
 
