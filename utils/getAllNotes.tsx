@@ -6,6 +6,7 @@ import {
 } from "./dates";
 import { note } from "./types";
 const readline = require("readline");
+import fetch from "node-fetch";
 
 const dev = process.env.NODE_ENV === "development";
 

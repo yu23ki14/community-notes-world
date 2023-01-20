@@ -7,6 +7,7 @@ import {
 import { userEnrollmentItem } from "./types";
 import { startLogging, endLogging } from "./logging";
 const readline = require("readline");
+import fetch from "node-fetch";
 
 const dev = process.env.NODE_ENV === "development";
 

@@ -10,6 +10,7 @@ import { noteText, note } from "./types";
 const wordFrequency = require("word-freq-counter");
 var stripCommon = require("strip-common-words");
 const readline = require("readline");
+import fetch from "node-fetch";
 
 const dev = process.env.NODE_ENV === "development";
 
