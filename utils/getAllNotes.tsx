@@ -14,7 +14,9 @@ const dev = process.env.NODE_ENV === "development";
 export default async function getAllNotes() {
   var startTime = Date.now();
   process.stdout.write("getAllNotes...");
-
+  process.stdout.write(
+    `${currentYear}/${currentMonthFormatted}/${currentDayFormatted}`
+  );
   const noteStatusHistoryUrl = `https://ton.twimg.com/birdwatch-public-data/${currentYear}/${currentMonthFormatted}/${currentDayFormatted}/noteStatusHistory/noteStatusHistory-00000.tsv`;
 
   const res = await fetch(noteStatusHistoryUrl);
