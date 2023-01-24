@@ -30,6 +30,7 @@ import UserEnrollmentState from "../components/userEnrollmentState";
 import EmptyState from "../components/emptyState";
 import React from "react";
 import { endLogging, startLogging } from "../utils/logging";
+import getAllNoteSummaries from "../utils/getAllNoteSummaries";
 
 type authorArray = author[];
 const StyledTitle = styled("h1", {
@@ -225,11 +226,14 @@ export async function getStaticProps() {
   const somewhatHelpfulRatingsTimeSeries = getMonthlyTimeSeries(
     somewhatHelpfulRatings
   );
+  let allNoteSummaries = await getAllNoteSummaries();
   let topWords = await getTopWords({
+    allNoteSummaries: allNoteSummaries,
     helpfulNotes: helpfulNotes,
     notHelpfulNotes: notHelpfulNotes,
   });
   let topUrls = await getTopUrls({
+    allNoteSummaries: allNoteSummaries,
     helpfulNotes: helpfulNotes,
     notHelpfulNotes: notHelpfulNotes,
   });

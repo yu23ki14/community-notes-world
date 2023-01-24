@@ -18,35 +18,19 @@ const dev = process.env.NODE_ENV === "development";
 export default async function getTopWords({
   helpfulNotes,
   notHelpfulNotes,
+  allNoteSummaries,
 }: {
   helpfulNotes: notes | undefined;
   notHelpfulNotes: notes | undefined;
+  allNoteSummaries: any;
 }) {
   var startTime = Date.now();
   process.stdout.write("getAllNoteText...");
   if (helpfulNotes === undefined || notHelpfulNotes === undefined) {
     return null;
   }
-  const notesUrl = `https://ton.twimg.com/birdwatch-public-data/${currentYear}/${currentMonthFormatted}/${currentDayFormatted}/notes/notes-00000.tsv`;
 
-  const res = await fetch(notesUrl);
-  if (!res.ok) {
-    return null;
-  }
-  const text = await res.text();
-
-  const allNotes = parse(text, {
-    columns: true,
-    skip_empty_lines: true,
-    delimiter: "\t",
-    to: dev ? 150000 : undefined,
-  }).map((note: noteText) => {
-    return {
-      createdAtMillis: note.createdAtMillis,
-      summary: note.summary,
-      noteId: note.noteId,
-    };
-  });
+  const allNotes = allNoteSummaries;
 
   const helpfulNotesText = allNotes.filter((item: noteText) => {
     return helpfulNotes.some(
