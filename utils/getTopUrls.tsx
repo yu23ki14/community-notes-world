@@ -1,4 +1,6 @@
+import createFetch from "@vercel/fetch";
 import { parse } from "csv-parse/sync";
+import normalizeUrl from "normalize-url";
 import { createImportSpecifier } from "typescript";
 import { notes } from "../utils/types";
 import {
@@ -6,16 +8,17 @@ import {
   currentMonthFormatted,
   currentYear,
 } from "./dates";
-import { noteText, note } from "./types";
+import { note, noteText } from "./types";
 const wordFrequency = require("word-freq-counter");
 var stripCommon = require("strip-common-words");
 const readline = require("readline");
-import createFetch from "@vercel/fetch";
+const urlRegex = require("url-regex");
+
 const fetch = createFetch();
 
 const dev = process.env.NODE_ENV === "development";
 
-export default async function getTopWords({
+export default async function getTopUrls({
   helpfulNotes,
   notHelpfulNotes,
 }: {
@@ -72,20 +75,48 @@ export default async function getTopWords({
   notHelpfulNotesText.forEach(
     (item: noteText) =>
       (notHelpfulNotesCompleteString =
-        notHelpfulNotesCompleteString + " " + item.summary)
+        notHelpfulNotesCompleteString + item.summary)
   );
 
-  let strippedHelpful = stripCommon(helpfulNotesCompleteString);
-  let strippedNotHelpful = stripCommon(notHelpfulNotesCompleteString);
+  let helpfulUrls = helpfulNotesCompleteString.match(urlRegex());
+  let notHelpfulUrls = notHelpfulNotesCompleteString.match(urlRegex());
 
-  let rankedHelpful: { [key: string]: number } = wordFrequency(
-    strippedHelpful,
-    false
-  );
-  let rankedNotHelpful: { [key: string]: number } = wordFrequency(
-    strippedNotHelpful,
-    false
-  );
+  const helpfulNormalizedUrls = helpfulUrls?.map((url) => {
+    return normalizeUrl(url, {
+      stripHash: true,
+      stripProtocol: true,
+      stripWWW: true,
+      removeQueryParameters: true,
+    }).split("/")[0];
+  });
+
+  const notHelpfulNormalizedUrls = notHelpfulUrls?.map((url) => {
+    return normalizeUrl(url, {
+      stripHash: true,
+      stripProtocol: true,
+      stripWWW: true,
+      removeQueryParameters: true,
+    }).split("/")[0];
+  });
+
+  let rankedHelpful: { [key: string]: number } = {};
+
+  let rankedNotHelpful: { [key: string]: number } = {};
+
+  helpfulNormalizedUrls?.forEach((item: string) => {
+    if (Object.keys(rankedHelpful).some((key) => key === item)) {
+      rankedHelpful[item]++;
+    } else {
+      rankedHelpful[item] = 1;
+    }
+  });
+  notHelpfulNormalizedUrls?.forEach((item: string) => {
+    if (Object.keys(rankedNotHelpful).some((key) => key === item)) {
+      rankedNotHelpful[item]++;
+    } else {
+      rankedNotHelpful[item] = 1;
+    }
+  });
 
   let sortableHelpful: any = [];
   let sortableNotHelpful: any = [];
@@ -94,67 +125,23 @@ export default async function getTopWords({
     let newItem = [item, rankedHelpful[item]];
     sortableHelpful.push(newItem);
   }
+
   for (var item in rankedNotHelpful) {
     let newItem = [item, rankedNotHelpful[item]];
     sortableNotHelpful.push(newItem);
   }
 
-  const removedWords = [
-    "this",
-    "be",
-    "",
-    "of",
-    "to",
-    "were",
-    "did",
-    "is",
-    "the",
-    "a",
-    "was",
-    "has",
-    "have",
-    "are",
-    "Tweet",
-    "Twitter",
-    "been",
-    "an",
-    "had",
-    "does",
-    "not",
-    "being",
-    "it",
-    "&quot;",
-    "his",
-    "&amp;",
-    "before",
-    "made",
-    "tweet",
-    ",",
-    "he",
-    "'s",
-    "’s",
-  ];
-
-  let filteredHelpfulWords = sortableHelpful
+  let sortedHelpfulUrls = sortableHelpful
     .sort(function (a: [string, number], b: [string, number]) {
       return b[1] - a[1];
     })
-    .filter(
-      (item: [string, number]) =>
-        !removedWords.some((word: string) => item[0] === word)
-    )
     .slice(0, 9);
 
-  let filteredNotHelpfulWords = sortableNotHelpful
+  let sortedNotHelpfulUrls = sortableNotHelpful
     .sort(function (a: [string, number], b: [string, number]) {
       return b[1] - a[1];
     })
-    .filter(
-      (item: [string, number]) =>
-        !removedWords.some((word: string) => item[0] === word)
-    )
     .slice(0, 9);
-
   let elapsed = Date.now() - startTime;
   readline.clearLine(process.stdout, 0);
   readline.cursorTo(process.stdout, 0);
@@ -163,8 +150,8 @@ export default async function getTopWords({
   );
   process.stdout.write("\n");
   return {
-    topHelpfulWords: filteredHelpfulWords,
-    topNotHelpfulWords: filteredNotHelpfulWords,
+    topHelpfulUrls: sortedHelpfulUrls,
+    topNotHelpfulUrls: sortedNotHelpfulUrls,
   };
 }
 

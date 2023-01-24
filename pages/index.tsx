@@ -12,6 +12,7 @@ import getActiveRaters from "../utils/getActiveRaters";
 import HelpfulNotePercentage from "../components/helpfulNotePercentage";
 import getAllNotes from "../utils/getAllNotes";
 import getTopWords from "../utils/getTopWords";
+import getTopUrls from "../utils/getTopUrls";
 import getAllRatings from "../utils/getAllRatings";
 import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
 import getMostRecentRatingTimestamp from "../utils/getMostRecentRatingTimestamp";
@@ -53,6 +54,7 @@ export default function Home({
   topAuthorsLastMonth,
   topAuthorsLastWeek,
   topWords,
+  topUrls,
   userStates,
 }: {
   activeAuthors?: { [key: string]: number };
@@ -73,6 +75,7 @@ export default function Home({
   topAuthorsLastMonth?: authorArray;
   topAuthorsLastWeek?: authorArray;
   topWords?: any;
+  topUrls?: any;
   userStates?: {
     earned_in: number;
     earned_out: number;
@@ -128,6 +131,23 @@ export default function Home({
           <TopWords
             title="Frequent words in notes with status of Not Helpful"
             topWords={topWords.topNotHelpfulWords}
+          />
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <EmptyState />
+          <EmptyState />
+        </React.Fragment>
+      )}
+      {topUrls ? (
+        <React.Fragment>
+          <TopWords
+            title="Frequent URLs in notes with status of Helpful"
+            topWords={topUrls.topHelpfulUrls}
+          />
+          <TopWords
+            title="Frequent URLs in notes with status of Not Helpful"
+            topWords={topUrls.topNotHelpfulUrls}
           />
         </React.Fragment>
       ) : (
@@ -209,6 +229,10 @@ export async function getStaticProps() {
     helpfulNotes: helpfulNotes,
     notHelpfulNotes: notHelpfulNotes,
   });
+  let topUrls = await getTopUrls({
+    helpfulNotes: helpfulNotes,
+    notHelpfulNotes: notHelpfulNotes,
+  });
   let topAuthors = await getTopAuthors({ helpfulNotes: helpfulNotes });
   let activeAuthors = await getActiveAuthors(allNotes);
   let activeRaters = await getActiveRaters({ allRatings });
@@ -228,6 +252,7 @@ export async function getStaticProps() {
       activeAuthors,
       activeRaters,
       topWords,
+      topUrls,
       allNotesTimeSeries,
       allRatingsTimeSeries,
       helpfulNotesTimeSeries,
