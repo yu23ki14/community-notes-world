@@ -100,23 +100,40 @@ export default async function getTopUrls({
   });
 
   let rankedHelpful: { [key: string]: number } = {};
-
   let rankedNotHelpful: { [key: string]: number } = {};
 
   helpfulNormalizedUrls?.forEach((item: string) => {
-    if (Object.keys(rankedHelpful).some((key) => key === item)) {
+    if (Object.keys(rankedHelpful).some((key) => item === key)) {
       rankedHelpful[item]++;
     } else {
       rankedHelpful[item] = 1;
     }
   });
   notHelpfulNormalizedUrls?.forEach((item: string) => {
-    if (Object.keys(rankedNotHelpful).some((key) => key === item)) {
+    if (Object.keys(rankedNotHelpful).some((key) => item === key)) {
       rankedNotHelpful[item]++;
     } else {
       rankedNotHelpful[item] = 1;
     }
   });
+
+  rankedHelpful["youtube.com"] =
+    rankedHelpful["youtube.com"] + rankedHelpful["youtu.be"];
+
+  rankedNotHelpful["youtube.com"] =
+    rankedNotHelpful["youtube.com"] + rankedNotHelpful["youtu.be"];
+
+  rankedHelpful["en.wikipedia.org"] =
+    rankedHelpful["en.wikipedia.org"] + rankedHelpful["en.m.wikipedia.org"];
+
+  rankedNotHelpful["en.wikipedia.org"] =
+    rankedNotHelpful["en.wikipedia.org"] +
+    rankedNotHelpful["en.m.wikipedia.org"];
+
+  delete rankedHelpful["youtu.be"];
+  delete rankedNotHelpful["youtu.be"];
+  delete rankedHelpful["en.m.wikipedia.org"];
+  delete rankedNotHelpful["en.m.wikipedia.org"];
 
   let sortableHelpful: any = [];
   let sortableNotHelpful: any = [];
@@ -154,5 +171,3 @@ export default async function getTopUrls({
     topNotHelpfulUrls: sortedNotHelpfulUrls,
   };
 }
-
-//TODO: #22 Rename this file and function to getAllNotesStatus

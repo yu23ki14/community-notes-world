@@ -167,5 +167,3 @@ export default async function getTopWords({
     topNotHelpfulWords: filteredNotHelpfulWords,
   };
 }
-
-//TODO: #22 Rename this file and function to getAllNotesStatus
