@@ -10,8 +10,9 @@ import TopWritersLeaderBoard from "../components/topWritersLeaderBoard";
 import getActiveAuthors from "../utils/getActiveAuthors";
 import getActiveRaters from "../utils/getActiveRaters";
 import HelpfulNotePercentage from "../components/helpfulNotePercentage";
-import getAllNotes from "../utils/getAllNotes";
+import getAllNotesStatus from "../utils/getAllNotesStatus";
 import getTopWords from "../utils/getTopWords";
+import getTopUrls from "../utils/getTopUrls";
 import getAllRatings from "../utils/getAllRatings";
 import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
 import getMostRecentRatingTimestamp from "../utils/getMostRecentRatingTimestamp";
@@ -29,6 +30,7 @@ import UserEnrollmentState from "../components/userEnrollmentState";
 import EmptyState from "../components/emptyState";
 import React from "react";
 import { endLogging, startLogging } from "../utils/logging";
+import getAllNoteSummaries from "../utils/getAllNoteSummaries";
 
 type authorArray = author[];
 const StyledTitle = styled("h1", {
@@ -53,6 +55,7 @@ export default function Home({
   topAuthorsLastMonth,
   topAuthorsLastWeek,
   topWords,
+  topUrls,
   userStates,
 }: {
   activeAuthors?: { [key: string]: number };
@@ -73,6 +76,7 @@ export default function Home({
   topAuthorsLastMonth?: authorArray;
   topAuthorsLastWeek?: authorArray;
   topWords?: any;
+  topUrls?: any;
   userStates?: {
     earned_in: number;
     earned_out: number;
@@ -136,6 +140,23 @@ export default function Home({
           <EmptyState />
         </React.Fragment>
       )}
+      {topUrls ? (
+        <React.Fragment>
+          <TopWords
+            title="Frequent URLs in notes with status of Helpful"
+            topWords={topUrls.topHelpfulUrls}
+          />
+          <TopWords
+            title="Frequent URLs in notes with status of Not Helpful"
+            topWords={topUrls.topNotHelpfulUrls}
+          />
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <EmptyState />
+          <EmptyState />
+        </React.Fragment>
+      )}
       <StyledTitle>Writers</StyledTitle>
       {topAuthors && topAuthorsLastMonth && topAuthorsLastWeek ? (
         <TopWritersLeaderBoard
@@ -186,7 +207,7 @@ export async function getStaticProps() {
   startLogging("Starting site build...");
   const startTime = Date.now();
   let { allNotes, helpfulNotes, notHelpfulNotes, needsMoreRatingsNotes } =
-    await getAllNotes();
+    await getAllNotesStatus();
   let {
     allRatings,
     helpfulRatings,
@@ -205,7 +226,14 @@ export async function getStaticProps() {
   const somewhatHelpfulRatingsTimeSeries = getMonthlyTimeSeries(
     somewhatHelpfulRatings
   );
+  let allNoteSummaries = await getAllNoteSummaries();
   let topWords = await getTopWords({
+    allNoteSummaries: allNoteSummaries,
+    helpfulNotes: helpfulNotes,
+    notHelpfulNotes: notHelpfulNotes,
+  });
+  let topUrls = await getTopUrls({
+    allNoteSummaries: allNoteSummaries,
     helpfulNotes: helpfulNotes,
     notHelpfulNotes: notHelpfulNotes,
   });
@@ -228,6 +256,7 @@ export async function getStaticProps() {
       activeAuthors,
       activeRaters,
       topWords,
+      topUrls,
       allNotesTimeSeries,
       allRatingsTimeSeries,
       helpfulNotesTimeSeries,

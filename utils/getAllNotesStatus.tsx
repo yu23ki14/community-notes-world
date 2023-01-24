@@ -11,7 +11,7 @@ const fetch = createFetch();
 
 const dev = process.env.NODE_ENV === "development";
 
-export default async function getAllNotes() {
+export default async function getAllNotesStatus() {
   var startTime = Date.now();
   process.stdout.write("getAllNotes...");
   process.stdout.write(
@@ -58,7 +58,7 @@ export default async function getAllNotes() {
       item.currentStatus !== "CURRENTLY_RATED_NOT_HELPFUL"
   );
 
-  const notes = {
+  const notesStatus = {
     allNotes: allNotes,
     helpfulNotes: helpfulNotes,
     notHelpfulNotes: notHelpfulNotes,
@@ -70,7 +70,5 @@ export default async function getAllNotes() {
   process.stdout.write(`getAllNotes...Done ✅ ${(elapsed / 1000).toFixed(3)}s`);
   process.stdout.write("\n");
 
-  return notes;
+  return notesStatus;
 }
-
-//TODO: #22 Rename this file and function to getAllNotesStatus

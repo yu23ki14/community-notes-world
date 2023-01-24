@@ -1,52 +1,28 @@
-import { parse } from "csv-parse/sync";
-import { createImportSpecifier } from "typescript";
+import createFetch from "@vercel/fetch";
 import { notes } from "../utils/types";
-import {
-  currentDayFormatted,
-  currentMonthFormatted,
-  currentYear,
-} from "./dates";
-import { noteText, note } from "./types";
+import { note, noteText } from "./types";
 const wordFrequency = require("word-freq-counter");
 var stripCommon = require("strip-common-words");
 const readline = require("readline");
-import createFetch from "@vercel/fetch";
-const fetch = createFetch();
-
-const dev = process.env.NODE_ENV === "development";
+import { startLogging, endLogging } from "./logging";
 
 export default async function getTopWords({
   helpfulNotes,
   notHelpfulNotes,
+  allNoteSummaries,
 }: {
   helpfulNotes: notes | undefined;
   notHelpfulNotes: notes | undefined;
+  allNoteSummaries: any;
 }) {
   var startTime = Date.now();
-  process.stdout.write("getAllNoteText...");
+  startLogging("getTopWords");
+
   if (helpfulNotes === undefined || notHelpfulNotes === undefined) {
     return null;
   }
-  const notesUrl = `https://ton.twimg.com/birdwatch-public-data/${currentYear}/${currentMonthFormatted}/${currentDayFormatted}/notes/notes-00000.tsv`;
 
-  const res = await fetch(notesUrl);
-  if (!res.ok) {
-    return null;
-  }
-  const text = await res.text();
-
-  const allNotes = parse(text, {
-    columns: true,
-    skip_empty_lines: true,
-    delimiter: "\t",
-    to: dev ? 150000 : undefined,
-  }).map((note: noteText) => {
-    return {
-      createdAtMillis: note.createdAtMillis,
-      summary: note.summary,
-      noteId: note.noteId,
-    };
-  });
+  const allNotes = allNoteSummaries;
 
   const helpfulNotesText = allNotes.filter((item: noteText) => {
     return helpfulNotes.some(
@@ -65,13 +41,14 @@ export default async function getTopWords({
 
   helpfulNotesText.forEach(
     (item: noteText) =>
-      (helpfulNotesCompleteString = helpfulNotesCompleteString + item.summary)
+      (helpfulNotesCompleteString =
+        helpfulNotesCompleteString + " " + item.summary)
   );
 
   notHelpfulNotesText.forEach(
     (item: noteText) =>
       (notHelpfulNotesCompleteString =
-        notHelpfulNotesCompleteString + item.summary)
+        notHelpfulNotesCompleteString + " " + item.summary)
   );
 
   let strippedHelpful = stripCommon(helpfulNotesCompleteString);
@@ -131,6 +108,7 @@ export default async function getTopWords({
     ",",
     "he",
     "'s",
+    "’s",
   ];
 
   let filteredHelpfulWords = sortableHelpful
@@ -153,17 +131,9 @@ export default async function getTopWords({
     )
     .slice(0, 9);
 
-  let elapsed = Date.now() - startTime;
-  readline.clearLine(process.stdout, 0);
-  readline.cursorTo(process.stdout, 0);
-  process.stdout.write(
-    `getAllNotesText...Done ✅ ${(elapsed / 1000).toFixed(3)}s`
-  );
-  process.stdout.write("\n");
+  endLogging("getTopWords", startTime);
   return {
     topHelpfulWords: filteredHelpfulWords,
     topNotHelpfulWords: filteredNotHelpfulWords,
   };
 }
-
-//TODO: #22 Rename this file and function to getAllNotesStatus
