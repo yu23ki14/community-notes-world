@@ -1,19 +1,10 @@
-import { parse } from "csv-parse/sync";
-import { createImportSpecifier } from "typescript";
+import createFetch from "@vercel/fetch";
 import { notes } from "../utils/types";
-import {
-  currentDayFormatted,
-  currentMonthFormatted,
-  currentYear,
-} from "./dates";
-import { noteText, note } from "./types";
+import { note, noteText } from "./types";
 const wordFrequency = require("word-freq-counter");
 var stripCommon = require("strip-common-words");
 const readline = require("readline");
-import createFetch from "@vercel/fetch";
-const fetch = createFetch();
-
-const dev = process.env.NODE_ENV === "development";
+import { startLogging, endLogging } from "./logging";
 
 export default async function getTopWords({
   helpfulNotes,
@@ -25,7 +16,8 @@ export default async function getTopWords({
   allNoteSummaries: any;
 }) {
   var startTime = Date.now();
-  process.stdout.write("getAllNoteText...");
+  startLogging("getTopWords");
+
   if (helpfulNotes === undefined || notHelpfulNotes === undefined) {
     return null;
   }
@@ -139,13 +131,7 @@ export default async function getTopWords({
     )
     .slice(0, 9);
 
-  let elapsed = Date.now() - startTime;
-  readline.clearLine(process.stdout, 0);
-  readline.cursorTo(process.stdout, 0);
-  process.stdout.write(
-    `getAllNotesText...Done ✅ ${(elapsed / 1000).toFixed(3)}s`
-  );
-  process.stdout.write("\n");
+  endLogging("getTopWords", startTime);
   return {
     topHelpfulWords: filteredHelpfulWords,
     topNotHelpfulWords: filteredNotHelpfulWords,

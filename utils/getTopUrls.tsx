@@ -1,20 +1,9 @@
-import createFetch from "@vercel/fetch";
-import { parse } from "csv-parse/sync";
 import normalizeUrl from "normalize-url";
-import { createImportSpecifier } from "typescript";
 import { notes } from "../utils/types";
-import {
-  currentDayFormatted,
-  currentMonthFormatted,
-  currentYear,
-} from "./dates";
 import { note, noteText } from "./types";
-const wordFrequency = require("word-freq-counter");
-var stripCommon = require("strip-common-words");
 const readline = require("readline");
 const urlRegex = require("url-regex");
-
-const dev = process.env.NODE_ENV === "development";
+import { startLogging, endLogging } from "./logging";
 
 export default async function getTopUrls({
   helpfulNotes,
@@ -26,7 +15,8 @@ export default async function getTopUrls({
   allNoteSummaries: any;
 }) {
   var startTime = Date.now();
-  process.stdout.write("getAllNoteText...");
+  startLogging("getTopUrls");
+
   if (helpfulNotes === undefined || notHelpfulNotes === undefined) {
     return null;
   }
@@ -142,12 +132,7 @@ export default async function getTopUrls({
     })
     .slice(0, 9);
   let elapsed = Date.now() - startTime;
-  readline.clearLine(process.stdout, 0);
-  readline.cursorTo(process.stdout, 0);
-  process.stdout.write(
-    `getAllNotesText...Done ✅ ${(elapsed / 1000).toFixed(3)}s`
-  );
-  process.stdout.write("\n");
+  endLogging("getTopUrls", startTime);
   return {
     topHelpfulUrls: sortedHelpfulUrls,
     topNotHelpfulUrls: sortedNotHelpfulUrls,
