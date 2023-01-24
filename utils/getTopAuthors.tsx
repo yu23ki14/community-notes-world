@@ -1,4 +1,4 @@
-import getAllNotes from "./getAllNotes";
+import getAllNotes from "./getAllNotesStatus";
 import { author, notes, note } from "../utils/types";
 let currentTime = Date.now();
 const readline = require("readline");

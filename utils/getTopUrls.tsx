@@ -1,7 +1,6 @@
 import normalizeUrl from "normalize-url";
 import { notes } from "../utils/types";
 import { note, noteText } from "./types";
-const readline = require("readline");
 const urlRegex = require("url-regex");
 import { startLogging, endLogging } from "./logging";
 

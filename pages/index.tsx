@@ -10,7 +10,7 @@ import TopWritersLeaderBoard from "../components/topWritersLeaderBoard";
 import getActiveAuthors from "../utils/getActiveAuthors";
 import getActiveRaters from "../utils/getActiveRaters";
 import HelpfulNotePercentage from "../components/helpfulNotePercentage";
-import getAllNotes from "../utils/getAllNotes";
+import getAllNotesStatus from "../utils/getAllNotesStatus";
 import getTopWords from "../utils/getTopWords";
 import getTopUrls from "../utils/getTopUrls";
 import getAllRatings from "../utils/getAllRatings";
@@ -207,7 +207,7 @@ export async function getStaticProps() {
   startLogging("Starting site build...");
   const startTime = Date.now();
   let { allNotes, helpfulNotes, notHelpfulNotes, needsMoreRatingsNotes } =
-    await getAllNotes();
+    await getAllNotesStatus();
   let {
     allRatings,
     helpfulRatings,

@@ -1,4 +1,4 @@
-import getAllNotes from "./getAllNotes";
+import getAllNotes from "./getAllNotesStatus";
 import { author, note } from "../utils/types";
 const readline = require("readline");
 
