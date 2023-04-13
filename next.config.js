@@ -16,5 +16,5 @@ module.exports = {
     });
     return config;
   },
-  staticPageGenerationTimeout: 2000,
+  staticPageGenerationTimeout: 20000,
 };
