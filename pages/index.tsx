@@ -172,7 +172,7 @@ export default function Home({
       ) : (
         <EmptyState />
       )}
-      <StyledTitle>Ratings</StyledTitle>
+      {/* <StyledTitle>Ratings</StyledTitle>
       {allRatingsTimeSeries ? (
         <AllRatings allRatingsTimeSeries={allRatingsTimeSeries} />
       ) : (
@@ -193,7 +193,7 @@ export default function Home({
         <ActiveRaters activeRatersTimeSeries={activeRaters} />
       ) : (
         <EmptyState />
-      )}
+      )} */}
       <StyledTitle>Contributor states</StyledTitle>
       {userStates ? (
         <UserEnrollmentState userStates={userStates} />
@@ -208,24 +208,24 @@ export async function getStaticProps() {
   const startTime = Date.now();
   let { allNotes, helpfulNotes, notHelpfulNotes, needsMoreRatingsNotes } =
     await getAllNotesStatus();
-  let {
-    allRatings,
-    helpfulRatings,
-    notHelpfulRatings,
-    somewhatHelpfulRatings,
-  } = await getAllRatings();
+  //   let {
+  //     allRatings,
+  //     helpfulRatings,
+  //     notHelpfulRatings,
+  //     somewhatHelpfulRatings,
+  //   } = await getAllRatings();
   const helpfulNotesTimeSeries = getMonthlyTimeSeries(helpfulNotes);
   const notHelpfulNotesTimeSeries = getMonthlyTimeSeries(notHelpfulNotes);
   const allNotesTimeSeries = getMonthlyTimeSeries(allNotes);
   const needsMoreRatingsNotesTimeSeries = getMonthlyTimeSeries(
     needsMoreRatingsNotes
   );
-  const allRatingsTimeSeries = getMonthlyTimeSeries(allRatings);
-  const helpfulRatingsTimeSeries = getMonthlyTimeSeries(helpfulRatings);
-  const notHelpfulRatingsTimeSeries = getMonthlyTimeSeries(notHelpfulRatings);
-  const somewhatHelpfulRatingsTimeSeries = getMonthlyTimeSeries(
-    somewhatHelpfulRatings
-  );
+  //   const allRatingsTimeSeries = getMonthlyTimeSeries(allRatings);
+  //   const helpfulRatingsTimeSeries = getMonthlyTimeSeries(helpfulRatings);
+  //   const notHelpfulRatingsTimeSeries = getMonthlyTimeSeries(notHelpfulRatings);
+  //   const somewhatHelpfulRatingsTimeSeries = getMonthlyTimeSeries(
+  //     somewhatHelpfulRatings
+  //   );
   let allNoteSummaries = await getAllNoteSummaries();
   let topWords = await getTopWords({
     allNoteSummaries: allNoteSummaries,
@@ -239,7 +239,7 @@ export async function getStaticProps() {
   });
   let topAuthors = await getTopAuthors({ helpfulNotes: helpfulNotes });
   let activeAuthors = await getActiveAuthors(allNotes);
-  let activeRaters = await getActiveRaters({ allRatings });
+  //   let activeRaters = await getActiveRaters({ allRatings });
   let topAuthorsLastMonth = await getTopAuthors({
     helpfulNotes: helpfulNotes,
     range: "last month",
@@ -248,24 +248,24 @@ export async function getStaticProps() {
     helpfulNotes: helpfulNotes,
     range: "last week",
   });
-  let lastUpdated = getMostRecentRatingTimestamp(allRatings);
+  //   let lastUpdated = getMostRecentRatingTimestamp(allRatings);
   let userStates = await getUserEnrollmentData();
   endLogging("Finished building site in", startTime);
   return {
     props: {
       activeAuthors,
-      activeRaters,
+      //   activeRaters,
       topWords,
       topUrls,
       allNotesTimeSeries,
-      allRatingsTimeSeries,
+      //   allRatingsTimeSeries,
       helpfulNotesTimeSeries,
-      helpfulRatingsTimeSeries,
-      lastUpdated,
+      //   helpfulRatingsTimeSeries,
+      //   lastUpdated,
       needsMoreRatingsNotesTimeSeries,
       notHelpfulNotesTimeSeries,
-      notHelpfulRatingsTimeSeries,
-      somewhatHelpfulRatingsTimeSeries,
+      //   notHelpfulRatingsTimeSeries,
+      //   somewhatHelpfulRatingsTimeSeries,
       topAuthors,
       topAuthorsLastMonth,
       topAuthorsLastWeek,
