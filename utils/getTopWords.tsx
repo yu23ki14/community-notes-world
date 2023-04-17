@@ -77,6 +77,8 @@ export default async function getTopWords({
 
   const removedWords = [
     "this",
+    "de",
+    "que",
     "be",
     "",
     "of",
