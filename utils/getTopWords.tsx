@@ -88,6 +88,7 @@ export default async function getTopWords({
     "is",
     "the",
     "a",
+    "e",
     "was",
     "la",
     "o",
