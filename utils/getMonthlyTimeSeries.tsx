@@ -1,4 +1,6 @@
 import { note, rating } from "./types";
+import { groupBy, padStart } from "lodash";
+
 export default function getMonthlyTimeSeries(
   items: note[] | rating[] | undefined
 ) {
@@ -8,21 +10,17 @@ export default function getMonthlyTimeSeries(
   const readline = require("readline");
   var startTime = Date.now();
   process.stdout.write("getMonthlyTimeSeries...");
-  const o: { [key: string]: number } = {};
-  items.map((item: note | rating) => {
-    let date = new Date(+item.createdAtMillis);
-    var month = date.getMonth() + 1;
-    var formattedMonth = date.getMonth() + 1 < 10 ? "0" + month : month;
-    var key = date.getFullYear() + "-" + formattedMonth;
-    if (o[key] === undefined) {
-      o[key] = 0;
-    }
-    o[key]++;
+
+  const groupedItems = groupBy(items, (item: note | rating) => {
+    const date = new Date(+item.createdAtMillis);
+    const formattedMonth = padStart(String(date.getMonth() + 1), 2, "0");
+    return `${date.getFullYear()}-${formattedMonth}`;
   });
-  const timeSeries = Object.keys(o)
+
+  const timeSeries = Object.keys(groupedItems)
     .sort()
-    .reduce((obj: typeof o, key) => {
-      obj[key] = o[key];
+    .reduce((obj: { [key: string]: number }, key) => {
+      obj[key] = groupedItems[key].length;
       return obj;
     }, {});
   let elapsed = Date.now() - startTime;

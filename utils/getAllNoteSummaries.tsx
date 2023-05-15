@@ -34,6 +34,7 @@ export default async function getAllNoteSummaries() {
       createdAtMillis: note.createdAtMillis,
       summary: note.summary,
       noteId: note.noteId,
+      tweetId: note.tweetId,
     };
   });
   endLogging("getAllNoteSummaries", startTime);

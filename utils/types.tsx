@@ -9,6 +9,7 @@ type noteText = {
   noteId: string;
   createdAtMillis: number;
   summary: string;
+  tweetId: string;
 };
 
 type rating = {
@@ -27,6 +28,14 @@ type author = {
   noteExampleId?: string;
 };
 
+type tweetAuthor = {
+  id: string;
+  name: string;
+  username: string;
+  count: number;
+  tweets: string[];
+};
+
 type userEnrollmentItem = {
   participantId: string;
   enrollmentState: string;
@@ -40,6 +49,7 @@ type notes = Array<note>;
 
 export type {
   author,
+  tweetAuthor,
   note,
   notes,
   noteText,

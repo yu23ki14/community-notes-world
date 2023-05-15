@@ -15,6 +15,7 @@ import getTopWords from "../utils/getTopWords";
 import getTopUrls from "../utils/getTopUrls";
 import getAllRatings from "../utils/getAllRatings";
 import getMonthlyTimeSeries from "../utils/getMonthlyTimeSeries";
+import getTopTweetAuthors from "../utils/getTopTweetAuthors";
 import getMostRecentRatingTimestamp from "../utils/getMostRecentRatingTimestamp";
 import getTopAuthors from "../utils/getTopAuthors";
 import { styled } from "../utils/styles";
@@ -23,6 +24,7 @@ import {
   notes,
   noteTimeSeries,
   ratingTimeSeries,
+  tweetAuthor,
 } from "../utils/types";
 import RatingActivity from "../components/ratingActivity";
 import getUserEnrollmentData from "../utils/getUserEnrollmentData";
@@ -31,12 +33,24 @@ import EmptyState from "../components/emptyState";
 import React from "react";
 import { endLogging, startLogging } from "../utils/logging";
 import getAllNoteSummaries from "../utils/getAllNoteSummaries";
+import TopTweetAuthorsLeaderBoard from "../components/topTweetAuthorsLeaderboard";
 
 type authorArray = author[];
 const StyledTitle = styled("h1", {
   gridColumn: "span 2",
-  letterSpacing: "-0.04rem",
-  margin: "2rem .25rem 2rem",
+  letterSpacing: "-0.029375rem",
+  margin: "1rem 0 0",
+  padding: "3rem 0 1.5rem 0",
+  borderTop: "1px solid $slate6",
+  fontSize: "1.5rem",
+  fontWeight: "600",
+  variants: {
+    noBorderTop: {
+      true: {
+        borderTop: "none",
+      },
+    },
+  },
 });
 export default function Home({
   activeAuthors,
@@ -52,8 +66,9 @@ export default function Home({
   notHelpfulRatingsTimeSeries,
   somewhatHelpfulRatingsTimeSeries,
   topAuthors,
-  topAuthorsLastMonth,
+  topTweetAuthors,
   topAuthorsLastWeek,
+  topAuthorsLastMonth,
   topWords,
   topUrls,
   userStates,
@@ -73,8 +88,9 @@ export default function Home({
   notHelpfulRatingsTimeSeries?: ratingTimeSeries;
   somewhatHelpfulRatingsTimeSeries?: ratingTimeSeries;
   topAuthors?: authorArray;
-  topAuthorsLastMonth?: authorArray;
+  topTweetAuthors?: tweetAuthor[];
   topAuthorsLastWeek?: authorArray;
+  topAuthorsLastMonth?: authorArray;
   topWords?: any;
   topUrls?: any;
   userStates?: {
@@ -86,7 +102,22 @@ export default function Home({
 }) {
   return (
     <Layout lastUpdated={lastUpdated}>
-      <StyledTitle>Notes</StyledTitle>
+      <StyledTitle noBorderTop>Leaderboards</StyledTitle>
+      {topAuthors && topAuthorsLastMonth && topAuthorsLastWeek ? (
+        <TopWritersLeaderBoard
+          topAuthors={topAuthors}
+          topAuthorsLastMonth={topAuthorsLastMonth}
+          topAuthorsLastWeek={topAuthorsLastWeek}
+        />
+      ) : (
+        <EmptyState />
+      )}
+      {topTweetAuthors ? (
+        <TopTweetAuthorsLeaderBoard topTweetAuthors={topTweetAuthors} />
+      ) : (
+        <EmptyState />
+      )}
+      <StyledTitle>Activity</StyledTitle>
       {allNotesTimeSeries ? (
         <AllNotes allNotesTimeSeries={allNotesTimeSeries} />
       ) : (
@@ -123,6 +154,39 @@ export default function Home({
           <EmptyState />
         </React.Fragment>
       )}
+      {userStates ? (
+        <UserEnrollmentState userStates={userStates} />
+      ) : (
+        <EmptyState />
+      )}
+      {activeAuthors ? (
+        <ActiveAuthors activeAuthorsTimeSeries={activeAuthors} />
+      ) : (
+        <EmptyState />
+      )}
+      {/* <StyledTitle>Ratings</StyledTitle>
+      {allRatingsTimeSeries ? (
+        <AllRatings allRatingsTimeSeries={allRatingsTimeSeries} />
+      ) : (
+        <EmptyState />
+      )}
+      {helpfulRatingsTimeSeries &&
+      notHelpfulRatingsTimeSeries &&
+      somewhatHelpfulRatingsTimeSeries ? (
+        <RatingActivity
+          helpfulRatingsTimeSeries={helpfulRatingsTimeSeries}
+          notHelpfulRatingsTimeSeries={notHelpfulRatingsTimeSeries}
+          somewhatHelpfulRatingsTimeSeries={somewhatHelpfulRatingsTimeSeries}
+        />
+      ) : (
+        <EmptyState />
+      )}
+      {activeRaters ? (
+        <ActiveRaters activeRatersTimeSeries={activeRaters} />
+      ) : (
+        <EmptyState />
+      )} */}
+      <StyledTitle>Frequent words and urls</StyledTitle>
       {topWords ? (
         <React.Fragment>
           <TopWords
@@ -156,49 +220,6 @@ export default function Home({
           <EmptyState />
           <EmptyState />
         </React.Fragment>
-      )}
-      <StyledTitle>Writers</StyledTitle>
-      {topAuthors && topAuthorsLastMonth && topAuthorsLastWeek ? (
-        <TopWritersLeaderBoard
-          topAuthors={topAuthors}
-          topAuthorsLastMonth={topAuthorsLastMonth}
-          topAuthorsLastWeek={topAuthorsLastWeek}
-        />
-      ) : (
-        <EmptyState />
-      )}
-      {activeAuthors ? (
-        <ActiveAuthors activeAuthorsTimeSeries={activeAuthors} />
-      ) : (
-        <EmptyState />
-      )}
-      {/* <StyledTitle>Ratings</StyledTitle>
-      {allRatingsTimeSeries ? (
-        <AllRatings allRatingsTimeSeries={allRatingsTimeSeries} />
-      ) : (
-        <EmptyState />
-      )}
-      {helpfulRatingsTimeSeries &&
-      notHelpfulRatingsTimeSeries &&
-      somewhatHelpfulRatingsTimeSeries ? (
-        <RatingActivity
-          helpfulRatingsTimeSeries={helpfulRatingsTimeSeries}
-          notHelpfulRatingsTimeSeries={notHelpfulRatingsTimeSeries}
-          somewhatHelpfulRatingsTimeSeries={somewhatHelpfulRatingsTimeSeries}
-        />
-      ) : (
-        <EmptyState />
-      )}
-      {activeRaters ? (
-        <ActiveRaters activeRatersTimeSeries={activeRaters} />
-      ) : (
-        <EmptyState />
-      )} */}
-      <StyledTitle>Contributor states</StyledTitle>
-      {userStates ? (
-        <UserEnrollmentState userStates={userStates} />
-      ) : (
-        <EmptyState />
       )}
     </Layout>
   );
@@ -248,6 +269,7 @@ export async function getStaticProps() {
     helpfulNotes: helpfulNotes,
     range: "last week",
   });
+  let topTweetAuthors = await getTopTweetAuthors(allNotes, allNoteSummaries);
   //   let lastUpdated = getMostRecentRatingTimestamp(allRatings);
   let userStates = await getUserEnrollmentData();
   endLogging("Finished building site in", startTime);
@@ -255,6 +277,7 @@ export async function getStaticProps() {
     props: {
       activeAuthors,
       //   activeRaters,
+      topTweetAuthors,
       topWords,
       topUrls,
       allNotesTimeSeries,

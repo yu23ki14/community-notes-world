@@ -7,7 +7,7 @@ const StyledContainer = styled("div", {
   margin: "0",
   width: "100%",
   border: "1px solid $slate6",
-  borderRadius: "13px",
+  borderRadius: "7px",
   padding: "2rem",
   color: "$slate9",
   backgroundColor: "$slate1",

@@ -54,7 +54,7 @@ export default async function getTopAuthors({
 
   let topAuthors = authors
     .sort((a, b) => b.numberOfHelpfulNotes - a.numberOfHelpfulNotes)
-    .slice(0, 6);
+    .slice(0, 10);
   let elapsed = Date.now() - startTime;
   readline.clearLine(process.stdout, 0);
   readline.cursorTo(process.stdout, 0);

@@ -5,6 +5,9 @@ const StyledHeader = styled("nav", {
   padding: "1rem 1rem",
   borderBottom: "1px solid $slate6",
   display: "flex",
+  "@bp2": {
+    padding: "0rem",
+  },
 });
 const StyledContent = styled("nav", {
   display: "flex",
@@ -12,7 +15,10 @@ const StyledContent = styled("nav", {
   width: "100%",
   margin: "0 auto",
   alignItems: "center",
-  padding: "0 2.25rem",
+  padding: "0",
+  "@bp2": {
+    padding: "1rem",
+  },
 });
 const SiteTitle = styled("h1", {
   fontSize: "1rem",

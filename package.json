@@ -22,9 +22,13 @@
     "csv-parse": "^5.3.1",
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.2",
+    "follow-redirects": "^1.15.2",
+    "lodash": "^4.17.21",
+    "needle": "^3.2.0",
     "next": "13.0.2",
     "node-html-scraper": "^1.0.9",
     "normalize-url": "^8.0.0",
+    "puppeteer": "^19.9.0",
     "react": "18.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-dom": "18.2.0",
@@ -34,6 +38,7 @@
     "word-freq-counter": "^1.0.0"
   },
   "devDependencies": {
-    "@svgr/webpack": "^6.5.1"
+    "@svgr/webpack": "^6.5.1",
+    "@types/lodash": "^4.14.194"
   }
 }
