@@ -72,6 +72,9 @@ export default async function getTopTweetAuthors(
     try {
       const tweetIdsBatch = filteredNoteSummariesTweetIds.slice(i, i + 50);
       const response = await getRequest(tweetIdsBatch);
+      if (!response.users) {
+        return null;
+      }
       const { users } = response.includes;
       const { data } = response;
       const tweets: TweetObject[] = data;
