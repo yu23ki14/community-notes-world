@@ -82,6 +82,7 @@ export default async function getTopWords({
     "be",
     "",
     "of",
+     "y",
     "to",
     "were",
     "did",
